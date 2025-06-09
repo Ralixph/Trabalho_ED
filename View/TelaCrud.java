@@ -120,7 +120,7 @@ public class TelaCrud extends JFrame {
 		tabInscricao.add(btnLerInscricao);
 		
 		JPanel tabDisciplina = new JPanel();
-		tabbedPane.addTab("New tab", null, tabDisciplina, null);
+		tabbedPane.addTab("Disciplina", null, tabDisciplina, "Disciplina");
 		tabDisciplina.setLayout(null);
 		
 		JButton btnCriarDisciplina = new JButton("Criar");
