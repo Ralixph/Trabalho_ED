@@ -56,6 +56,8 @@ public class ProfessorCRUD extends JFrame {
 		tabbedPane.setBounds(10, 11, 416, 241);
 		contentPane.add(tabbedPane);
 		
+// Aba Criar
+		
 		JPanel tabCriarProfessor = new JPanel();
 		tabbedPane.addTab("Criar", null, tabCriarProfessor, "Criar Professor");
 		tabCriarProfessor.setLayout(null);
@@ -117,7 +119,7 @@ public class ProfessorCRUD extends JFrame {
 		lblPontosProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblPontosProfessor.setBounds(21, 99, 79, 19);
 		
-		// ===========================================================================
+// Aba atualizar
 		
 		JPanel tabAtualizarProfessor = new JPanel();
 		tabbedPane.addTab("Atualizar", null, tabAtualizarProfessor, "Atualizar Professor");

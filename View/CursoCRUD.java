@@ -9,6 +9,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -54,15 +57,16 @@ public class CursoCRUD extends JFrame {
 		tabbedPane.setBounds(10, 11, 416, 241);
 		contentPane.add(tabbedPane);
 		
-		// Aba Criar
+// Aba Criar
+		
 		JPanel tabCriarCurso = new JPanel();
 		tabbedPane.addTab("Criar", null, tabCriarCurso, "Criar Curso");
 		tabCriarCurso.setLayout(null);
 		
-		JLabel lblCPFProfessor = new JLabel("Codigo");
-		lblCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCPFProfessor.setBounds(21, 11, 79, 19);
-		tabCriarCurso.add(lblCPFProfessor);
+		JLabel lblCodigoCurso = new JLabel("Codigo");
+		lblCodigoCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCodigoCurso.setBounds(21, 11, 79, 19);
+		tabCriarCurso.add(lblCodigoCurso);
 		
 		tfCPFProfessor = new JTextField();
 		tfCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -98,8 +102,74 @@ public class CursoCRUD extends JFrame {
 		tabCriarCurso.add(btnCriarCurso);
 		btnCriarCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
+// Aba atualizar
 		
-		// Aba Deletar
+		JPanel tabAtualizarProfessor = new JPanel();
+		tabbedPane.addTab("Atualizar", null, tabAtualizarProfessor, "Atualizar Professor");
+		tabAtualizarProfessor.setLayout(null);
+		
+		lblCPFProfessor = new JLabel("Codigo");
+		lblCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCPFProfessor.setBounds(21, 11, 79, 19);
+		tabAtualizarProfessor.add(lblCPFProfessor);
+		
+		tfCPFProfessor = new JTextField();
+		tfCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfCPFProfessor.setBounds(90, 12, 197, 20);
+		tabAtualizarProfessor.add(tfCPFProfessor);
+		tfCPFProfessor.setColumns(10);
+		
+		tfNomeProfessor = new JTextField();
+		tfNomeProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfNomeProfessor.setColumns(10);
+		tfNomeProfessor.setBounds(90, 182, 197, 20);
+		tabAtualizarProfessor.add(tfNomeProfessor);
+		
+		tfAreaProfessor = new JTextField();
+		tfAreaProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfAreaProfessor.setBounds(90, 153, 197, 20);
+		tabAtualizarProfessor.add(tfAreaProfessor);
+		tfAreaProfessor.setColumns(10);
+		
+		tfPontosProfessor = new JTextField();
+		tfPontosProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfPontosProfessor.setColumns(10);
+		tfPontosProfessor.setBounds(90, 182, 197, 20);
+		tabAtualizarProfessor.add(tfPontosProfessor);
+		
+		JButton btnAtualizarProfessor = new JButton("Atualizar");
+		btnAtualizarProfessor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAtualizarProfessor.setBounds(300, 181, 89, 23);
+		tabAtualizarProfessor.add(btnAtualizarProfessor);
+		btnAtualizarProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCPFProfessor.setBounds(21, 11, 79, 19);
+		
+		JButton btnBuscarProfessor = new JButton("Buscar");
+		btnBuscarProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBuscarProfessor.setBounds(300, 11, 89, 23);
+		tabAtualizarProfessor.add(btnBuscarProfessor);
+		
+		JTextArea taProfessorLista = new JTextArea();
+		taProfessorLista.setBounds(21, 48, 267, 46);
+		tabAtualizarProfessor.add(taProfessorLista);
+		
+		JLabel lblNome = new JLabel("Nome");
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNome.setBounds(21, 154, 79, 19);
+		tabAtualizarProfessor.add(lblNome);
+		
+		JLabel lblArea = new JLabel("Area");
+		lblArea.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblArea.setBounds(21, 183, 79, 19);
+		tabAtualizarProfessor.add(lblArea);
+		
+		
+// Aba Deletar
+		
 		JPanel tabDeletarProfessor = new JPanel();
 		tabbedPane.addTab("Deletar", null, tabDeletarProfessor, "Deletar Professor");
 		tabDeletarProfessor.setLayout(null);
