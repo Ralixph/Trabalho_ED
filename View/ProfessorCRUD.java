@@ -189,7 +189,7 @@ public class ProfessorCRUD extends JFrame {
 		lblPontos.setBounds(21, 183, 79, 19);
 		tabAtualizarProfessor.add(lblPontos);
 		
-		// ===========================================================================
+// Aba Ler
 		
 		JPanel tabLerProfessor = new JPanel();
 		tabbedPane.addTab("Ler", null, tabLerProfessor, "Ler Professor");
@@ -204,7 +204,7 @@ public class ProfessorCRUD extends JFrame {
 		textArea.setBounds(10, 12, 319, 191);
 		tabLerProfessor.add(textArea);
 		
-		// ===========================================================================
+// Aba Deletar
 		
 		JPanel tabDeletarProfessor = new JPanel();
 		tabbedPane.addTab("Deletar", null, tabDeletarProfessor, "Deletar Professor");
