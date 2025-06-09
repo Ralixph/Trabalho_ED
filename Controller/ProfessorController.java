@@ -116,7 +116,7 @@ public class ProfessorController implements ActionListener, IProcura{
 					//Professor professor = 
 					//new Professor(CPFProfessor, nomeProfessor, areaProfessor, pontosProfessor);
 				}	
-				buffer .close();
+				buffer.close();
 				isr.close();
 				fis.close();
 			}
