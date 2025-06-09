@@ -18,6 +18,8 @@ public class ProfessorCRUD extends JFrame {
 	private JPanel contentPane;
 	private JTextField tfCPFProfessor;
 	private JTextField tfNomeProfessor;
+	private JTextField tfAreaProfessor;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -55,22 +57,13 @@ public class ProfessorCRUD extends JFrame {
 		tabbedPane.addTab("Criar", null, tabCriarProfessor, "Criar Professor");
 		tabCriarProfessor.setLayout(null);
 		
-		JButton btnAtualizarProfessor = new JButton("Atualizar");
-		btnAtualizarProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnAtualizarProfessor.setBounds(36, 116, 89, 23);
-		tabCriarProfessor.add(btnAtualizarProfessor);
-		
-		JButton btnLerProfessor = new JButton("Ler");
-		btnLerProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnLerProfessor.setBounds(252, 118, 89, 23);
-		tabCriarProfessor.add(btnLerProfessor);
-		
 		JLabel lblCPFProfessor = new JLabel("CPF");
 		lblCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCPFProfessor.setBounds(21, 11, 79, 19);
 		tabCriarProfessor.add(lblCPFProfessor);
 		
 		tfCPFProfessor = new JTextField();
+		tfCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfCPFProfessor.setBounds(90, 12, 197, 20);
 		tabCriarProfessor.add(tfCPFProfessor);
 		tfCPFProfessor.setColumns(10);
@@ -85,6 +78,33 @@ public class ProfessorCRUD extends JFrame {
 		tfNomeProfessor.setColumns(10);
 		tfNomeProfessor.setBounds(90, 42, 197, 20);
 		tabCriarProfessor.add(tfNomeProfessor);
+		
+		JLabel lblAreaProfessor = new JLabel("Area");
+		lblAreaProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAreaProfessor.setBounds(21, 70, 79, 19);
+		tabCriarProfessor.add(lblAreaProfessor);
+		
+		tfAreaProfessor = new JTextField();
+		tfAreaProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfAreaProfessor.setBounds(90, 71, 197, 20);
+		tabCriarProfessor.add(tfAreaProfessor);
+		tfAreaProfessor.setColumns(10);
+		
+		JLabel lblPontosProfessor = new JLabel("Pontos");
+		lblPontosProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPontosProfessor.setBounds(21, 99, 79, 19);
+		tabCriarProfessor.add(lblPontosProfessor);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textField.setColumns(10);
+		textField.setBounds(90, 100, 197, 20);
+		tabCriarProfessor.add(textField);
+		
+		JButton btnCriarProfessor = new JButton("Criar");
+		btnCriarProfessor.setBounds(300, 166, 89, 23);
+		tabCriarProfessor.add(btnCriarProfessor);
+		btnCriarProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JPanel tabDeletarProfessor = new JPanel();
 		tabbedPane.addTab("Deletar", null, tabDeletarProfessor, "Deletar Professor");
