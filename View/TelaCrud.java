@@ -32,7 +32,7 @@ public class TelaCrud extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Criando a tela.
 	 */
 	public TelaCrud() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
