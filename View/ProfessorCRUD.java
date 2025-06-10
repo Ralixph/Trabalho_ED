@@ -167,10 +167,10 @@ public class ProfessorCRUD extends JFrame {
 		lblCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCPFProfessor.setBounds(21, 11, 79, 19);
 		
-		JButton btnBuscarProfessor = new JButton("Buscar");
-		btnBuscarProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnBuscarProfessor.setBounds(300, 11, 89, 23);
-		tabAtualizarProfessor.add(btnBuscarProfessor);
+		JButton btnBuscarATProfessor = new JButton("Buscar_AT");
+		btnBuscarATProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBuscarATProfessor.setBounds(300, 11, 89, 23);
+		tabAtualizarProfessor.add(btnBuscarATProfessor);
 		
 		JTextArea taProfessorListaAtualizar = new JTextArea();
 		taProfessorListaAtualizar.setBounds(21, 48, 267, 46);
@@ -229,10 +229,10 @@ public class ProfessorCRUD extends JFrame {
 		lblCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCPFProfessor.setBounds(21, 11, 79, 19);
 		
-		btnBuscarProfessor = new JButton("Buscar");
-		btnBuscarProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnBuscarProfessor.setBounds(300, 11, 89, 23);
-		tabDeletarProfessor.add(btnBuscarProfessor);
+		JButton btnBuscarDLProfessor = new JButton("Buscar_DL");
+		btnBuscarDLProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBuscarDLProfessor.setBounds(300, 11, 89, 23);
+		tabDeletarProfessor.add(btnBuscarDLProfessor);
 		
 		JTextArea taProfessorListaDeletar = new JTextArea();
 		taProfessorListaDeletar.setBounds(21, 48, 368, 120);
@@ -246,7 +246,9 @@ public class ProfessorCRUD extends JFrame {
 		
 		btnCriarProfessor.addActionListener(pCont);
 
-		btnBuscarProfessor.addActionListener(pCont);
+		btnBuscarATProfessor.addActionListener(pCont);
+		
+		btnBuscarDLProfessor.addActionListener(pCont);
 
 		btnDeletarProfessor.addActionListener(pCont);
 

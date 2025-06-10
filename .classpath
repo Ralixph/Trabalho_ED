@@ -7,5 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="lib" path="biblioteca/Arquivos_simples.jar"/>
+	<classpathentry kind="lib" path="modelLista/ListaGenerica.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

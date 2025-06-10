@@ -15,8 +15,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import Interface.IProcura;
-
 import model.Professor;
+import model.ListaGenerica;
 
 public class ProfessorController implements ActionListener, IProcura {
 
@@ -24,24 +24,21 @@ public class ProfessorController implements ActionListener, IProcura {
 	private JTextField tfNomeProfessorCriar;
 	private JTextField tfAreaProfessorCriar;
 	private JTextField tfPontosProfessorCriar;
-	
+
 	private JTextField tfCPFProfessorBuscarAtualizar;
 	private JTextField tfNomeProfessorAtualizar;
 	private JTextField tfAreaProfessorAtualizar;
 	private JTextField tfPontosProfessorAtualizar;
 	private JTextArea taProfessorListaAtualizar;
-	
-	private JTextField tfCPFProfessorBuscar; 
+
 	private JTextArea taProfessorListaLer;
 	private JTextArea taProfessorListaDeletar;
 	private JTextField tfCPFProfessorBuscarDeletar;
-	
-	
 
 	public ProfessorController(JTextField tfCPFProfessorCriar, JTextField tfNomeProfessorCriar,
-			JTextField tfAreaProfessorCriar, JTextField tfPontosProfessorCriar, JTextField tfCPFProfessorAtualizar,
+			JTextField tfAreaProfessorCriar, JTextField tfPontosProfessorCriar, JTextField tfCPFProfessorBuscarAtualizar,
 			JTextField tfNomeProfessorAtualizar, JTextField tfAreaProfessorAtualizar,
-			JTextField tfPontosProfessorAtualizar, JTextArea taProfessorListaAtualizar, JTextField tfCPFProfessorBuscar,
+			JTextField tfPontosProfessorAtualizar, JTextArea taProfessorListaAtualizar, JTextField tfCPFProfessorBuscarDeletar,
 			JTextArea taProfessorListaLer, JTextArea taProfessorListaDeletar) {
 		super();
 		this.tfCPFProfessorCriar = tfCPFProfessorCriar;
@@ -76,9 +73,16 @@ public class ProfessorController implements ActionListener, IProcura {
 				e1.printStackTrace();
 			}
 		}
-		if (cmd.equals("Buscar")) {
+		if (cmd.equals("Buscar_AT")) {
 			try {
-				Buscar();
+				BuscarAtualizar();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		if (cmd.equals("Buscar_DL")) {
+			try {
+				BuscarDeletar();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -86,7 +90,7 @@ public class ProfessorController implements ActionListener, IProcura {
 		if (cmd.equals("Atualizar")) {
 			try {
 				Atualizar();
-			} catch (IOException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
@@ -136,7 +140,7 @@ public class ProfessorController implements ActionListener, IProcura {
 
 	@Override
 	public void Deletar() throws IOException {
-		double CPF = Double.parseDouble(tfCPFProfessor.getText());
+		double CPF = Double.parseDouble(tfCPFProfessorBuscarDeletar.getText());
 
 		DeletarProfessor(CPF);
 	}
@@ -166,17 +170,33 @@ public class ProfessorController implements ActionListener, IProcura {
 		}
 	}
 
-	public void Buscar() throws IOException {
+	public void BuscarAtualizar() throws IOException {
 		Professor professor = new Professor();
-		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessor.getText()));
+		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorBuscarAtualizar.getText()));
 
 		professor = buscaProfessor(professor);
-		tfCPFProfessor.setText("");
+		tfCPFProfessorBuscarAtualizar.setText("");
 		if (professor.getNomeProfessor() != null) {
-			taProfessorLista.setText("CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor()
+			taProfessorListaAtualizar.setText("CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor()
 					+ "  - Area: " + professor.getAreaProfessor() + " - Pontos: " + professor.getPontosProfessor());
 		} else {
-			taProfessorLista.setText("Cliente nao encontrado");
+			taProfessorListaAtualizar.setText("Cliente nao encontrado");
+		}
+	}
+	
+	
+	
+	public void BuscarDeletar() throws IOException {
+		Professor professor = new Professor();
+		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorBuscarDeletar.getText()));
+
+		professor = buscaProfessor(professor);
+		tfCPFProfessorBuscarDeletar.setText("");
+		if (professor.getNomeProfessor() != null) {
+			taProfessorListaDeletar.setText("CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor()
+					+ "  - Area: " + professor.getAreaProfessor() + " - Pontos: " + professor.getPontosProfessor());
+		} else {
+			taProfessorListaDeletar.setText("Cliente nao encontrado");
 		}
 	}
 
@@ -191,7 +211,7 @@ public class ProfessorController implements ActionListener, IProcura {
 			String linha = buffer.readLine();
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				if (vetLinha[0].equals(professor.getCPFProfessor())) {
+				if (Double.parseDouble(vetLinha[0]) == professor.getCPFProfessor()) {
 					professor.setNomeProfessor(vetLinha[1]);
 					professor.setAreaProfessor(vetLinha[2]);
 					professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
@@ -206,39 +226,58 @@ public class ProfessorController implements ActionListener, IProcura {
 		return professor;
 	}
 
-	public void Atualizar() throws IOException {
+	public void Atualizar() throws Exception {
 		Professor professor = new Professor();
-		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorAtualizar.getText()));
+		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorBuscarAtualizar.getText()));
 		professor.setNomeProfessor(tfNomeProfessorAtualizar.getText());
 		professor.setAreaProfessor(tfAreaProfessorAtualizar.getText());
 		professor.setPontosProfessor(Integer.parseInt(tfPontosProfessorAtualizar.getText()));
 
 		AtualizarProfessor(professor.toString());
 	}
+	
+	
 
-	private void AtualizarProfessor(String professor) throws IOException {
+	private void AtualizarProfessor(String prof) throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arq = new File(path, "professor.csv");
+		ListaGenerica<Professor> lista = new ListaGenerica<>();
 
-		String[] vetProfessor = professor.split(";");
+		String[] vetProfessor = prof.split(";");
+		double CPF = Double.parseDouble(vetProfessor[0]);
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
 			InputStreamReader isr = new InputStreamReader(fis);
 			BufferedReader buffer = new BufferedReader(isr);
+			boolean existe = false;
+			if (arq.exists()) {
+				existe = true;
+			}
 			String linha = buffer.readLine();
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				if (vetLinha[0].equals(vetProfessor[0])) {
-					vetLinha[1] = vetProfessor[1];
-					vetLinha[2] = vetProfessor[2];
-					vetLinha[3] = vetProfessor[3];
-					break;
-				}
+				Professor professor = new Professor(Double.parseDouble(vetLinha[0]), vetLinha[1], 
+						vetLinha[2], Integer.parseInt(vetLinha[3]));
+				lista.addFirst(professor);
 				linha = buffer.readLine();
+			}	
+				
+			int tamanhoLista = lista.size();
+			
+			for (int i = 0; i < tamanhoLista; i++) {
+				Professor professor = lista.get(i);
+				if (professor.getCPFProfessor() == CPF) {
+					professor.setNomeProfessor(vetProfessor[1]);
+					professor.setAreaProfessor(vetProfessor[2]);
+					professor.setPontosProfessor(Integer.parseInt(vetProfessor[3]));
+				}
+				FileWriter fw = new FileWriter(arq, existe);
+					PrintWriter pw = new PrintWriter(fw);
+					pw.write(professor.toString() + "\r\n");
+					pw.flush();
+					pw.close();
+					fw.close();
 			}
-			buffer.close();
-			isr.close();
-			fis.close();
 		}
 	}
 
@@ -254,7 +293,7 @@ public class ProfessorController implements ActionListener, IProcura {
 			String linha = buffer.readLine();
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				taProfessorLista.setText("CPF: " + vetLinha[0] + " - Nome: " + vetLinha[1] + "  - Area: " + vetLinha[2]
+				taProfessorListaLer.setText("CPF: " + vetLinha[0] + " - Nome: " + vetLinha[1] + "  - Area: " + vetLinha[2]
 						+ " - Pontos: " + vetLinha[3]);
 				linha = buffer.readLine();
 			}
@@ -262,5 +301,11 @@ public class ProfessorController implements ActionListener, IProcura {
 			isr.close();
 			fis.close();
 		}
+	}
+
+	@Override
+	public void Buscar() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 }
