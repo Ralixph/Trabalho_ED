@@ -19,7 +19,10 @@ public class CursoCRUD extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField tfCodigoCurso;
+	
+	private JTextField tfCodigoCursoCriar;
+	private JTextField tfCodigoCursoAtualizar;
+	private JTextField tfCodigoCursoDeletar;
 	private JTextField tfNomeCurso;
 	private JTextField tfAreaCurso;
 	private JTextField textField;
@@ -69,16 +72,16 @@ public class CursoCRUD extends JFrame {
 		lblCodigoCurso.setBounds(21, 11, 79, 19);
 		tabCriarCurso.add(lblCodigoCurso);
 		
-		tfCodigoCurso = new JTextField();
-		tfCodigoCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfCodigoCurso.setBounds(90, 12, 197, 20);
-		tabCriarCurso.add(tfCodigoCurso);
-		tfCodigoCurso.setColumns(10);
+		tfCodigoCursoCriar = new JTextField();
+		tfCodigoCursoCriar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfCodigoCursoCriar.setBounds(90, 12, 197, 20);
+		tabCriarCurso.add(tfCodigoCursoCriar);
+		tfCodigoCursoCriar.setColumns(10);
 		
-		JLabel lblNomeProfessor = new JLabel("Nome");
-		lblNomeProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNomeProfessor.setBounds(21, 41, 79, 19);
-		tabCriarCurso.add(lblNomeProfessor);
+		JLabel lblNomeCurso = new JLabel("Nome");
+		lblNomeCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNomeCurso.setBounds(21, 41, 79, 19);
+		tabCriarCurso.add(lblNomeCurso);
 		
 		tfNomeCurso = new JTextField();
 		tfNomeCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -86,10 +89,10 @@ public class CursoCRUD extends JFrame {
 		tfNomeCurso.setBounds(90, 42, 197, 20);
 		tabCriarCurso.add(tfNomeCurso);
 		
-		JLabel lblAreaProfessor = new JLabel("Area");
-		lblAreaProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAreaProfessor.setBounds(21, 70, 79, 19);
-		tabCriarCurso.add(lblAreaProfessor);
+		JLabel lblAreaCurso = new JLabel("Area");
+		lblAreaCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAreaCurso.setBounds(21, 70, 79, 19);
+		tabCriarCurso.add(lblAreaCurso);
 		
 		tfAreaCurso = new JTextField();
 		tfAreaCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -117,11 +120,11 @@ public class CursoCRUD extends JFrame {
 		tabAtualizarCurso.add(lblCodigoCurso);
 		
 		
-		tfCodigoCurso = new JTextField();
-		tfCodigoCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfCodigoCurso.setBounds(90, 12, 197, 20);
-		tabAtualizarCurso.add(tfCodigoCurso);
-		tfCodigoCurso.setColumns(10);
+		tfCodigoCursoAtualizar = new JTextField();
+		tfCodigoCursoAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfCodigoCursoAtualizar.setBounds(90, 12, 197, 20);
+		tabAtualizarCurso.add(tfCodigoCursoAtualizar);
+		tfCodigoCursoAtualizar.setColumns(10);
 		
 		tfNomeCurso = new JTextField();
 		tfNomeCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -195,11 +198,11 @@ public class CursoCRUD extends JFrame {
 		lblCodigoCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tabDeletarCurso.add(lblCodigoCurso);
 		
-		tfCodigoCurso = new JTextField();
-		tfCodigoCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfCodigoCurso.setBounds(90, 12, 197, 20);
-		tabDeletarCurso.add(tfCodigoCurso);
-		tfCodigoCurso.setColumns(10);
+		tfCodigoCursoDeletar = new JTextField();
+		tfCodigoCursoDeletar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfCodigoCursoDeletar.setBounds(90, 12, 197, 20);
+		tabDeletarCurso.add(tfCodigoCursoDeletar);
+		tfCodigoCursoDeletar.setColumns(10);
 		
 		JButton btnDeletarProfessor = new JButton("Deletar");
 		btnDeletarProfessor.setBounds(161, 179, 89, 23);
