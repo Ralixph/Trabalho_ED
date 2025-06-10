@@ -6,10 +6,6 @@ public class Curso {
 	private String nomeCurso;
 	private String areaCurso;
 
-	@Override
-	public String toString() {
-		return codigoCurso + ";" + nomeCurso + ";" + areaCurso;
-	}
 
 	public int getCodigoCurso() {
 		return codigoCurso;
@@ -35,5 +31,9 @@ public class Curso {
 		this.areaCurso = areaCurso;
 	}
 	
+	@Override
+	public String toString() {
+		return codigoCurso + "; " + nomeCurso + "; " + areaCurso;
+	}
 	
 }

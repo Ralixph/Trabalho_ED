@@ -241,8 +241,7 @@ public class ProfessorCRUD extends JFrame {
 		ProfessorController pCont = new ProfessorController(
 			tfCPFProfessorCriar, tfNomeProfessorCriar, tfAreaProfessorCriar, tfPontosProfessorCriar, 
 			tfCPFProfessorBuscarAtualizar, tfNomeProfessorAtualizar, tfAreaProfessorAtualizar, tfPontosProfessorAtualizar, taProfessorListaAtualizar, 
-			tfCPFProfessorBuscarDeletar,
-			taProfessorListaDeletar, taProfessorListaLer
+			tfCPFProfessorBuscarDeletar, taProfessorListaDeletar, taProfessorListaLer
 		);
 		
 		btnCriarProfessor.addActionListener(pCont);

@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Controller.CursoController;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
@@ -16,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class CursoCRUD extends JFrame {
-
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
@@ -35,8 +38,6 @@ public class CursoCRUD extends JFrame {
 	private JTextField tfAreaCursoLer;
 	private JTextField tfAreaCursoDeletar;
 	
-	private JTextField textField;
-	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -229,5 +230,22 @@ public class CursoCRUD extends JFrame {
 		taCursoLista = new JTextArea();
 		taCursoLista.setBounds(21, 48, 368, 120);
 		tabDeletarCurso.add(taCursoLista);	
+		
+		CursoController cc = new CursoController(tfAreaCursoAtualizar, tfAreaCursoCriar, tfAreaCursoDeletar, tfAreaCursoLer, 
+				tfCodigoCursoAtualizar, tfCodigoCursoCriar, tfCodigoCursoLer, tfCodigoCursoDeletar, 
+				tfNomeCursoCriar, tfNomeCursoAtualizar, tfNomeCursoLer, tfNomeCursoDeletar);
+		
+		
+		btnCriarCurso.addActionListener(cc);
+
+		btnBuscarCurso.addActionListener(cc);
+
+		btnBuscarCurso.addActionListener(cc);
+
+		btnBuscarCurso.addActionListener(cc);
+		
+		btnBuscarCurso.addActionListener(cc);
+		
+		
 	}
 }
