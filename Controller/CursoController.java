@@ -28,13 +28,13 @@ public class CursoController implements ActionListener, IProcura {
 	private JTextField tfNomeCursoAtualizar;
 	private JTextField tfAreaCursoAtualizar;
 	private JTextField tfPontosProfessorAtualizar;
-	private JTextArea taProfessorListaAtualizar;
+	private JTextArea taCursoListaAtualizar;
 	
-	private JTextField tfCPFProfessorBuscar; 
-	private JTextArea taProfessorListaLer;
-	private JTextArea taProfessorListaDeletar;
-	private JTextField tfCPFProfessorBuscarDeletar;
+	private JTextArea taCursoListaLer;
+	private JTextArea taCursoListaDeletar;
+	private JTextField tfCodigoCursoBuscarDeletar;
 	
+	private JTextField tfCodigoCursoDeletar;
 	
 
 	public CursoController(JTextField tfAreaCursoAtualizar,JTextField tfAreaCursoCriar, 
@@ -46,17 +46,22 @@ public class CursoController implements ActionListener, IProcura {
 			JTextField tfNomeCursoCriar, JTextField tfNomeCursoAtualizar, 
 			JTextField tfNomeCursoLer, JTextField tfNomeCursoDeletar) {
 		super();
+		
 		this.tfCodigoCursoCriar = tfCodigoCursoCriar;
 		this.tfNomeCursoCriar = tfNomeCursoCriar;
 		this.tfAreaCursoCriar = tfAreaCursoCriar;
+		
 		this.tfCodigoCursoBuscarAtualizar = tfCodigoCursoBuscarAtualizar;
 		this.tfNomeCursoAtualizar = tfNomeCursoAtualizar;
 		this.tfAreaCursoAtualizar = tfAreaCursoAtualizar;
+		this.taCursoListaAtualizar = taCursoListaAtualizar;
 		
-		this.taProfessorListaAtualizar = taProfessorListaAtualizar;
-		this.taProfessorListaLer = taProfessorListaLer;
-		this.taProfessorListaDeletar = taProfessorListaDeletar;
-		this.tfCPFProfessorBuscarDeletar = tfCPFProfessorBuscarDeletar;
+		this.taCursoListaLer = taCursoListaLer;
+		
+		this.taCursoListaDeletar = taCursoListaDeletar;
+		this.tfCodigoCursoDeletar = tfCodigoCursoDeletar;
+		this.tfCodigoCursoBuscarDeletar = tfCodigoCursoBuscarDeletar;
+		
 	}
 
 	@Override
@@ -77,9 +82,16 @@ public class CursoController implements ActionListener, IProcura {
 				e1.printStackTrace();
 			}
 		}
-		if (cmd.equals("Buscar")) {
+		if (cmd.equals("Buscar_AT")) {
 			try {
-				Buscar();
+				BuscarAtualizar();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		if (cmd.equals("Buscar_DL")) {
+			try {
+				BuscarDeletar();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -87,7 +99,7 @@ public class CursoController implements ActionListener, IProcura {
 		if (cmd.equals("Atualizar")) {
 			try {
 				Atualizar();
-			} catch (IOException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
@@ -98,6 +110,59 @@ public class CursoController implements ActionListener, IProcura {
 				e1.printStackTrace();
 			}
 		}
+	}
+	
+	public void BuscarAtualizar() throws IOException {
+		Curso curso = new Curso();
+		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoBuscarAtualizar.getText()));
+
+		curso = buscaCurso(curso);
+		tfCodigoCursoBuscarAtualizar.setText("");
+		if (curso.getNomeCurso() != null) {
+			taCursoListaAtualizar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
+					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
+		} else {
+			taCursoListaAtualizar.setText("Cliente nao encontrado");
+		}
+	}
+	
+	public void BuscarDeletar() throws IOException {
+		Curso curso = new Curso();
+		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoBuscarDeletar.getText()));
+
+		curso = buscaCurso(curso);
+		tfCodigoCursoBuscarDeletar.setText("");
+		if (curso.getNomeCurso() != null) {
+			taCursoListaDeletar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
+					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
+		} else {
+			taCursoListaDeletar.setText("Curso nao encontrado");
+		}
+	}
+	
+	private Curso buscaCurso(Curso curso) throws IOException {
+		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+		File arq = new File(path, "curso.csv");
+
+		if (arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			String linha = buffer.readLine();
+			while (linha != null) {
+				String[] vetLinha = linha.split(";");
+				if (Double.parseDouble(vetLinha[0]) == curso.getCodigoCurso()) {
+					curso.setNomeCurso(vetLinha[1]);
+					curso.setAreaCurso(vetLinha[2]);
+					break;
+				}
+				linha = buffer.readLine();
+			}
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
+		return curso;
 	}
 
 	@Override
@@ -137,14 +202,15 @@ public class CursoController implements ActionListener, IProcura {
 
 	@Override
 	public void Deletar() throws IOException {
-		double CPF = Double.parseDouble(tfCPFProfessor.getText());
+		
+		int Codigo = Integer.parseInt(tfCodigoCursoDeletar.getText());
 
-		DeletarProfessor(CPF);
+		DeletarCurso(Codigo);
 	}
 
-	private void DeletarProfessor(Double CPF) throws IOException {
+	private void DeletarCurso(int cod) throws IOException {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "professor.csv");
+		File arq = new File(path, "curso.csv");
 
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
@@ -153,7 +219,7 @@ public class CursoController implements ActionListener, IProcura {
 			String linha = buffer.readLine();
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				if (vetLinha[0].equals(CPF)) {
+				if (vetLinha[0].equals(cod)) {
 					vetLinha[1] = null;
 					vetLinha[2] = null;
 					vetLinha[3] = null;
@@ -165,46 +231,6 @@ public class CursoController implements ActionListener, IProcura {
 			isr.close();
 			fis.close();
 		}
-	}
-
-	public void Buscar() throws IOException {
-		Professor professor = new Professor();
-		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessor.getText()));
-
-		professor = buscaProfessor(professor);
-		tfCPFProfessor.setText("");
-		if (professor.getNomeProfessor() != null) {
-			taProfessorLista.setText("CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor()
-					+ "  - Area: " + professor.getAreaProfessor() + " - Pontos: " + professor.getPontosProfessor());
-		} else {
-			taProfessorLista.setText("Cliente nao encontrado");
-		}
-	}
-
-	private Professor buscaProfessor(Professor professor) throws IOException {
-		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "professor.csv");
-
-		if (arq.exists() && arq.isFile()) {
-			FileInputStream fis = new FileInputStream(arq);
-			InputStreamReader isr = new InputStreamReader(fis);
-			BufferedReader buffer = new BufferedReader(isr);
-			String linha = buffer.readLine();
-			while (linha != null) {
-				String[] vetLinha = linha.split(";");
-				if (vetLinha[0].equals(professor.getCPFProfessor())) {
-					professor.setNomeProfessor(vetLinha[1]);
-					professor.setAreaProfessor(vetLinha[2]);
-					professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
-					break;
-				}
-				linha = buffer.readLine();
-			}
-			buffer.close();
-			isr.close();
-			fis.close();
-		}
-		return professor;
 	}
 
 	public void Atualizar() throws IOException {
@@ -263,6 +289,12 @@ public class CursoController implements ActionListener, IProcura {
 			isr.close();
 			fis.close();
 		}
+	}
+
+	@Override
+	public void Buscar() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

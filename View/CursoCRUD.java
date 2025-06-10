@@ -184,7 +184,7 @@ public class CursoCRUD extends JFrame {
 // Aba Ler
 		
 		JPanel tabLerCurso = new JPanel();
-		tabbedPane.addTab("Ler", null, tabLerCurso, "Ler Professor");
+		tabbedPane.addTab("Ler", null, tabLerCurso, "Ler Curso");
 		tabLerCurso.setLayout(null);
 		
 		
@@ -201,7 +201,7 @@ public class CursoCRUD extends JFrame {
 // Aba Deletar
 		
 		JPanel tabDeletarCurso = new JPanel();
-		tabbedPane.addTab("Deletar", null, tabDeletarCurso, "Deletar Professor");
+		tabbedPane.addTab("Deletar", null, tabDeletarCurso, "Deletar Curso");
 		tabDeletarCurso.setLayout(null);
 		
 		
@@ -215,10 +215,10 @@ public class CursoCRUD extends JFrame {
 		tabDeletarCurso.add(tfCodigoCursoDeletar);
 		tfCodigoCursoDeletar.setColumns(10);
 		
-		JButton btnDeletarProfessor = new JButton("Deletar");
-		btnDeletarProfessor.setBounds(161, 179, 89, 23);
-		tabDeletarCurso.add(btnDeletarProfessor);
-		btnDeletarProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JButton btnDeletarCurso = new JButton("Deletar");
+		btnDeletarCurso.setBounds(161, 179, 89, 23);
+		tabDeletarCurso.add(btnDeletarCurso);
+		btnDeletarCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCodigoCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCodigoCurso.setBounds(21, 11, 79, 19);
 		
@@ -237,8 +237,8 @@ public class CursoCRUD extends JFrame {
 		
 		
 		btnCriarCurso.addActionListener(cc);
-
-		btnBuscarCurso.addActionListener(cc);
+		
+		btnDeletarCurso.addActionListener(cc);
 
 		btnBuscarCurso.addActionListener(cc);
 
