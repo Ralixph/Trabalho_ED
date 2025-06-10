@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Controller.ProfessorController;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
@@ -21,7 +24,6 @@ public class ProfessorCRUD extends JFrame {
 	private JTextField tfCPFProfessor;
 	private JTextField tfNomeProfessor;
 	private JTextField tfAreaProfessor;
-	private JTextField textField;
 	private JTextField tfPontosProfessor;
 
 	/**
@@ -67,44 +69,44 @@ public class ProfessorCRUD extends JFrame {
 		lblCPFProfessor.setBounds(21, 11, 79, 19);
 		tabCriarProfessor.add(lblCPFProfessor);
 		
-		tfCPFProfessor = new JTextField();
-		tfCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfCPFProfessor.setBounds(90, 12, 197, 20);
-		tabCriarProfessor.add(tfCPFProfessor);
-		tfCPFProfessor.setColumns(10);
+		JTextField tfCPFProfessorCriar = new JTextField();
+		tfCPFProfessorCriar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfCPFProfessorCriar.setBounds(90, 12, 197, 20);
+		tabCriarProfessor.add(tfCPFProfessorCriar);
+		tfCPFProfessorCriar.setColumns(10);
 		
 		JLabel lblNomeProfessor = new JLabel("Nome");
 		lblNomeProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNomeProfessor.setBounds(21, 41, 79, 19);
 		tabCriarProfessor.add(lblNomeProfessor);
 		
-		tfNomeProfessor = new JTextField();
-		tfNomeProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfNomeProfessor.setColumns(10);
-		tfNomeProfessor.setBounds(90, 42, 197, 20);
-		tabCriarProfessor.add(tfNomeProfessor);
+		JTextField tfNomeProfessorCriar = new JTextField();
+		tfNomeProfessorCriar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfNomeProfessorCriar.setColumns(10);
+		tfNomeProfessorCriar.setBounds(90, 42, 197, 20);
+		tabCriarProfessor.add(tfNomeProfessorCriar);
 		
 		JLabel lblAreaProfessor = new JLabel("Area");
 		lblAreaProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblAreaProfessor.setBounds(21, 70, 79, 19);
 		tabCriarProfessor.add(lblAreaProfessor);
 		
-		tfAreaProfessor = new JTextField();
-		tfAreaProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfAreaProfessor.setBounds(90, 71, 197, 20);
-		tabCriarProfessor.add(tfAreaProfessor);
-		tfAreaProfessor.setColumns(10);
+		JTextField tfAreaProfessorCriar = new JTextField();
+		tfAreaProfessorCriar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfAreaProfessorCriar.setBounds(90, 71, 197, 20);
+		tabCriarProfessor.add(tfAreaProfessorCriar);
+		tfAreaProfessorCriar.setColumns(10);
 		
 		JLabel lblPontosProfessor = new JLabel("Pontos");
 		lblPontosProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblPontosProfessor.setBounds(21, 99, 79, 19);
 		tabCriarProfessor.add(lblPontosProfessor);
 		
-		tfPontosProfessor = new JTextField();
-		tfPontosProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfPontosProfessor.setColumns(10);
-		tfPontosProfessor.setBounds(90, 100, 197, 20);
-		tabCriarProfessor.add(tfPontosProfessor);
+		JTextField tfPontosProfessorCriar = new JTextField();
+		tfPontosProfessorCriar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfPontosProfessorCriar.setColumns(10);
+		tfPontosProfessorCriar.setBounds(90, 100, 197, 20);
+		tabCriarProfessor.add(tfPontosProfessorCriar);
 		
 		JButton btnCriarProfessor = new JButton("Criar");
 		btnCriarProfessor.setBounds(300, 166, 89, 23);
@@ -130,29 +132,29 @@ public class ProfessorCRUD extends JFrame {
 		lblCPFProfessor.setBounds(21, 11, 79, 19);
 		tabAtualizarProfessor.add(lblCPFProfessor);
 		
-		tfCPFProfessor = new JTextField();
-		tfCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfCPFProfessor.setBounds(90, 12, 197, 20);
-		tabAtualizarProfessor.add(tfCPFProfessor);
-		tfCPFProfessor.setColumns(10);
+		JTextField tfCPFProfessorAtualizar = new JTextField();
+		tfCPFProfessorAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfCPFProfessorAtualizar.setBounds(90, 12, 197, 20);
+		tabAtualizarProfessor.add(tfCPFProfessorAtualizar);
+		tfCPFProfessorAtualizar.setColumns(10);
 		
-		tfNomeProfessor = new JTextField();
-		tfNomeProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfNomeProfessor.setColumns(10);
-		tfNomeProfessor.setBounds(90, 124, 197, 20);
-		tabAtualizarProfessor.add(tfNomeProfessor);
+		JTextField tfNomeProfessorAtualizar = new JTextField();
+		tfNomeProfessorAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfNomeProfessorAtualizar.setColumns(10);
+		tfNomeProfessorAtualizar.setBounds(90, 124, 197, 20);
+		tabAtualizarProfessor.add(tfNomeProfessorAtualizar);
 		
-		tfAreaProfessor = new JTextField();
-		tfAreaProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfAreaProfessor.setBounds(90, 153, 197, 20);
-		tabAtualizarProfessor.add(tfAreaProfessor);
-		tfAreaProfessor.setColumns(10);
+		JTextField tfAreaProfessorAtualizar = new JTextField();
+		tfAreaProfessorAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfAreaProfessorAtualizar.setBounds(90, 153, 197, 20);
+		tabAtualizarProfessor.add(tfAreaProfessorAtualizar);
+		tfAreaProfessorAtualizar.setColumns(10);
 		
-		tfPontosProfessor = new JTextField();
-		tfPontosProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfPontosProfessor.setColumns(10);
-		tfPontosProfessor.setBounds(90, 182, 197, 20);
-		tabAtualizarProfessor.add(tfPontosProfessor);
+		JTextField tfPontosProfessorAtualizar = new JTextField();
+		tfPontosProfessorAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfPontosProfessorAtualizar.setColumns(10);
+		tfPontosProfessorAtualizar.setBounds(90, 182, 197, 20);
+		tabAtualizarProfessor.add(tfPontosProfessorAtualizar);
 		
 		JButton btnAtualizarProfessor = new JButton("Atualizar");
 		btnAtualizarProfessor.addActionListener(new ActionListener() {
@@ -170,9 +172,9 @@ public class ProfessorCRUD extends JFrame {
 		btnBuscarProfessor.setBounds(300, 11, 89, 23);
 		tabAtualizarProfessor.add(btnBuscarProfessor);
 		
-		JTextArea taProfessorLista = new JTextArea();
-		taProfessorLista.setBounds(21, 48, 267, 46);
-		tabAtualizarProfessor.add(taProfessorLista);
+		JTextArea taProfessorListaAtualizar = new JTextArea();
+		taProfessorListaAtualizar.setBounds(21, 48, 267, 46);
+		tabAtualizarProfessor.add(taProfessorListaAtualizar);
 		
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -195,14 +197,14 @@ public class ProfessorCRUD extends JFrame {
 		tabbedPane.addTab("Ler", null, tabLerProfessor, "Ler Professor");
 		tabLerProfessor.setLayout(null);
 		
-		btnBuscarProfessor = new JButton("Ler");
-		btnBuscarProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnBuscarProfessor.setBounds(338, 11, 73, 23);
-		tabLerProfessor.add(btnBuscarProfessor);
+		JButton btnLerProfessor = new JButton("Ler");
+		btnLerProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnLerProfessor.setBounds(338, 11, 73, 23);
+		tabLerProfessor.add(btnLerProfessor);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 12, 319, 191);
-		tabLerProfessor.add(textArea);
+		JTextArea taProfessorListaLer = new JTextArea();
+		taProfessorListaLer.setBounds(10, 12, 319, 191);
+		tabLerProfessor.add(taProfessorListaLer);
 		
 // Aba Deletar
 		
@@ -214,11 +216,11 @@ public class ProfessorCRUD extends JFrame {
 		lblCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tabDeletarProfessor.add(lblCPFProfessor);
 		
-		tfCPFProfessor = new JTextField();
-		tfCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfCPFProfessor.setBounds(90, 12, 197, 20);
-		tabDeletarProfessor.add(tfCPFProfessor);
-		tfCPFProfessor.setColumns(10);
+		JTextField tfCPFProfessorBuscar = new JTextField();
+		tfCPFProfessorBuscar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfCPFProfessorBuscar.setBounds(90, 12, 197, 20);
+		tabDeletarProfessor.add(tfCPFProfessorBuscar);
+		tfCPFProfessorBuscar.setColumns(10);
 		
 		JButton btnDeletarProfessor = new JButton("Deletar");
 		btnDeletarProfessor.setBounds(161, 179, 89, 23);
@@ -232,9 +234,27 @@ public class ProfessorCRUD extends JFrame {
 		btnBuscarProfessor.setBounds(300, 11, 89, 23);
 		tabDeletarProfessor.add(btnBuscarProfessor);
 		
-		taProfessorLista = new JTextArea();
-		taProfessorLista.setBounds(21, 48, 368, 120);
-		tabDeletarProfessor.add(taProfessorLista);
+		JTextArea taProfessorListaDeletar = new JTextArea();
+		taProfessorListaDeletar.setBounds(21, 48, 368, 120);
+		tabDeletarProfessor.add(taProfessorListaDeletar);
+		
+		ProfessorController pCont = new ProfessorController(
+			tfCPFProfessorCriar, tfNomeProfessorCriar, tfAreaProfessorCriar, tfPontosProfessorCriar, 
+			tfCPFProfessorAtualizar, tfNomeProfessorAtualizar, tfAreaProfessorAtualizar, tfPontosProfessorAtualizar, taProfessorListaAtualizar, 
+			tfCPFProfessorBuscar, 
+			taProfessorListaLer,
+			taProfessorListaDeletar 
+		);
+		
+		btnCriarProfessor.addActionListener(pCont);
+
+		btnBuscarProfessor.addActionListener(pCont);
+
+		btnDeletarProfessor.addActionListener(pCont);
+
+		btnAtualizarProfessor.addActionListener(pCont);
+		
+		btnLerProfessor.addActionListener(pCont);
 		
 	}
 }
