@@ -167,7 +167,7 @@ public class ProfessorCRUD extends JFrame {
 		lblCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCPFProfessor.setBounds(21, 11, 79, 19);
 		
-		JButton btnBuscarProfessor = new JButton("Buscar");
+		JButton btnBuscarProfessor = new JButton("Buscar_AT");
 		btnBuscarProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnBuscarProfessor.setBounds(300, 11, 89, 23);
 		tabAtualizarProfessor.add(btnBuscarProfessor);
@@ -229,7 +229,7 @@ public class ProfessorCRUD extends JFrame {
 		lblCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCPFProfessor.setBounds(21, 11, 79, 19);
 		
-		btnBuscarProfessor = new JButton("Buscar");
+		btnBuscarProfessor = new JButton("Buscar_DL");
 		btnBuscarProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnBuscarProfessor.setBounds(300, 11, 89, 23);
 		tabDeletarProfessor.add(btnBuscarProfessor);
