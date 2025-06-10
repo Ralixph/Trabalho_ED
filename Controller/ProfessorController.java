@@ -25,7 +25,7 @@ public class ProfessorController implements ActionListener, IProcura {
 	private JTextField tfAreaProfessorCriar;
 	private JTextField tfPontosProfessorCriar;
 	
-	private JTextField tfCPFProfessorAtualizar;
+	private JTextField tfCPFProfessorBuscarAtualizar;
 	private JTextField tfNomeProfessorAtualizar;
 	private JTextField tfAreaProfessorAtualizar;
 	private JTextField tfPontosProfessorAtualizar;
@@ -34,6 +34,7 @@ public class ProfessorController implements ActionListener, IProcura {
 	private JTextField tfCPFProfessorBuscar; 
 	private JTextArea taProfessorListaLer;
 	private JTextArea taProfessorListaDeletar;
+	private JTextField tfCPFProfessorBuscarDeletar;
 	
 	
 
@@ -47,14 +48,14 @@ public class ProfessorController implements ActionListener, IProcura {
 		this.tfNomeProfessorCriar = tfNomeProfessorCriar;
 		this.tfAreaProfessorCriar = tfAreaProfessorCriar;
 		this.tfPontosProfessorCriar = tfPontosProfessorCriar;
-		this.tfCPFProfessorAtualizar = tfCPFProfessorAtualizar;
+		this.tfCPFProfessorBuscarAtualizar = tfCPFProfessorBuscarAtualizar;
 		this.tfNomeProfessorAtualizar = tfNomeProfessorAtualizar;
 		this.tfAreaProfessorAtualizar = tfAreaProfessorAtualizar;
 		this.tfPontosProfessorAtualizar = tfPontosProfessorAtualizar;
 		this.taProfessorListaAtualizar = taProfessorListaAtualizar;
-		this.tfCPFProfessorBuscar = tfCPFProfessorBuscar;
 		this.taProfessorListaLer = taProfessorListaLer;
 		this.taProfessorListaDeletar = taProfessorListaDeletar;
+		this.tfCPFProfessorBuscarDeletar = tfCPFProfessorBuscarDeletar;
 	}
 
 	@Override
@@ -207,10 +208,10 @@ public class ProfessorController implements ActionListener, IProcura {
 
 	public void Atualizar() throws IOException {
 		Professor professor = new Professor();
-		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessor.getText()));
-		professor.setNomeProfessor(tfNomeProfessor.getText());
-		professor.setAreaProfessor(tfAreaProfessor.getText());
-		professor.setPontosProfessor(Integer.parseInt(tfPontosProfessor.getText()));
+		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorAtualizar.getText()));
+		professor.setNomeProfessor(tfNomeProfessorAtualizar.getText());
+		professor.setAreaProfessor(tfAreaProfessorAtualizar.getText());
+		professor.setPontosProfessor(Integer.parseInt(tfPontosProfessorAtualizar.getText()));
 
 		AtualizarProfessor(professor.toString());
 	}

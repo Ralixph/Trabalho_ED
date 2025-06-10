@@ -132,11 +132,11 @@ public class ProfessorCRUD extends JFrame {
 		lblCPFProfessor.setBounds(21, 11, 79, 19);
 		tabAtualizarProfessor.add(lblCPFProfessor);
 		
-		JTextField tfCPFProfessorAtualizar = new JTextField();
-		tfCPFProfessorAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfCPFProfessorAtualizar.setBounds(90, 12, 197, 20);
-		tabAtualizarProfessor.add(tfCPFProfessorAtualizar);
-		tfCPFProfessorAtualizar.setColumns(10);
+		JTextField tfCPFProfessorBuscarAtualizar = new JTextField();
+		tfCPFProfessorBuscarAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfCPFProfessorBuscarAtualizar.setBounds(90, 12, 197, 20);
+		tabAtualizarProfessor.add(tfCPFProfessorBuscarAtualizar);
+		tfCPFProfessorBuscarAtualizar.setColumns(10);
 		
 		JTextField tfNomeProfessorAtualizar = new JTextField();
 		tfNomeProfessorAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -216,11 +216,11 @@ public class ProfessorCRUD extends JFrame {
 		lblCPFProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tabDeletarProfessor.add(lblCPFProfessor);
 		
-		JTextField tfCPFProfessorBuscar = new JTextField();
-		tfCPFProfessorBuscar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfCPFProfessorBuscar.setBounds(90, 12, 197, 20);
-		tabDeletarProfessor.add(tfCPFProfessorBuscar);
-		tfCPFProfessorBuscar.setColumns(10);
+		JTextField tfCPFProfessorBuscarDeletar = new JTextField();
+		tfCPFProfessorBuscarDeletar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfCPFProfessorBuscarDeletar.setBounds(90, 12, 197, 20);
+		tabDeletarProfessor.add(tfCPFProfessorBuscarDeletar);
+		tfCPFProfessorBuscarDeletar.setColumns(10);
 		
 		JButton btnDeletarProfessor = new JButton("Deletar");
 		btnDeletarProfessor.setBounds(161, 179, 89, 23);
@@ -240,10 +240,9 @@ public class ProfessorCRUD extends JFrame {
 		
 		ProfessorController pCont = new ProfessorController(
 			tfCPFProfessorCriar, tfNomeProfessorCriar, tfAreaProfessorCriar, tfPontosProfessorCriar, 
-			tfCPFProfessorAtualizar, tfNomeProfessorAtualizar, tfAreaProfessorAtualizar, tfPontosProfessorAtualizar, taProfessorListaAtualizar, 
-			tfCPFProfessorBuscar, 
-			taProfessorListaLer,
-			taProfessorListaDeletar 
+			tfCPFProfessorBuscarAtualizar, tfNomeProfessorAtualizar, tfAreaProfessorAtualizar, tfPontosProfessorAtualizar, taProfessorListaAtualizar, 
+			tfCPFProfessorBuscarDeletar,
+			taProfessorListaDeletar, taProfessorListaLer
 		);
 		
 		btnCriarProfessor.addActionListener(pCont);
