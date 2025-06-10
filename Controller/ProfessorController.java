@@ -38,7 +38,7 @@ public class ProfessorController implements ActionListener, IProcura {
 			JTextField tfAreaProfessorCriar, JTextField tfPontosProfessorCriar, JTextField tfCPFProfessorBuscarAtualizar,
 			JTextField tfNomeProfessorAtualizar, JTextField tfAreaProfessorAtualizar,
 			JTextField tfPontosProfessorAtualizar, JTextArea taProfessorListaAtualizar, JTextField tfCPFProfessorBuscarDeletar,
-			JTextArea taProfessorListaLer, JTextArea taProfessorListaDeletar) {
+			JTextArea taProfessorListaDeletar, JTextArea taProfessorListaLer) {
 		super();
 		this.tfCPFProfessorCriar = tfCPFProfessorCriar;
 		this.tfNomeProfessorCriar = tfNomeProfessorCriar;
@@ -49,9 +49,9 @@ public class ProfessorController implements ActionListener, IProcura {
 		this.tfAreaProfessorAtualizar = tfAreaProfessorAtualizar;
 		this.tfPontosProfessorAtualizar = tfPontosProfessorAtualizar;
 		this.taProfessorListaAtualizar = taProfessorListaAtualizar;
-		this.taProfessorListaLer = taProfessorListaLer;
-		this.taProfessorListaDeletar = taProfessorListaDeletar;
 		this.tfCPFProfessorBuscarDeletar = tfCPFProfessorBuscarDeletar;
+		this.taProfessorListaDeletar = taProfessorListaDeletar;
+		this.taProfessorListaLer = taProfessorListaLer;
 	}
 
 	@Override
@@ -305,7 +305,7 @@ public class ProfessorController implements ActionListener, IProcura {
 			String linha = buffer.readLine();
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				taProfessorListaLer.setText("CPF: " + vetLinha[0] + " - Nome: " + vetLinha[1] + "  - Area: " + vetLinha[2]+ " - Pontos: " + vetLinha[3] + "\r\n");
+				taProfessorListaLer.append("CPF: " + vetLinha[0] + " - Nome: " + vetLinha[1] + "  - Area: " + vetLinha[2]+ " - Pontos: " + vetLinha[3] + "\r\n");
 				//System.out.println("CPF: " + vetLinha[0] + " - Nome: " + vetLinha[1] + "  - Area: " + vetLinha[2]+ " - Pontos: " + vetLinha[3] + "\r\n");
 				linha = buffer.readLine();
 			}

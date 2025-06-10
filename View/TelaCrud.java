@@ -74,6 +74,8 @@ public class TelaCrud extends JFrame implements ActionListener{
 		tabConcurso.add(btnInscricao);
 		
 	// Adicionando os ActionListeners:
+		
+		
 			btnProfessor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					new ProfessorCRUD().setVisible(true);

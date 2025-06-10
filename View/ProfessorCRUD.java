@@ -21,10 +21,6 @@ public class ProfessorCRUD extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField tfCPFProfessor;
-	private JTextField tfNomeProfessor;
-	private JTextField tfAreaProfessor;
-	private JTextField tfPontosProfessor;
 
 	/**
 	 * Launch the application.
