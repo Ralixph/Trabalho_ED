@@ -9,12 +9,14 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class TelaCrud extends JFrame {
+public class TelaCrud extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -66,9 +68,40 @@ public class TelaCrud extends JFrame {
 		btnDisciplina.setBounds(40, 116, 138, 23);
 		tabConcurso.add(btnDisciplina);
 		
-		JButton btnLerProfessor = new JButton("Ler");
-		btnLerProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnLerProfessor.setBounds(223, 116, 138, 23);
-		tabConcurso.add(btnLerProfessor);
+		JButton btnInscricao = new JButton("Inscricao");
+		btnInscricao.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnInscricao.setBounds(223, 116, 138, 23);
+		tabConcurso.add(btnInscricao);
+		
+	// Adicionando os ActionListeners:
+			btnProfessor.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new ProfessorCRUD().setVisible(true);
+				}
+			});
+
+			btnCurso.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new CursoCRUD().setVisible(true);
+				}
+			});
+
+			btnDisciplina.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new DisciplinaCRUD().setVisible(true);
+				}
+			});
+
+			btnInscricao.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new InscricaoCRUD().setVisible(true);
+				}
+			});
+}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
