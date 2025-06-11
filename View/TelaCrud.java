@@ -75,30 +75,33 @@ public class TelaCrud extends JFrame implements ActionListener{
 		
 	// Adicionando os ActionListeners:
 		
+		btnProfessor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ProfessorCRUD().setVisible(true);
+				TelaCrud.this.dispose();
+			}
+		});
 		
-			btnProfessor.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					new ProfessorCRUD().setVisible(true);
-				}
-			});
-
-			btnCurso.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					new CursoCRUD().setVisible(true);
-				}
-			});
-
-			btnDisciplina.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					new DisciplinaCRUD().setVisible(true);
-				}
-			});
-
-			btnInscricao.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					new InscricaoCRUD().setVisible(true);
-				}
-			});
+		btnDisciplina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new disciplinaCRUD().setVisible(true);
+				TelaCrud.this.dispose();
+			}
+		});
+		
+		btnCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CursoCRUD().setVisible(true);
+				TelaCrud.this.dispose();
+			}
+		});
+		
+		btnInscricao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new InscricaoCRUD().setVisible(true);
+				TelaCrud.this.dispose();
+			}
+		});
 }
 
 	@Override
