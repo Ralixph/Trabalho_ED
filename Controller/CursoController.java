@@ -90,7 +90,7 @@ public class CursoController implements ActionListener, IProcura {
 		if (cmd.equals("Deletar")) {
 			try {
 				Deletar();
-			} catch (IOException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
@@ -213,13 +213,12 @@ public class CursoController implements ActionListener, IProcura {
 	}
 
 	@Override
-	public void Deletar() throws IOException {
+	public void Deletar() throws Exception {
 		
 		int Codigo = Integer.parseInt(tfCodigoCursoDeletar.getText());
 
-		try {
 			DeletarCurso(Codigo);
-		} catch (Exception e) {System.err.println("Código não encontrado");}
+		
 	}
 	
 	private void DeletarCurso(int cod) throws Exception {
@@ -249,7 +248,6 @@ public class CursoController implements ActionListener, IProcura {
 				
 				lista.addLast(c);
 				
-				
 				if (Integer.parseInt(vetLinha[0]) == cod) {
 					
 					lista.remove(i);
@@ -258,9 +256,29 @@ public class CursoController implements ActionListener, IProcura {
 				linha = buffer.readLine();
 				i += 1;
 			}
+			
 			buffer.close();
 			isr.close();
 			fis.close();
+			
+			FileWriter fw = new FileWriter(arq);
+			PrintWriter pw = new PrintWriter(fw);
+			pw.write("");
+			pw.flush();
+			pw.close();
+			fw.close();
+			
+			int tamanhoLista = lista.size();
+
+			for (i = 0; i < tamanhoLista; i++) {
+				Curso curso = lista.get(i);
+				FileWriter fw1 = new FileWriter(arq, existe);
+				PrintWriter pw1 = new PrintWriter(fw1);
+				pw1.write(curso.toString() + "\r\n");
+				pw1.flush();
+				pw1.close();
+				fw1.close();
+			}
 		}
 	}
 
