@@ -255,24 +255,23 @@ public class ProfessorController implements ActionListener, IProcura {
 				existe = true;
 			}
 			String linha = buffer.readLine();
+			int verifica = 0;
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
 				Professor professor = new Professor();
-				professor.setCPFProfessor(Double.parseDouble(vetLinha[0]));
-				professor.setNomeProfessor(vetLinha[1]);
-				professor.setAreaProfessor(vetLinha[2]);
-				professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
-				lista.addLast(professor);
-				linha = buffer.readLine();
-			}
-			int tamanhoLista = lista.size();
 
-			for (int i = 0; i < tamanhoLista; i++) {
-				Professor professor = lista.get(i);
-				if (professor.getCPFProfessor() == CPF) {
+				if (verifica == 0 && (Double.parseDouble(vetLinha[0]) == CPF)) {
 					professor.setNomeProfessor(vetProfessor[1]);
 					professor.setAreaProfessor(vetProfessor[2]);
 					professor.setPontosProfessor(Integer.parseInt(vetProfessor[3]));
+					verifica++;
+				} else {
+					professor.setCPFProfessor(Double.parseDouble(vetLinha[0]));
+					professor.setNomeProfessor(vetLinha[1]);
+					professor.setAreaProfessor(vetLinha[2]);
+					professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
+					lista.addLast(professor);
+					linha = buffer.readLine();
 				}
 			}
 
@@ -282,6 +281,8 @@ public class ProfessorController implements ActionListener, IProcura {
 			pw.flush();
 			pw.close();
 			fw.close();
+			
+			int tamanhoLista = lista.size();
 
 			for (int i = 0; i < tamanhoLista; i++) {
 				Professor professor = lista.get(i);
@@ -299,6 +300,7 @@ public class ProfessorController implements ActionListener, IProcura {
 	public void Ler() throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arq = new File(path, "professor.csv");
+		Fila<Professor> filaAuxiliar = new Fila<>();
 		Fila<Professor> fila = new Fila<>();
 
 		if (arq.exists() && arq.isFile()) {
@@ -313,15 +315,15 @@ public class ProfessorController implements ActionListener, IProcura {
 				professor.setNomeProfessor(vetLinha[1]);
 				professor.setAreaProfessor(vetLinha[2]);
 				professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
-				fila.insert(professor);
+				filaAuxiliar.insert(professor);
 				linha = buffer.readLine();
 			}
-
-			int tamanhoFila = fila.size();
+			fila = filaAuxiliar;
+			int tamanhoFila = filaAuxiliar.size();
 
 			for (int i = 0; i < tamanhoFila; i++) {
 				Professor professor = new Professor();
-				professor = fila.remove();
+				professor = filaAuxiliar.remove();
 				taProfessorListaLer.append(professor.toString() + "\n");
 			}
 
