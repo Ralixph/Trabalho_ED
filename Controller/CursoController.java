@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import Interface.IProcura;
 import model.Curso;
 import model.Professor;
+import modeloLista.ListaGenerica;
 
 public class CursoController implements ActionListener, IProcura {
 
@@ -30,9 +31,15 @@ public class CursoController implements ActionListener, IProcura {
 	private JTextField tfPontosProfessorAtualizar;
 	private JTextArea taCursoListaAtualizar;
 	
+	private JTextField tfAreaCursoLer;
+	private JTextField tfCodigoCursoLer;
 	private JTextArea taCursoListaLer;
+	
 	private JTextArea taCursoListaDeletar;
 	private JTextField tfCodigoCursoBuscarDeletar;
+	
+	
+	private JTextField tfAreaCursoDeletar;
 	
 	private JTextField tfCodigoCursoDeletar;
 	
@@ -47,20 +54,25 @@ public class CursoController implements ActionListener, IProcura {
 			JTextField tfNomeCursoLer, JTextField tfNomeCursoDeletar) {
 		super();
 		
-		this.tfCodigoCursoCriar = tfCodigoCursoCriar;
-		this.tfNomeCursoCriar = tfNomeCursoCriar;
-		this.tfAreaCursoCriar = tfAreaCursoCriar;
-		
-		this.tfCodigoCursoBuscarAtualizar = tfCodigoCursoBuscarAtualizar;
-		this.tfNomeCursoAtualizar = tfNomeCursoAtualizar;
 		this.tfAreaCursoAtualizar = tfAreaCursoAtualizar;
-		this.taCursoListaAtualizar = taCursoListaAtualizar;
+		this.tfAreaCursoCriar = tfAreaCursoCriar;
+		this.tfAreaCursoLer = tfAreaCursoLer;
+		this.tfAreaCursoDeletar = tfAreaCursoDeletar;
 		
-		this.taCursoListaLer = taCursoListaLer;
 		
-		this.taCursoListaDeletar = taCursoListaDeletar;
+		this.tfCodigoCursoCriar = tfCodigoCursoCriar;
+		this.tfCodigoCursoLer = tfCodigoCursoLer;
 		this.tfCodigoCursoDeletar = tfCodigoCursoDeletar;
-		this.tfCodigoCursoBuscarDeletar = tfCodigoCursoBuscarDeletar;
+		
+		
+		
+		
+		this.tfNomeCursoAtualizar = tfNomeCursoAtualizar;
+		this.tfNomeCursoCriar = tfNomeCursoCriar;
+		
+		
+		
+		
 		
 	}
 
@@ -205,27 +217,46 @@ public class CursoController implements ActionListener, IProcura {
 		
 		int Codigo = Integer.parseInt(tfCodigoCursoDeletar.getText());
 
-		DeletarCurso(Codigo);
+		try {
+			DeletarCurso(Codigo);
+		} catch (Exception e) {System.err.println("Código não encontrado");}
 	}
-
-	private void DeletarCurso(int cod) throws IOException {
+	
+	private void DeletarCurso(int cod) throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arq = new File(path, "curso.csv");
-
+		 ListaGenerica<Curso> lista = new ListaGenerica<>();
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
 			InputStreamReader isr = new InputStreamReader(fis);
 			BufferedReader buffer = new BufferedReader(isr);
+			
+			boolean existe = false;
+			if (arq.exists()) {
+				existe = true;
+			}
+			
 			String linha = buffer.readLine();
+			
+			int i = 0;
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				if (vetLinha[0].equals(cod)) {
-					vetLinha[1] = null;
-					vetLinha[2] = null;
-					vetLinha[3] = null;
-					break;
+				Curso c = new Curso();
+				
+				c.setCodigoCurso(Integer.parseInt(vetLinha[0]));
+				c.setNomeCurso(vetLinha[1]);
+				c.setAreaCurso(vetLinha[2]);
+				
+				lista.addLast(c);
+				
+				
+				if (Integer.parseInt(vetLinha[0]) == cod) {
+					
+					lista.remove(i);
+					
 				}
 				linha = buffer.readLine();
+				i += 1;
 			}
 			buffer.close();
 			isr.close();
