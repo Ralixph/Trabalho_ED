@@ -10,13 +10,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import Interface.IProcura;
 import model.Professor;
-import model.ListaGenerica;
+import modeloLista.ListaGenerica;
 
 public class ProfessorController implements ActionListener, IProcura {
 
@@ -39,7 +38,7 @@ public class ProfessorController implements ActionListener, IProcura {
 			JTextField tfAreaProfessorCriar, JTextField tfPontosProfessorCriar, JTextField tfCPFProfessorBuscarAtualizar,
 			JTextField tfNomeProfessorAtualizar, JTextField tfAreaProfessorAtualizar,
 			JTextField tfPontosProfessorAtualizar, JTextArea taProfessorListaAtualizar, JTextField tfCPFProfessorBuscarDeletar,
-			JTextArea taProfessorListaLer, JTextArea taProfessorListaDeletar) {
+			JTextArea taProfessorListaDeletar, JTextArea taProfessorListaLer) {
 		super();
 		this.tfCPFProfessorCriar = tfCPFProfessorCriar;
 		this.tfNomeProfessorCriar = tfNomeProfessorCriar;
@@ -50,9 +49,9 @@ public class ProfessorController implements ActionListener, IProcura {
 		this.tfAreaProfessorAtualizar = tfAreaProfessorAtualizar;
 		this.tfPontosProfessorAtualizar = tfPontosProfessorAtualizar;
 		this.taProfessorListaAtualizar = taProfessorListaAtualizar;
-		this.taProfessorListaLer = taProfessorListaLer;
-		this.taProfessorListaDeletar = taProfessorListaDeletar;
 		this.tfCPFProfessorBuscarDeletar = tfCPFProfessorBuscarDeletar;
+		this.taProfessorListaDeletar = taProfessorListaDeletar;
+		this.taProfessorListaLer = taProfessorListaLer;
 	}
 
 	@Override
@@ -256,12 +255,14 @@ public class ProfessorController implements ActionListener, IProcura {
 			String linha = buffer.readLine();
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				Professor professor = new Professor(Double.parseDouble(vetLinha[0]), vetLinha[1], 
-						vetLinha[2], Integer.parseInt(vetLinha[3]));
-				lista.addFirst(professor);
+				Professor professor = new Professor();
+				professor.setCPFProfessor(Double.parseDouble(vetLinha[0]));
+				professor.setNomeProfessor(vetLinha[1]);
+				professor.setAreaProfessor(vetLinha[2]);
+				professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
+				lista.addLast(professor);
 				linha = buffer.readLine();
 			}	
-				
 			int tamanhoLista = lista.size();
 			
 			for (int i = 0; i < tamanhoLista; i++) {
@@ -271,12 +272,23 @@ public class ProfessorController implements ActionListener, IProcura {
 					professor.setAreaProfessor(vetProfessor[2]);
 					professor.setPontosProfessor(Integer.parseInt(vetProfessor[3]));
 				}
-				FileWriter fw = new FileWriter(arq, existe);
-					PrintWriter pw = new PrintWriter(fw);
-					pw.write(professor.toString() + "\r\n");
-					pw.flush();
-					pw.close();
-					fw.close();
+			}
+			
+			FileWriter fw = new FileWriter(arq);
+			PrintWriter pw = new PrintWriter(fw);
+			pw.write("");
+			pw.flush();
+			pw.close();
+			fw.close();
+			
+			for (int i = 0; i < tamanhoLista; i++) {
+				Professor professor = lista.get(i);
+				FileWriter fw1 = new FileWriter(arq, existe);
+				PrintWriter pw1 = new PrintWriter(fw1);
+				pw1.write(professor.toString() + "\r\n");
+				pw1.flush();
+				pw1.close();
+				fw1.close();
 			}
 		}
 	}
@@ -293,8 +305,8 @@ public class ProfessorController implements ActionListener, IProcura {
 			String linha = buffer.readLine();
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				taProfessorListaLer.setText("CPF: " + vetLinha[0] + " - Nome: " + vetLinha[1] + "  - Area: " + vetLinha[2]
-						+ " - Pontos: " + vetLinha[3]);
+				taProfessorListaLer.append("CPF: " + vetLinha[0] + " - Nome: " + vetLinha[1] + "  - Area: " + vetLinha[2]+ " - Pontos: " + vetLinha[3] + "\r\n");
+				//System.out.println("CPF: " + vetLinha[0] + " - Nome: " + vetLinha[1] + "  - Area: " + vetLinha[2]+ " - Pontos: " + vetLinha[3] + "\r\n");
 				linha = buffer.readLine();
 			}
 			buffer.close();
