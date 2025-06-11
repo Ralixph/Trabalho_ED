@@ -15,7 +15,9 @@ import javax.swing.JTextField;
 
 import Interface.IProcura;
 import model.Professor;
+
 import modeloLista.ListaGenerica;
+import modelFila.Fila;
 
 public class ProfessorController implements ActionListener, IProcura {
 
@@ -35,9 +37,10 @@ public class ProfessorController implements ActionListener, IProcura {
 	private JTextField tfCPFProfessorBuscarDeletar;
 
 	public ProfessorController(JTextField tfCPFProfessorCriar, JTextField tfNomeProfessorCriar,
-			JTextField tfAreaProfessorCriar, JTextField tfPontosProfessorCriar, JTextField tfCPFProfessorBuscarAtualizar,
-			JTextField tfNomeProfessorAtualizar, JTextField tfAreaProfessorAtualizar,
-			JTextField tfPontosProfessorAtualizar, JTextArea taProfessorListaAtualizar, JTextField tfCPFProfessorBuscarDeletar,
+			JTextField tfAreaProfessorCriar, JTextField tfPontosProfessorCriar,
+			JTextField tfCPFProfessorBuscarAtualizar, JTextField tfNomeProfessorAtualizar,
+			JTextField tfAreaProfessorAtualizar, JTextField tfPontosProfessorAtualizar,
+			JTextArea taProfessorListaAtualizar, JTextField tfCPFProfessorBuscarDeletar,
 			JTextArea taProfessorListaDeletar, JTextArea taProfessorListaLer) {
 		super();
 		this.tfCPFProfessorCriar = tfCPFProfessorCriar;
@@ -96,7 +99,8 @@ public class ProfessorController implements ActionListener, IProcura {
 		if (cmd.equals("Ler")) {
 			try {
 				Ler();
-			} catch (IOException e1) {
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -176,15 +180,14 @@ public class ProfessorController implements ActionListener, IProcura {
 		professor = buscaProfessor(professor);
 		tfCPFProfessorBuscarAtualizar.setText("");
 		if (professor.getNomeProfessor() != null) {
-			taProfessorListaAtualizar.setText("CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor()
-					+ "  - Area: " + professor.getAreaProfessor() + " - Pontos: " + professor.getPontosProfessor());
+			taProfessorListaAtualizar.setText(
+					"CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor() + "  - Area: "
+							+ professor.getAreaProfessor() + " - Pontos: " + professor.getPontosProfessor());
 		} else {
 			taProfessorListaAtualizar.setText("Cliente nao encontrado");
 		}
 	}
-	
-	
-	
+
 	public void BuscarDeletar() throws IOException {
 		Professor professor = new Professor();
 		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorBuscarDeletar.getText()));
@@ -192,8 +195,9 @@ public class ProfessorController implements ActionListener, IProcura {
 		professor = buscaProfessor(professor);
 		tfCPFProfessorBuscarDeletar.setText("");
 		if (professor.getNomeProfessor() != null) {
-			taProfessorListaDeletar.setText("CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor()
-					+ "  - Area: " + professor.getAreaProfessor() + " - Pontos: " + professor.getPontosProfessor());
+			taProfessorListaDeletar.setText(
+					"CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor() + "  - Area: "
+							+ professor.getAreaProfessor() + " - Pontos: " + professor.getPontosProfessor());
 		} else {
 			taProfessorListaDeletar.setText("Cliente nao encontrado");
 		}
@@ -234,8 +238,6 @@ public class ProfessorController implements ActionListener, IProcura {
 
 		AtualizarProfessor(professor.toString());
 	}
-	
-	
 
 	private void AtualizarProfessor(String prof) throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
@@ -262,9 +264,9 @@ public class ProfessorController implements ActionListener, IProcura {
 				professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
 				lista.addLast(professor);
 				linha = buffer.readLine();
-			}	
+			}
 			int tamanhoLista = lista.size();
-			
+
 			for (int i = 0; i < tamanhoLista; i++) {
 				Professor professor = lista.get(i);
 				if (professor.getCPFProfessor() == CPF) {
@@ -273,14 +275,14 @@ public class ProfessorController implements ActionListener, IProcura {
 					professor.setPontosProfessor(Integer.parseInt(vetProfessor[3]));
 				}
 			}
-			
+
 			FileWriter fw = new FileWriter(arq);
 			PrintWriter pw = new PrintWriter(fw);
 			pw.write("");
 			pw.flush();
 			pw.close();
 			fw.close();
-			
+
 			for (int i = 0; i < tamanhoLista; i++) {
 				Professor professor = lista.get(i);
 				FileWriter fw1 = new FileWriter(arq, existe);
@@ -294,9 +296,10 @@ public class ProfessorController implements ActionListener, IProcura {
 	}
 
 	@Override
-	public void Ler() throws IOException {
+	public void Ler() throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arq = new File(path, "professor.csv");
+		Fila<Professor> fila = new Fila<>();
 
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
@@ -305,10 +308,23 @@ public class ProfessorController implements ActionListener, IProcura {
 			String linha = buffer.readLine();
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				taProfessorListaLer.append("CPF: " + vetLinha[0] + " - Nome: " + vetLinha[1] + "  - Area: " + vetLinha[2]+ " - Pontos: " + vetLinha[3] + "\r\n");
-				//System.out.println("CPF: " + vetLinha[0] + " - Nome: " + vetLinha[1] + "  - Area: " + vetLinha[2]+ " - Pontos: " + vetLinha[3] + "\r\n");
+				Professor professor = new Professor();
+				professor.setCPFProfessor(Double.parseDouble(vetLinha[0]));
+				professor.setNomeProfessor(vetLinha[1]);
+				professor.setAreaProfessor(vetLinha[2]);
+				professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
+				fila.insert(professor);
 				linha = buffer.readLine();
 			}
+
+			int tamanhoFila = fila.size();
+
+			for (int i = 0; i < tamanhoFila; i++) {
+				Professor professor = new Professor();
+				professor = fila.remove();
+				taProfessorListaLer.append(professor.toString() + "\n");
+			}
+
 			buffer.close();
 			isr.close();
 			fis.close();
@@ -318,6 +334,6 @@ public class ProfessorController implements ActionListener, IProcura {
 	@Override
 	public void Buscar() throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
