@@ -8,5 +8,6 @@
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="lib" path="biblioteca/Arquivos_simples.jar"/>
 	<classpathentry kind="lib" path="biblioteca/ListaGenericaModel.jar"/>
+	<classpathentry kind="lib" path="modelFila/FilaGenericaModel.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

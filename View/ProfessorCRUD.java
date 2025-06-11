@@ -24,7 +24,10 @@ public class ProfessorCRUD extends JFrame {
 
 	/**
 	 * Launch the application.
+	 * 
 	 */
+	public ProfessorCRUD(TelaCrud tela) {
+		}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -36,6 +39,8 @@ public class ProfessorCRUD extends JFrame {
 				}
 			}
 		});
+		
+		
 	}
 
 	/**
