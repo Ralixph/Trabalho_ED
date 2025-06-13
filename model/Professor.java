@@ -49,7 +49,7 @@ public class Professor {
 
 	@Override
 	public String toString() {
-		return CPFProfessor + "; " + nomeProfessor + "; "
-				+ areaProfessor + "; " + pontosProfessor;
+		return CPFProfessor + ";" + nomeProfessor + ";"
+				+ areaProfessor + ";" + pontosProfessor;
 	}
 }
