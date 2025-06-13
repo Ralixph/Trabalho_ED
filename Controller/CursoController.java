@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import Interface.IProcura;
 import model.Curso;
 import model.Professor;
+import modelFila.Fila;
 import modeloLista.ListaGenerica;
 
 public class CursoController implements ActionListener, IProcura {
@@ -45,6 +46,8 @@ public class CursoController implements ActionListener, IProcura {
 	
 	private JTextField tfCodigoCursoAtualizar;
 	
+	private JTextArea taCursoLista;
+	
 
 	public CursoController(JTextField tfAreaCursoAtualizar,JTextField tfAreaCursoCriar, 
 			JTextField tfAreaCursoDeletar, JTextField tfAreaCursoLer, 
@@ -56,7 +59,7 @@ public class CursoController implements ActionListener, IProcura {
 			JTextField tfNomeCursoCriar, JTextField tfNomeCursoAtualizar, 
 			JTextField tfNomeCursoLer, JTextField tfNomeCursoDeletar,
 			
-			JTextArea taCursoListaDeletar){
+			JTextArea taCursoListaDeletar, JTextArea taCursoLista, JTextArea taCursoListaLer){
 		super();
 		
 		this.tfAreaCursoAtualizar = tfAreaCursoAtualizar;
@@ -77,6 +80,10 @@ public class CursoController implements ActionListener, IProcura {
 		this.taCursoListaDeletar = taCursoListaDeletar;
 		
 		this.tfCodigoCursoAtualizar = tfCodigoCursoAtualizar;
+		
+		this.taCursoLista = taCursoLista;
+		
+		this.taCursoListaLer = taCursoListaLer;
 		
 		
 	}
@@ -123,9 +130,7 @@ public class CursoController implements ActionListener, IProcura {
 		if (cmd.equals("Ler")) {
 			try {
 				Ler();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			} catch (Exception e1) {e1.printStackTrace();}
 		}
 	}
 	
@@ -333,9 +338,11 @@ public class CursoController implements ActionListener, IProcura {
 	}
 
 	@Override
-	public void Ler() throws IOException {
+	public void Ler() throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "professor.csv");
+		File arq = new File(path, "curso.csv");
+		Fila<Curso> filaAuxiliar = new Fila<>();
+		Fila<Curso> fila = new Fila<>();
 
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
@@ -344,10 +351,22 @@ public class CursoController implements ActionListener, IProcura {
 			String linha = buffer.readLine();
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				taProfessorLista.setText("CPF: " + vetLinha[0] + " - Nome: " + vetLinha[1] + "  - Area: " + vetLinha[2]
-						+ " - Pontos: " + vetLinha[3]);
+				Curso curso = new Curso();
+				curso.setCodigoCurso(Integer.parseInt(vetLinha[0]));
+				curso.setNomeCurso(vetLinha[1]);
+				curso.setAreaCurso(vetLinha[2]);
+				filaAuxiliar.insert(curso);
+				fila.insert(curso);
 				linha = buffer.readLine();
 			}
+			int tamanhoFila = filaAuxiliar.size();
+
+			for (int i = 0; i < tamanhoFila; i++) {
+				Curso curso = new Curso();
+				curso = filaAuxiliar.remove();
+				taCursoListaLer.append(curso.toString() + "\n");
+			}
+
 			buffer.close();
 			isr.close();
 			fis.close();

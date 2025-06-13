@@ -193,9 +193,9 @@ public class CursoCRUD extends JFrame {
 		btnBuscarCurso.setBounds(338, 11, 73, 23);
 		tabLerCurso.add(btnBuscarCurso);
 				
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 12, 319, 191);
-		tabLerCurso.add(textArea);	
+		JTextArea taCursoListaLer = new JTextArea();
+		taCursoListaLer.setBounds(10, 12, 319, 191);
+		tabLerCurso.add(taCursoListaLer);	
 		
 		
 // Aba Deletar
@@ -247,7 +247,7 @@ public class CursoCRUD extends JFrame {
 				
 				tfNomeCursoCriar, tfNomeCursoAtualizar, tfNomeCursoLer, tfNomeCursoDeletar,
 				
-				taCursoListaDeletar);
+				taCursoListaDeletar, taCursoLista, taCursoListaLer);
 		
 		
 		btnCriarCurso.addActionListener(cc);
@@ -258,13 +258,6 @@ public class CursoCRUD extends JFrame {
 		
 		btnDeletarCurso.addActionListener(cc);
 		
-		btnBuscarDLCurso.addActionListener(cc);
-		
-		
-		
-
-
-		
-		
+		btnBuscarDLCurso.addActionListener(cc);	
 	}
 }
