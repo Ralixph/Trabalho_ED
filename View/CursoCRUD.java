@@ -204,6 +204,12 @@ public class CursoCRUD extends JFrame {
 		tabbedPane.addTab("Deletar", null, tabDeletarCurso, "Deletar Curso");
 		tabDeletarCurso.setLayout(null);
 		
+		JTextField tfCodigoCursoBuscarDeletar = new JTextField();
+		tfCodigoCursoBuscarDeletar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfCodigoCursoBuscarDeletar.setBounds(90, 12, 197, 20);
+		tabDeletarCurso.add(tfCodigoCursoBuscarDeletar);
+		tfCodigoCursoBuscarDeletar.setColumns(10);
+		
 		
 		lblCodigoCurso = new JLabel("Código");
 		lblCodigoCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -222,31 +228,40 @@ public class CursoCRUD extends JFrame {
 		lblCodigoCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCodigoCurso.setBounds(21, 11, 79, 19);
 		
-		btnBuscarCurso = new JButton("Buscar");
-		btnBuscarCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnBuscarCurso.setBounds(300, 11, 89, 23);
-		tabDeletarCurso.add(btnBuscarCurso);
+		JButton btnBuscarDLCurso = new JButton("Buscar_DL");
+		btnBuscarDLCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBuscarDLCurso.setBounds(300, 11, 89, 23);
+		tabDeletarCurso.add(btnBuscarDLCurso);
 		
 		taCursoLista = new JTextArea();
 		taCursoLista.setBounds(21, 48, 368, 120);
 		tabDeletarCurso.add(taCursoLista);	
 		
+		JTextArea taCursoListaDeletar = new JTextArea();
+		taCursoListaDeletar.setBounds(21, 48, 368, 120);
+		tabDeletarCurso.add(taCursoListaDeletar);
+		
 		CursoController cc = new CursoController(tfAreaCursoAtualizar, tfAreaCursoCriar, tfAreaCursoDeletar, tfAreaCursoLer,
 				
-				tfCodigoCursoAtualizar, tfCodigoCursoCriar, tfCodigoCursoLer, tfCodigoCursoDeletar, 
+				tfCodigoCursoAtualizar, tfCodigoCursoCriar, tfCodigoCursoLer, tfCodigoCursoDeletar, tfCodigoCursoBuscarDeletar,
 				
-				tfNomeCursoCriar, tfNomeCursoAtualizar, tfNomeCursoLer, tfNomeCursoDeletar);
+				tfNomeCursoCriar, tfNomeCursoAtualizar, tfNomeCursoLer, tfNomeCursoDeletar,
+				
+				taCursoListaDeletar);
 		
 		
 		btnCriarCurso.addActionListener(cc);
 		
-		btnDeletarCurso.addActionListener(cc);
-
-		btnBuscarCurso.addActionListener(cc);
-
 		btnBuscarCurso.addActionListener(cc);
 		
-		btnBuscarCurso.addActionListener(cc);
+		btnDeletarCurso.addActionListener(cc);
+		
+		btnBuscarDLCurso.addActionListener(cc);
+		
+		btnAtualizarCurso.addActionListener(cc);
+		
+
+
 		
 		
 	}

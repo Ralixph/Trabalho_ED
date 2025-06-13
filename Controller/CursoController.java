@@ -43,15 +43,20 @@ public class CursoController implements ActionListener, IProcura {
 	
 	private JTextField tfCodigoCursoDeletar;
 	
+	
+	
 
 	public CursoController(JTextField tfAreaCursoAtualizar,JTextField tfAreaCursoCriar, 
 			JTextField tfAreaCursoDeletar, JTextField tfAreaCursoLer, 
 			
 			JTextField tfCodigoCursoAtualizar,JTextField tfCodigoCursoCriar,
 			JTextField tfCodigoCursoLer,JTextField tfCodigoCursoDeletar, 
+			JTextField tfCodigoCursoBuscarDeletar,
 			
 			JTextField tfNomeCursoCriar, JTextField tfNomeCursoAtualizar, 
-			JTextField tfNomeCursoLer, JTextField tfNomeCursoDeletar) {
+			JTextField tfNomeCursoLer, JTextField tfNomeCursoDeletar,
+			
+			JTextArea taCursoListaDeletar){
 		super();
 		
 		this.tfAreaCursoAtualizar = tfAreaCursoAtualizar;
@@ -63,13 +68,13 @@ public class CursoController implements ActionListener, IProcura {
 		this.tfCodigoCursoCriar = tfCodigoCursoCriar;
 		this.tfCodigoCursoLer = tfCodigoCursoLer;
 		this.tfCodigoCursoDeletar = tfCodigoCursoDeletar;
-		
+		this.tfCodigoCursoBuscarDeletar = tfCodigoCursoBuscarDeletar;
 		
 		
 		this.tfNomeCursoAtualizar = tfNomeCursoAtualizar;
 		this.tfNomeCursoCriar = tfNomeCursoCriar;
 		
-		
+		this.taCursoListaDeletar = taCursoListaDeletar;
 		
 		
 		
@@ -147,7 +152,7 @@ public class CursoController implements ActionListener, IProcura {
 			taCursoListaDeletar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
 					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
 		} else {
-			taCursoListaDeletar.setText("Curso nao encontrado");
+			taCursoListaDeletar.setText("Curso não encontrado");
 		}
 	}
 	

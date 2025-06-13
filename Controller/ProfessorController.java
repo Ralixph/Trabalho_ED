@@ -153,7 +153,7 @@ public class ProfessorController implements ActionListener, IProcura {
 					"CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor() + "  - Area: "
 							+ professor.getAreaProfessor() + " - Pontos: " + professor.getPontosProfessor());
 		} else {
-			taProfessorListaDeletar.setText("Cliente nao encontrado");
+			taProfessorListaDeletar.setText("Professor nao encontrado");
 		}
 	}
 	
