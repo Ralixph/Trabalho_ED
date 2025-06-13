@@ -73,6 +73,8 @@ public class ProfessorController implements ActionListener, IProcura {
 				Deletar();
 			} catch (IOException e1) {
 				e1.printStackTrace();
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
 		}
 		if (cmd.equals("Buscar_AT")) {
@@ -100,7 +102,6 @@ public class ProfessorController implements ActionListener, IProcura {
 			try {
 				Ler();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -140,36 +141,79 @@ public class ProfessorController implements ActionListener, IProcura {
 		pw.close();
 		fw.close();
 	}
+	
+	public void BuscarDeletar() throws IOException {
+		Professor professor = new Professor();
+		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorBuscarDeletar.getText()));
 
+		professor = buscaProfessor(professor);
+		tfCPFProfessorBuscarDeletar.setText("");
+		if (professor.getNomeProfessor() != null) {
+			taProfessorListaDeletar.setText(
+					"CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor() + "  - Area: "
+							+ professor.getAreaProfessor() + " - Pontos: " + professor.getPontosProfessor());
+		} else {
+			taProfessorListaDeletar.setText("Cliente nao encontrado");
+		}
+	}
+	
 	@Override
-	public void Deletar() throws IOException {
+	public void Deletar() throws Exception {
 		double CPF = Double.parseDouble(tfCPFProfessorBuscarDeletar.getText());
 
 		DeletarProfessor(CPF);
 	}
 
-	private void DeletarProfessor(Double CPF) throws IOException {
+	private void DeletarProfessor(Double CPF) throws Exception {
+
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arq = new File(path, "professor.csv");
+		ListaGenerica<Professor> lista = new ListaGenerica<>();
 
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
 			InputStreamReader isr = new InputStreamReader(fis);
 			BufferedReader buffer = new BufferedReader(isr);
+			boolean existe = false;
+			if (arq.exists()) {
+				existe = true;
+			}
 			String linha = buffer.readLine();
+			int verifica = 0;
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				if (vetLinha[0].equals(CPF)) {
-					vetLinha[1] = null;
-					vetLinha[2] = null;
-					vetLinha[3] = null;
-					break;
+				Professor professor = new Professor();
+
+				if (verifica == 0 && (Double.parseDouble(vetLinha[0]) == CPF)) {
+					verifica++;
+				} else {
+					professor.setCPFProfessor(Double.parseDouble(vetLinha[0]));
+					professor.setNomeProfessor(vetLinha[1]);
+					professor.setAreaProfessor(vetLinha[2]);
+					professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
+					lista.addLast(professor);
 				}
 				linha = buffer.readLine();
 			}
-			buffer.close();
-			isr.close();
-			fis.close();
+
+			FileWriter fw = new FileWriter(arq);
+			PrintWriter pw = new PrintWriter(fw);
+			pw.write("");
+			pw.flush();
+			pw.close();
+			fw.close();
+			
+			int tamanhoLista = lista.size();
+
+			for (int i = 0; i < tamanhoLista; i++) {
+				Professor professor = lista.get(i);
+				FileWriter fw1 = new FileWriter(arq, existe);
+				PrintWriter pw1 = new PrintWriter(fw1);
+				pw1.write(professor.toString() + "\r\n");
+				pw1.flush();
+				pw1.close();
+				fw1.close();
+			}
 		}
 	}
 
@@ -187,48 +231,7 @@ public class ProfessorController implements ActionListener, IProcura {
 			taProfessorListaAtualizar.setText("Cliente nao encontrado");
 		}
 	}
-
-	public void BuscarDeletar() throws IOException {
-		Professor professor = new Professor();
-		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorBuscarDeletar.getText()));
-
-		professor = buscaProfessor(professor);
-		tfCPFProfessorBuscarDeletar.setText("");
-		if (professor.getNomeProfessor() != null) {
-			taProfessorListaDeletar.setText(
-					"CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor() + "  - Area: "
-							+ professor.getAreaProfessor() + " - Pontos: " + professor.getPontosProfessor());
-		} else {
-			taProfessorListaDeletar.setText("Cliente nao encontrado");
-		}
-	}
-
-	private Professor buscaProfessor(Professor professor) throws IOException {
-		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "professor.csv");
-
-		if (arq.exists() && arq.isFile()) {
-			FileInputStream fis = new FileInputStream(arq);
-			InputStreamReader isr = new InputStreamReader(fis);
-			BufferedReader buffer = new BufferedReader(isr);
-			String linha = buffer.readLine();
-			while (linha != null) {
-				String[] vetLinha = linha.split(";");
-				if (Double.parseDouble(vetLinha[0]) == professor.getCPFProfessor()) {
-					professor.setNomeProfessor(vetLinha[1]);
-					professor.setAreaProfessor(vetLinha[2]);
-					professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
-					break;
-				}
-				linha = buffer.readLine();
-			}
-			buffer.close();
-			isr.close();
-			fis.close();
-		}
-		return professor;
-	}
-
+	
 	public void Atualizar() throws Exception {
 		Professor professor = new Professor();
 		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorBuscarAtualizar.getText()));
@@ -238,7 +241,7 @@ public class ProfessorController implements ActionListener, IProcura {
 
 		AtualizarProfessor(professor.toString());
 	}
-
+	
 	private void AtualizarProfessor(String prof) throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arq = new File(path, "professor.csv");
@@ -316,9 +319,9 @@ public class ProfessorController implements ActionListener, IProcura {
 				professor.setAreaProfessor(vetLinha[2]);
 				professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
 				filaAuxiliar.insert(professor);
+				fila.insert(professor);
 				linha = buffer.readLine();
 			}
-			fila = filaAuxiliar;
 			int tamanhoFila = filaAuxiliar.size();
 
 			for (int i = 0; i < tamanhoFila; i++) {
@@ -331,6 +334,32 @@ public class ProfessorController implements ActionListener, IProcura {
 			isr.close();
 			fis.close();
 		}
+	}
+	
+	private Professor buscaProfessor(Professor professor) throws IOException {
+		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+		File arq = new File(path, "professor.csv");
+
+		if (arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			String linha = buffer.readLine();
+			while (linha != null) {
+				String[] vetLinha = linha.split(";");
+				if (Double.parseDouble(vetLinha[0]) == professor.getCPFProfessor()) {
+					professor.setNomeProfessor(vetLinha[1]);
+					professor.setAreaProfessor(vetLinha[2]);
+					professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
+					break;
+				}
+				linha = buffer.readLine();
+			}
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
+		return professor;
 	}
 
 	@Override
