@@ -252,13 +252,15 @@ public class CursoCRUD extends JFrame {
 		
 		btnCriarCurso.addActionListener(cc);
 		
+		btnAtualizarCurso.addActionListener(cc);
+		
 		btnBuscarCurso.addActionListener(cc);
 		
 		btnDeletarCurso.addActionListener(cc);
 		
 		btnBuscarDLCurso.addActionListener(cc);
 		
-		btnAtualizarCurso.addActionListener(cc);
+		
 		
 
 

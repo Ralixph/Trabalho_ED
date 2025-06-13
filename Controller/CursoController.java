@@ -43,7 +43,7 @@ public class CursoController implements ActionListener, IProcura {
 	
 	private JTextField tfCodigoCursoDeletar;
 	
-	
+	private JTextField tfCodigoCursoAtualizar;
 	
 
 	public CursoController(JTextField tfAreaCursoAtualizar,JTextField tfAreaCursoCriar, 
@@ -76,6 +76,7 @@ public class CursoController implements ActionListener, IProcura {
 		
 		this.taCursoListaDeletar = taCursoListaDeletar;
 		
+		this.tfCodigoCursoAtualizar = tfCodigoCursoAtualizar;
 		
 		
 	}
@@ -128,34 +129,6 @@ public class CursoController implements ActionListener, IProcura {
 		}
 	}
 	
-	public void BuscarAtualizar() throws IOException {
-		Curso curso = new Curso();
-		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoBuscarAtualizar.getText()));
-
-		curso = buscaCurso(curso);
-		tfCodigoCursoBuscarAtualizar.setText("");
-		if (curso.getNomeCurso() != null) {
-			taCursoListaAtualizar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
-					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
-		} else {
-			taCursoListaAtualizar.setText("Cliente nao encontrado");
-		}
-	}
-	
-	public void BuscarDeletar() throws IOException {
-		Curso curso = new Curso();
-		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoBuscarDeletar.getText()));
-
-		curso = buscaCurso(curso);
-		tfCodigoCursoBuscarDeletar.setText("");
-		if (curso.getNomeCurso() != null) {
-			taCursoListaDeletar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
-					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
-		} else {
-			taCursoListaDeletar.setText("Curso não encontrado");
-		}
-	}
-	
 	private Curso buscaCurso(Curso curso) throws IOException {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arq = new File(path, "curso.csv");
@@ -196,6 +169,8 @@ public class CursoController implements ActionListener, IProcura {
 		
 	}
 
+// Aba Criar
+	
 	public void CriarCurso(String csvCurso) throws IOException {
 
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
@@ -215,7 +190,9 @@ public class CursoController implements ActionListener, IProcura {
 		pw.close();
 		fw.close();
 	}
-
+	
+// Aba Deletar
+	
 	@Override
 	public void Deletar() throws Exception {
 		
@@ -257,41 +234,101 @@ public class CursoController implements ActionListener, IProcura {
 	        pw.close();
 	    }
 	}
+	
+	public void BuscarDeletar() throws IOException {
+		Curso curso = new Curso();
+		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoBuscarDeletar.getText()));
 
-
-	public void Atualizar() throws IOException {
-		Professor professor = new Professor();
-		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorAtualizar.getText()));
-		professor.setNomeProfessor(tfNomeCursoAtualizar.getText());
-		professor.setAreaProfessor(tfAreaCursoAtualizar.getText());
-		professor.setPontosProfessor(Integer.parseInt(tfPontosProfessorAtualizar.getText()));
-
-		AtualizarProfessor(professor.toString());
+		curso = buscaCurso(curso);
+		tfCodigoCursoBuscarDeletar.setText("");
+		if (curso.getNomeCurso() != null) {
+			taCursoListaDeletar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
+					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
+		} else {
+			taCursoListaDeletar.setText("Curso não encontrado");
+		}
 	}
 
-	private void AtualizarProfessor(String professor) throws IOException {
-		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "professor.csv");
+// Aba Atualizar
+	
+	public void Atualizar() throws Exception {
+		Curso curso = new Curso();
+		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoAtualizar.getText()));
+		curso.setNomeCurso(tfNomeCursoAtualizar.getText());
+		curso.setAreaCurso(tfAreaCursoAtualizar.getText());
 
-		String[] vetProfessor = professor.split(";");
+		AtualizarCurso(curso.toString());
+	}
+	
+	private void AtualizarCurso(String prof) throws Exception {
+		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+		File arq = new File(path, "curso.csv");
+		ListaGenerica<Curso> lista = new ListaGenerica<>();
+
+		String[] vetCurso = prof.split(";");
+		int codigo = Integer.parseInt(vetCurso[0]);
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
 			InputStreamReader isr = new InputStreamReader(fis);
 			BufferedReader buffer = new BufferedReader(isr);
+			boolean existe = false;
+			if (arq.exists()) {
+				existe = true;
+			}
 			String linha = buffer.readLine();
+			int verifica = 0;
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				if (vetLinha[0].equals(vetProfessor[0])) {
-					vetLinha[1] = vetProfessor[1];
-					vetLinha[2] = vetProfessor[2];
-					vetLinha[3] = vetProfessor[3];
-					break;
+				Curso curso = new Curso();
+
+				if (verifica == 0 && (Double.parseDouble(vetLinha[0]) == codigo)) {
+					curso.setNomeCurso(vetCurso[1]);
+					curso.setAreaCurso(vetCurso[2]);
+					verifica++;
+				} else {
+					curso.setCodigoCurso(Integer.parseInt(vetLinha[0]));
+					curso.setNomeCurso(vetLinha[1]);
+					curso.setAreaCurso(vetLinha[2]);
+					lista.addLast(curso);
+					linha = buffer.readLine();
 				}
-				linha = buffer.readLine();
 			}
-			buffer.close();
-			isr.close();
 			fis.close();
+			isr.close();
+			buffer.close();
+
+			FileWriter fw = new FileWriter(arq);
+			PrintWriter pw = new PrintWriter(fw);
+			pw.write("");
+			pw.flush();
+			pw.close();
+			fw.close();
+			
+			int tamanhoLista = lista.size();
+
+			for (int i = 0; i < tamanhoLista; i++) {
+				Curso curso = lista.get(i);
+				FileWriter fw1 = new FileWriter(arq, existe);
+				PrintWriter pw1 = new PrintWriter(fw1);
+				pw1.write(curso.toString() + "\r\n");
+				pw1.flush();
+				pw1.close();
+				fw1.close();
+			}
+		}
+	}
+	
+	public void BuscarAtualizar() throws IOException {
+		Curso curso = new Curso();
+		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoBuscarAtualizar.getText()));
+
+		curso = buscaCurso(curso);
+		tfCodigoCursoBuscarAtualizar.setText("");
+		if (curso.getNomeCurso() != null) {
+			taCursoListaAtualizar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
+					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
+		} else {
+			taCursoListaAtualizar.setText("Curso nao encontrado");
 		}
 	}
 
