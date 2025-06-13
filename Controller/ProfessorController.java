@@ -195,7 +195,10 @@ public class ProfessorController implements ActionListener, IProcura {
 				}
 				linha = buffer.readLine();
 			}
-
+			fis.close();
+			isr.close();
+			buffer.close();
+			
 			FileWriter fw = new FileWriter(arq);
 			PrintWriter pw = new PrintWriter(fw);
 			buffer.close();
@@ -278,6 +281,9 @@ public class ProfessorController implements ActionListener, IProcura {
 					linha = buffer.readLine();
 				}
 			}
+			fis.close();
+			isr.close();
+			buffer.close();
 
 			FileWriter fw = new FileWriter(arq);
 			PrintWriter pw = new PrintWriter(fw);
@@ -362,6 +368,8 @@ public class ProfessorController implements ActionListener, IProcura {
 		}
 		return professor;
 	}
+
+	
 
 	@Override
 	public void Buscar() throws IOException {
