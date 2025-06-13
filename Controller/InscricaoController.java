@@ -2,9 +2,12 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import javax.swing.JTextArea;
@@ -13,10 +16,11 @@ import javax.swing.JTextField;
 import Interface.IProcura;
 import model.Inscricao;
 import model.Professor;
+import modeloLista.ListaGenerica;
 import model.Disciplina;
 
 public class InscricaoController implements ActionListener, IProcura {
-	
+
 	private JTextField tfCPFInscricaoCriar;
 	private JTextField tfCodDisciplinaInscricaoCriar;
 	private JTextField tfCodProcessoInscricaoCriar;
@@ -25,12 +29,12 @@ public class InscricaoController implements ActionListener, IProcura {
 	private JTextField tfCPFInscricaoAtualizar;
 	private JTextField tfCodDisciplinaInscricaoAtualizar;
 	private JTextArea taInscricaoListaAtualizar;
-	
+
 	private JTextArea taInscricaoListaLer;
-	
+
 	private JTextField tfCodProcessoInscricaoBuscarDeletar;
 	private JTextArea taInscricaoListaDeletar;
-	
+
 	public InscricaoController(JTextField tfCPFInscricaoCriar, JTextField tfCodDisciplinaInscricaoCriar,
 			JTextField tfCodProcessoInscricaoCriar, JTextField tfCodProcessoBuscarInscricaoAtualizar,
 			JTextField tfCPFInscricaoAtualizar, JTextField tfCodDisciplinaInscricaoAtualizar,
@@ -48,7 +52,6 @@ public class InscricaoController implements ActionListener, IProcura {
 		this.tfCodProcessoInscricaoBuscarDeletar = tfCodProcessoInscricaoBuscarDeletar;
 		this.taInscricaoListaDeletar = taInscricaoListaDeletar;
 	}
-	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -105,30 +108,30 @@ public class InscricaoController implements ActionListener, IProcura {
 		Inscricao inscricao = new Inscricao();
 		Professor professor = new Professor();
 		Disciplina disciplina = new Disciplina();
-		
-		professor.setCPFProfessor(Integer.parseInt(tfCPFInscricaoCriar.getText()));
+
+		professor.setCPFProfessor(Double.parseDouble(tfCPFInscricaoCriar.getText()));
 		disciplina.setCodigoDisciplina(Integer.parseInt(tfCodDisciplinaInscricaoCriar.getText()));
 		inscricao.setCodigoProcesso(Integer.parseInt(tfCodProcessoInscricaoCriar.getText()));
-		
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(professor +";");
-		buffer.append(disciplina +";");
-		buffer.append(inscricao +";");
 
-		CriarInscricao(buffer);
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(professor.getCPFProfessor() + ";");
+		buffer.append(disciplina.getCodigoDisciplina() + ";");
+		buffer.append(inscricao);
+
+		CriarInscricao(buffer.toString());
 		tfCPFInscricaoCriar.setText("");
 		tfCodDisciplinaInscricaoCriar.setText("");
 		tfCodProcessoInscricaoCriar.setText("");
 	}
 
-	public void CriarInscricao(StringBuffer csvInscricao) throws IOException {
-		
+	public void CriarInscricao(String csvInscricao) throws IOException {
+
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File dir = new File(path);
 		if (!dir.exists()) {
 			dir.mkdir();
 		}
-		File arq = new File(path, "professor.csv");
+		File arq = new File(path, "inscricao.csv");
 		boolean existe = false;
 		if (arq.exists()) {
 			existe = true;
@@ -140,35 +143,167 @@ public class InscricaoController implements ActionListener, IProcura {
 		pw.close();
 		fw.close();
 	}
-	
-	private void BuscarDeletar() throws IOException{
-		// TODO Auto-generated method stub
-		
+
+	private void BuscarDeletar() throws IOException {
+		Inscricao inscricao = new Inscricao();
+		inscricao.setCodigoProcesso(Integer.parseInt(tfCodProcessoInscricaoBuscarDeletar.getText()));
+
+		String linhacsv = buscaInscricao(inscricao);
+		if (linhacsv != null) {
+			String[] inscricaoCompleta = linhacsv.split(";");
+			tfCodProcessoInscricaoBuscarDeletar.setText("");
+			taInscricaoListaDeletar.setText("CPF: " + inscricaoCompleta[0] + " - Cod Disciplina: "
+					+ inscricaoCompleta[1] + "  - Cod Processo: " + inscricaoCompleta[2]);
+		} else {
+			taInscricaoListaDeletar.setText("Cliente nao encontrado");
+		}
 	}
-	
+
 	@Override
 	public void Deletar() throws IOException, Exception {
-		// TODO Auto-generated method stub
+		double CodProcesso = Double.parseDouble(tfCodProcessoInscricaoBuscarDeletar.getText());
+
+		DeletarInscricao(CodProcesso);
+	}
+
+	private void DeletarInscricao(Double CodProcesso) throws Exception {
+		
+		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+		File arq = new File(path, "inscricao.csv");
+		ListaGenerica<String> lista = new ListaGenerica<>();
+
+		if (arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			boolean existe = false;
+			if (arq.exists()) {
+				existe = true;
+			}
+			String linha = buffer.readLine();
+			int verifica = 0;
+			while (linha != null) {
+				String[] vetLinha = linha.split(";");
+
+				if (verifica == 0 && (Double.parseDouble(vetLinha[2]) == CodProcesso)) {
+					verifica++;
+				} else {
+					lista.addLast(linha);
+				}
+				linha = buffer.readLine();
+			}
+			fis.close();
+			isr.close();
+			buffer.close();
+			
+			FileWriter fw = new FileWriter(arq);
+			PrintWriter pw = new PrintWriter(fw);
+			pw.write("");
+			pw.flush();
+			pw.close();
+			fw.close();
+			
+			int tamanhoLista = lista.size();
+
+			for (int i = 0; i < tamanhoLista; i++) {
+				String inscricao = lista.get(i);
+				FileWriter fw1 = new FileWriter(arq, existe);
+				PrintWriter pw1 = new PrintWriter(fw1);
+				pw1.write(inscricao + "\r\n");
+				pw1.flush();
+				pw1.close();
+				fw1.close();
+			}
+		}
+	}
+
+	private void BuscarAtualizar() throws IOException {
+		Inscricao inscricao = new Inscricao();
+		inscricao.setCodigoProcesso(Integer.parseInt(tfCodProcessoBuscarInscricaoAtualizar.getText()));
+
+		String linhacsv = buscaInscricao(inscricao);
+		if (linhacsv != null) {
+			String[] inscricaoCompleta = linhacsv.split(";");
+			tfCodProcessoBuscarInscricaoAtualizar.setText("");
+			taInscricaoListaAtualizar.setText("CPF: " + inscricaoCompleta[0] + " - Cod Disciplina: "
+					+ inscricaoCompleta[1] + "  - Cod Processo: " + inscricaoCompleta[2]);
+		} else {
+			taInscricaoListaAtualizar.setText("Cliente nao encontrado");
+		}
 
 	}
-	
-	private void DeletarProfessor(Double CPF) throws Exception {
-		
-	}
-	
-	private void BuscarAtualizar() throws IOException{
-		// TODO Auto-generated method stub
-		
-	}
-	
+
 	@Override
 	public void Atualizar() throws IOException, Exception {
-		// TODO Auto-generated method stub
+		Inscricao inscricao = new Inscricao();
+		Professor professor = new Professor();
+		Disciplina disciplina = new Disciplina();
 
-	}
-	
-	private void AtualizarInscricao(String prof) throws Exception {
+		professor.setCPFProfessor(Double.parseDouble(tfCPFInscricaoAtualizar.getText()));
+		disciplina.setCodigoDisciplina(Integer.parseInt(tfCodDisciplinaInscricaoAtualizar.getText()));
+		inscricao.setCodigoProcesso(Integer.parseInt(tfCodProcessoBuscarInscricaoAtualizar.getText()));
+
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(professor.getCPFProfessor() + ";");
+		buffer.append(disciplina.getCodigoDisciplina() + ";");
+		buffer.append(inscricao + ";");
+
+		AtualizarInscricao(buffer.toString());
+		tfCodDisciplinaInscricaoCriar.setText("");
+		tfCodProcessoInscricaoCriar.setText("");
 		
+	}
+
+	private void AtualizarInscricao(String novaInscricao) throws Exception {
+		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+		File arq = new File(path, "inscricao.csv");
+		ListaGenerica<String> lista = new ListaGenerica<>();
+
+		String[] vetInscricao = novaInscricao.split(";");
+		double CodProcesso = Double.parseDouble(vetInscricao[2]);
+		if (arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			boolean existe = false;
+			if (arq.exists()) {
+				existe = true;
+			}
+			String linha = buffer.readLine();
+			int verifica = 0;
+			while (linha != null) {
+				String[] vetLinha = linha.split(";");
+
+				if (verifica == 0 && (Double.parseDouble(vetLinha[2]) == CodProcesso)) {
+					verifica++;
+					linha = novaInscricao;
+				}
+				lista.addLast(linha);
+				linha = buffer.readLine();
+			}
+			fis.close();
+			isr.close();
+			buffer.close();
+
+			FileWriter fw = new FileWriter(arq);
+			PrintWriter pw = new PrintWriter(fw);
+			pw.write("");
+			pw.flush();
+			pw.close();
+			fw.close();
+			
+			int tamanhoLista = lista.size();
+
+			for (int i = 0; i < tamanhoLista; i++) {
+				String inscricao = lista.get(i);
+				FileWriter fw1 = new FileWriter(arq, existe);
+				PrintWriter pw1 = new PrintWriter(fw1);
+				pw1.write(inscricao + "\r\n");
+				pw1.flush();
+				pw1.close();
+				fw1.close();
+			}
+		}
 	}
 
 	@Override
@@ -176,9 +311,31 @@ public class InscricaoController implements ActionListener, IProcura {
 		// TODO Auto-generated method stub
 
 	}
-	
-	private Inscricao buscaInscricao(Inscricao inscricao) throws IOException {
-		
+
+	private String buscaInscricao(Inscricao inscricao) throws IOException {
+		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+		File arq = new File(path, "inscricao.csv");
+
+		String linha = null;
+
+		if (arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			linha = buffer.readLine();
+			while (linha != null) {
+				String[] vetLinha = linha.split(";");
+				if (Double.parseDouble(vetLinha[2]) == inscricao.getCodigoProcesso()) {
+					break;
+				}
+				linha = buffer.readLine();
+			}
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
+
+		return linha;
 	}
 
 	@Override
