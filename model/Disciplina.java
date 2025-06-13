@@ -6,7 +6,7 @@ public class Disciplina {
 	private String nomeDisciplina;
 	private String diaSemana;
 	private String horasInicial;
-	private int horasTotal;
+	private String horasTotal;
 	
 	@Override
 	public String toString() {
@@ -46,11 +46,11 @@ public class Disciplina {
 		this.horasInicial = horasInicial;
 	}
 
-	public int getHorasTotal() {
+	public String getHorasTotal() {
 		return horasTotal;
 	}
 
-	public void setHorasTotal(int horasTotal) {
+	public void setHorasTotal(String horasTotal) {
 		this.horasTotal = horasTotal;
 	}
 	
