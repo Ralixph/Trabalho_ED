@@ -265,12 +265,12 @@ public class CursoController implements ActionListener, IProcura {
 		AtualizarCurso(curso.toString());
 	}
 	
-	private void AtualizarCurso(String prof) throws Exception {
+	private void AtualizarCurso(String curs) throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arq = new File(path, "curso.csv");
 		ListaGenerica<Curso> lista = new ListaGenerica<>();
 
-		String[] vetCurso = prof.split(";");
+		String[] vetCurso = curs.split(";");
 		int codigo = Integer.parseInt(vetCurso[0]);
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
@@ -286,7 +286,7 @@ public class CursoController implements ActionListener, IProcura {
 				String[] vetLinha = linha.split(";");
 				Curso curso = new Curso();
 
-				if (verifica == 0 && (Double.parseDouble(vetLinha[0]) == codigo)) {
+				if (verifica == 0 && (Integer.parseInt(vetLinha[0]) == codigo)) {
 					curso.setNomeCurso(vetCurso[1]);
 					curso.setAreaCurso(vetCurso[2]);
 					verifica++;
