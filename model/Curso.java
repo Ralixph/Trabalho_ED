@@ -33,7 +33,7 @@ public class Curso {
 	
 	@Override
 	public String toString() {
-		return codigoCurso + "; " + nomeCurso + "; " + areaCurso;
+		return codigoCurso + ";" + nomeCurso + ";" + areaCurso;
 	}
 	
 }

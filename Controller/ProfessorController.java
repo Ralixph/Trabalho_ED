@@ -198,6 +198,7 @@ public class ProfessorController implements ActionListener, IProcura {
 
 			FileWriter fw = new FileWriter(arq);
 			PrintWriter pw = new PrintWriter(fw);
+			buffer.close();
 			pw.write("");
 			pw.flush();
 			pw.close();

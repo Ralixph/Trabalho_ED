@@ -66,7 +66,6 @@ public class CursoController implements ActionListener, IProcura {
 		
 		
 		
-		
 		this.tfNomeCursoAtualizar = tfNomeCursoAtualizar;
 		this.tfNomeCursoCriar = tfNomeCursoCriar;
 		
@@ -222,65 +221,38 @@ public class CursoController implements ActionListener, IProcura {
 	}
 	
 	private void DeletarCurso(int cod) throws Exception {
-		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "curso.csv");
-		 ListaGenerica<Curso> lista = new ListaGenerica<>();
-		if (arq.exists() && arq.isFile()) {
-			FileInputStream fis = new FileInputStream(arq);
-			InputStreamReader isr = new InputStreamReader(fis);
-			BufferedReader buffer = new BufferedReader(isr);
-			
-			boolean existe = false;
-			if (arq.exists()) {
-				existe = true;
-			}
-			
-			String linha = buffer.readLine();
-			
-			int i = 0;
-			while (linha != null) {
-				String[] vetLinha = linha.split(";");
-				Curso c = new Curso();
-				
-				c.setCodigoCurso(Integer.parseInt(vetLinha[0]));
-				c.setNomeCurso(vetLinha[1]);
-				c.setAreaCurso(vetLinha[2]);
-				
-				lista.addLast(c);
-				
-				if (Integer.parseInt(vetLinha[0]) == cod) {
-					
-					lista.remove(i);
-					
-				}
-				linha = buffer.readLine();
-				i += 1;
-			}
-			
-			buffer.close();
-			isr.close();
-			fis.close();
-			
-			FileWriter fw = new FileWriter(arq);
-			PrintWriter pw = new PrintWriter(fw);
-			pw.write("");
-			pw.flush();
-			pw.close();
-			fw.close();
-			
-			int tamanhoLista = lista.size();
+	    String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+	    File arq = new File(path, "curso.csv");
+	    ListaGenerica<Curso> lista = new ListaGenerica<>();
 
-			for (i = 0; i < tamanhoLista; i++) {
-				Curso curso = lista.get(i);
-				FileWriter fw1 = new FileWriter(arq, existe);
-				PrintWriter pw1 = new PrintWriter(fw1);
-				pw1.write(curso.toString() + "\r\n");
-				pw1.flush();
-				pw1.close();
-				fw1.close();
-			}
-		}
+	    if (arq.exists() && arq.isFile()) {
+	        BufferedReader buffer = new BufferedReader(new InputStreamReader(new FileInputStream(arq)));
+
+	        String linha;
+	        while ((linha = buffer.readLine()) != null) {
+	            String[] vetLinha = linha.split(";");
+	            Curso c = new Curso();
+	            c.setCodigoCurso(Integer.parseInt(vetLinha[0]));
+	            c.setNomeCurso(vetLinha[1]);
+	            c.setAreaCurso(vetLinha[2]);
+
+	            if (c.getCodigoCurso() != cod) {
+	                lista.addLast(c);
+	            }
+	        }
+
+	        buffer.close();
+
+	       
+	        PrintWriter pw = new PrintWriter(new FileWriter(arq, false));
+	        for (int i = 0; i < lista.size(); i++) {
+	            pw.println(lista.get(i).toString());
+	        }
+	        pw.flush();
+	        pw.close();
+	    }
 	}
+
 
 	public void Atualizar() throws IOException {
 		Professor professor = new Professor();

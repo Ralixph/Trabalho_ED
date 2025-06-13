@@ -231,8 +231,10 @@ public class CursoCRUD extends JFrame {
 		taCursoLista.setBounds(21, 48, 368, 120);
 		tabDeletarCurso.add(taCursoLista);	
 		
-		CursoController cc = new CursoController(tfAreaCursoAtualizar, tfAreaCursoCriar, tfAreaCursoDeletar, tfAreaCursoLer, 
+		CursoController cc = new CursoController(tfAreaCursoAtualizar, tfAreaCursoCriar, tfAreaCursoDeletar, tfAreaCursoLer,
+				
 				tfCodigoCursoAtualizar, tfCodigoCursoCriar, tfCodigoCursoLer, tfCodigoCursoDeletar, 
+				
 				tfNomeCursoCriar, tfNomeCursoAtualizar, tfNomeCursoLer, tfNomeCursoDeletar);
 		
 		
