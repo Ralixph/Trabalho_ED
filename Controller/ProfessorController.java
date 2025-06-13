@@ -195,7 +195,10 @@ public class ProfessorController implements ActionListener, IProcura {
 				}
 				linha = buffer.readLine();
 			}
-
+			fis.close();
+			isr.close();
+			buffer.close();
+			
 			FileWriter fw = new FileWriter(arq);
 			PrintWriter pw = new PrintWriter(fw);
 			pw.write("");
@@ -277,6 +280,9 @@ public class ProfessorController implements ActionListener, IProcura {
 					linha = buffer.readLine();
 				}
 			}
+			fis.close();
+			isr.close();
+			buffer.close();
 
 			FileWriter fw = new FileWriter(arq);
 			PrintWriter pw = new PrintWriter(fw);

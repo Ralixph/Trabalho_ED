@@ -2,7 +2,10 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -104,21 +107,38 @@ public class InscricaoController implements ActionListener, IProcura {
 		Disciplina disciplina = new Disciplina();
 		
 		professor.setCPFProfessor(Integer.parseInt(tfCPFInscricaoCriar.getText()));
-		disciplina.
-		inscricao.setCodigoProcesso(Integer.parseInt(tfCPFInscricaoCriar.getText()));
-		inscricao.setNomeProfessor(tfNomeProfessorCriar.getText());
-		inscricao.setAreaProfessor(tfAreaProfessorCriar.getText());
-		inscricao.setPontosProfessor(Integer.parseInt(tfPontosProfessorCriar.getText()));
+		disciplina.setCodigoDisciplina(Integer.parseInt(tfCodDisciplinaInscricaoCriar.getText()));
+		inscricao.setCodigoProcesso(Integer.parseInt(tfCodProcessoInscricaoCriar.getText()));
+		
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(professor +";");
+		buffer.append(disciplina +";");
+		buffer.append(inscricao +";");
 
-		CriarProfessor(professor.toString());
-		tfCPFProfessorCriar.setText("");
-		tfNomeProfessorCriar.setText("");
-		tfAreaProfessorCriar.setText("");
-		tfPontosProfessorCriar.setText("");
+		CriarInscricao(buffer);
+		tfCPFInscricaoCriar.setText("");
+		tfCodDisciplinaInscricaoCriar.setText("");
+		tfCodProcessoInscricaoCriar.setText("");
 	}
 
-	public void CriarInscricao(String csvInscricao) throws IOException {
+	public void CriarInscricao(StringBuffer csvInscricao) throws IOException {
 		
+		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+		File dir = new File(path);
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
+		File arq = new File(path, "professor.csv");
+		boolean existe = false;
+		if (arq.exists()) {
+			existe = true;
+		}
+		FileWriter fw = new FileWriter(arq, existe);
+		PrintWriter pw = new PrintWriter(fw);
+		pw.write(csvInscricao + "\r\n");
+		pw.flush();
+		pw.close();
+		fw.close();
 	}
 	
 	private void BuscarDeletar() throws IOException{
