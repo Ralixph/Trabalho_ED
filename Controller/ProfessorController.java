@@ -362,6 +362,8 @@ public class ProfessorController implements ActionListener, IProcura {
 		return professor;
 	}
 
+	
+
 	@Override
 	public void Buscar() throws IOException {
 		// TODO Auto-generated method stub
