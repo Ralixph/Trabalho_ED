@@ -116,7 +116,7 @@ public class InscricaoController implements ActionListener, IProcura {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(professor.getCPFProfessor() + ";");
 		buffer.append(disciplina.getCodigoDisciplina() + ";");
-		buffer.append(inscricao + ";");
+		buffer.append(inscricao);
 
 		CriarInscricao(buffer.toString());
 		tfCPFInscricaoCriar.setText("");
@@ -184,7 +184,6 @@ public class InscricaoController implements ActionListener, IProcura {
 			int verifica = 0;
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				Professor professor = new Professor();
 
 				if (verifica == 0 && (Double.parseDouble(vetLinha[2]) == CodProcesso)) {
 					verifica++;
@@ -210,7 +209,7 @@ public class InscricaoController implements ActionListener, IProcura {
 				String inscricao = lista.get(i);
 				FileWriter fw1 = new FileWriter(arq, existe);
 				PrintWriter pw1 = new PrintWriter(fw1);
-				pw1.write(inscricao);
+				pw1.write(inscricao + "\r\n");
 				pw1.flush();
 				pw1.close();
 				fw1.close();
@@ -240,9 +239,9 @@ public class InscricaoController implements ActionListener, IProcura {
 		Professor professor = new Professor();
 		Disciplina disciplina = new Disciplina();
 
-		professor.setCPFProfessor(Double.parseDouble(tfCPFInscricaoCriar.getText()));
-		disciplina.setCodigoDisciplina(Integer.parseInt(tfCodDisciplinaInscricaoCriar.getText()));
-		inscricao.setCodigoProcesso(Integer.parseInt(tfCodProcessoInscricaoCriar.getText()));
+		professor.setCPFProfessor(Double.parseDouble(tfCPFInscricaoAtualizar.getText()));
+		disciplina.setCodigoDisciplina(Integer.parseInt(tfCodDisciplinaInscricaoAtualizar.getText()));
+		inscricao.setCodigoProcesso(Integer.parseInt(tfCodProcessoBuscarInscricaoAtualizar.getText()));
 
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(professor.getCPFProfessor() + ";");
@@ -255,13 +254,13 @@ public class InscricaoController implements ActionListener, IProcura {
 		
 	}
 
-	private void AtualizarInscricao(String inscricao) throws Exception {
+	private void AtualizarInscricao(String novaInscricao) throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arq = new File(path, "inscricao.csv");
-		ListaGenerica<Professor> lista = new ListaGenerica<>();
+		ListaGenerica<String> lista = new ListaGenerica<>();
 
-		String[] vetProfessor = inscricao.split(";");
-		double CPF = Double.parseDouble(vetProfessor[0]);
+		String[] vetInscricao = novaInscricao.split(";");
+		double CodProcesso = Double.parseDouble(vetInscricao[2]);
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
 			InputStreamReader isr = new InputStreamReader(fis);
@@ -274,17 +273,12 @@ public class InscricaoController implements ActionListener, IProcura {
 			int verifica = 0;
 			while (linha != null) {
 				String[] vetLinha = linha.split(";");
-				Professor professor = new Professor();
 
-				if (verifica == 0 && (Double.parseDouble(vetLinha[0]) == CPF)) {
+				if (verifica == 0 && (Double.parseDouble(vetLinha[2]) == CodProcesso)) {
 					verifica++;
-				} else {
-					professor.setCPFProfessor(Double.parseDouble(vetLinha[0]));
-					professor.setNomeProfessor(vetLinha[1]);
-					professor.setAreaProfessor(vetLinha[2]);
-					professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
-					lista.addLast(professor);
+					linha = novaInscricao;
 				}
+				lista.addLast(linha);
 				linha = buffer.readLine();
 			}
 			fis.close();
@@ -301,10 +295,10 @@ public class InscricaoController implements ActionListener, IProcura {
 			int tamanhoLista = lista.size();
 
 			for (int i = 0; i < tamanhoLista; i++) {
-				Professor professor = lista.get(i);
+				String inscricao = lista.get(i);
 				FileWriter fw1 = new FileWriter(arq, existe);
 				PrintWriter pw1 = new PrintWriter(fw1);
-				pw1.write(professor.toString() + "\r\n");
+				pw1.write(inscricao + "\r\n");
 				pw1.flush();
 				pw1.close();
 				fw1.close();
