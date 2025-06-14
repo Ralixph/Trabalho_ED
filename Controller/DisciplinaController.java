@@ -14,21 +14,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import Interface.IProcura;
-import model.Professor;
-import modeloLista.ListaGenerica;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.swing.JTextField;
-import javax.swing.text.JTextComponent;
-
-import Interface.IProcura;
 import model.Disciplina;
 
+import modeloLista.ListaGenerica;
+import modelFila.Fila;
+
 public class DisciplinaController implements ActionListener, IProcura{
+	
 	private JTextField tfCodigoDisciplinaCriar;
 	private JTextField tfNomeDisciplinaCriar;
 	private JTextField tfDiaDisciplinaCriar;
@@ -86,6 +78,9 @@ public class DisciplinaController implements ActionListener, IProcura{
 					Deletar();
 				} catch (IOException e1) {
 					e1.printStackTrace();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 			if (cmd.equals("Buscar_AT")) {
@@ -113,6 +108,9 @@ public class DisciplinaController implements ActionListener, IProcura{
 				try {
 					Ler();
 				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -152,40 +150,91 @@ public class DisciplinaController implements ActionListener, IProcura{
 		pw.close();
 		fw.close();
 	}
-	
+	public void BuscarDeletar() throws IOException {
+	    Disciplina disciplina = new Disciplina();
+	    disciplina.setCodigoDisciplina(Integer.parseInt(tfCodigoDisciplinaDeletar.getText()));
+
+	    disciplina = buscaDisciplina(disciplina);
+	    tfCodigoDisciplinaDeletar.setText("");
+
+	    if (disciplina.getNomeDisciplina() != null) {
+	        taDisciplinaDeletar.setText(
+	            "Código: " + disciplina.getCodigoDisciplina() +
+	            " - Nome: " + disciplina.getNomeDisciplina() +
+	            " - Dia: " + disciplina.getDiaDisciplina() +
+	            " - Início: " + disciplina.getDuracaoDisciplina() +
+	            " - Duração: " + disciplina.getHoraDisciplina()
+	        );
+	    } else {
+	        taDisciplinaDeletar.setText("Disciplina não encontrada");
+	    }
+	}
+
 
 	@Override
-	public void Deletar() throws IOException {
+	public void Deletar() throws Exception {
 		int COD = Integer.parseInt(tfCodigoDisciplinaDeletar.getText());
 
 		DeletarDisciplina(COD);
 	}
 
-	private void DeletarDisciplina(int COD) throws IOException {
-		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "disciplina.csv");
+	private void DeletarDisciplina(int cod) throws Exception {
+	    String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+	    File arq = new File(path, "disciplina.csv");
+	    ListaGenerica<Disciplina> lista = new ListaGenerica<>();
 
-		if (arq.exists() && arq.isFile()) {
-			FileInputStream fis = new FileInputStream(arq);
-			InputStreamReader isr = new InputStreamReader(fis);
-			BufferedReader buffer = new BufferedReader(isr);
-			String linha = buffer.readLine();
-			while (linha != null) {
-				String[] vetLinha = linha.split(";");
-				if (vetLinha[0].equals(COD)) {
-					vetLinha[1] = null;
-					vetLinha[2] = null;
-					vetLinha[3] = null;
-					break;
-				}
-				linha = buffer.readLine();
-			}
-			buffer.close();
-			isr.close();
-			fis.close();
-		}
-		
+	    if (arq.exists() && arq.isFile()) {
+	        FileInputStream fis = new FileInputStream(arq);
+	        InputStreamReader isr = new InputStreamReader(fis);
+	        BufferedReader buffer = new BufferedReader(isr);
+	        boolean existe = false;
+	        if (arq.exists()) {
+	            existe = true;
+	        }
+	        String linha = buffer.readLine();
+	        int verifica = 0;
+	        while (linha != null) {
+	            String[] vetLinha = linha.split(";");
+	            Disciplina disciplina = new Disciplina();
+
+	            if (verifica == 0 && (Double.parseDouble(vetLinha[0]) == cod)) {
+					verifica++;
+				} else {
+	                disciplina.setCodigoDisciplina(Integer.parseInt(vetLinha[0]));
+	                disciplina.setNomeDisciplina(vetLinha[1].trim());
+	                disciplina.setDiaDisciplina(vetLinha[2].trim());
+	                disciplina.setHoraDisciplina(vetLinha[3].trim());
+	                disciplina.setHoraDisciplina(vetLinha[4].trim());
+	                lista.addLast(disciplina);
+	            }
+	            linha = buffer.readLine();
+	        }
+
+	        buffer.close();
+	        isr.close();
+	        fis.close();
+
+	        FileWriter fw = new FileWriter(arq);
+	        PrintWriter pw = new PrintWriter(fw);
+	        pw.write("");
+	        pw.flush();
+	        pw.close();
+	        fw.close();
+
+	        int tamanhoLista = lista.size();
+	        
+	        for (int i = 0; i < tamanhoLista; i++) {
+	            Disciplina disciplina = lista.get(i);
+	            FileWriter fw1 = new FileWriter(arq, existe);
+	            PrintWriter pw1 = new PrintWriter(fw1);
+	            pw1.write(disciplina.toString() + "\r\n");
+	            pw1.flush();
+	            pw1.close();
+	            fw1.close();
+	        }
+	    }
 	}
+
 
 	public void BuscarAtualizar() throws IOException {
 		Disciplina disciplina = new Disciplina();
@@ -195,39 +244,12 @@ public class DisciplinaController implements ActionListener, IProcura{
 		tfCodigoDisciplinaAtualizar.setText("");
 		if (disciplina.getNomeDisciplina() != null) {
 			taDisciplinaAtualizar.setText("Código: " + disciplina.getCodigoDisciplina() + " - Nome: " + disciplina.getNomeDisciplina()
-					+ "  - Dia: " + disciplina.getDiaDisciplina() + " - Pontos: " + disciplina.getHoraDisciplina() + " - Pontos: " + disciplina.getDuracaoDisciplina()) ;
+					+ "  - Dia: " + disciplina.getDiaDisciplina() + " - Hora: " + disciplina.getHoraDisciplina() + " - Duração: " + disciplina.getDuracaoDisciplina()) ;
 		} else {
 			taDisciplinaAtualizar.setText("Cliente nao encontrado");
 		}
 	}
-	private Disciplina buscaDisciplina(Disciplina disciplina) throws IOException {
-		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "disciplina.csv");
-
-		if (arq.exists() && arq.isFile()) {
-			FileInputStream fis = new FileInputStream(arq);
-			InputStreamReader isr = new InputStreamReader(fis);
-			BufferedReader buffer = new BufferedReader(isr);
-			String linha = buffer.readLine();
-			while (linha != null) {
-				String[] vetLinha = linha.split(";");
-				if (Integer.parseInt(vetLinha[0]) == disciplina.getCodigoDisciplina()) {
-					disciplina.setCodigoDisciplina(Integer.parseInt(vetLinha[0]));
-					disciplina.setNomeDisciplina(vetLinha[1]);
-					disciplina.setDiaDisciplina(vetLinha[2]);
-					disciplina.setDuracaoDisciplina(vetLinha[3]);
-					disciplina.setHoraDisciplina(vetLinha[4]);
-					
-					break;
-				}
-				linha = buffer.readLine();
-			}
-			buffer.close();
-			isr.close();
-			fis.close();
-		}
-		return disciplina;
-	}
+	
 	@Override
 	public void Atualizar() throws Exception {
 		Disciplina disciplina = new Disciplina();
@@ -239,6 +261,7 @@ public class DisciplinaController implements ActionListener, IProcura{
 
 		AtualizarDisciplina(disciplina.toString());
 	}
+	
 	public void AtualizarDisciplina(String disc) throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arq = new File(path, "professor.csv");
@@ -275,6 +298,9 @@ public class DisciplinaController implements ActionListener, IProcura{
 					linha = buffer.readLine();
 				}
 			}
+			fis.close();
+			isr.close();
+			buffer.close();
 
 			FileWriter fw = new FileWriter(arq);
 			PrintWriter pw = new PrintWriter(fw);
@@ -297,10 +323,69 @@ public class DisciplinaController implements ActionListener, IProcura{
 		}
 	}
 	@Override
-	public void Ler() throws IOException {
-		// TODO Auto-generated method stub
-		
+	public void Ler() throws Exception {
+		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+		File arq = new File(path, "disciplina.csv");
+		Fila<Disciplina> filaAuxiliar = new Fila<>();
+		Fila<Disciplina> fila = new Fila<>();
+
+		if (arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			String linha = buffer.readLine();
+			while (linha != null) {
+				String[] vetLinha = linha.split(";");
+				Disciplina disciplina = new Disciplina();
+				disciplina.setCodigoDisciplina(Integer.parseInt(vetLinha[0].trim()));
+				disciplina.setNomeDisciplina(vetLinha[1].trim());
+				disciplina.setDiaDisciplina(vetLinha[2].trim());
+				disciplina.setDuracaoDisciplina(vetLinha[3].trim());
+				disciplina.setHoraDisciplina(vetLinha[4].trim());
+				filaAuxiliar.insert(disciplina);
+				fila.insert(disciplina);
+				linha = buffer.readLine();
+			}
+			int tamanhoFila = filaAuxiliar.size();
+
+			for (int i = 0; i < tamanhoFila; i++) {
+				Disciplina disciplina = new Disciplina();
+				disciplina = filaAuxiliar.remove();
+				taDisciplinaLer.append(disciplina.toString() + "\n");
+			}
+
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
 	}
+	private Disciplina buscaDisciplina(Disciplina disciplina) throws IOException {
+		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+		File arq = new File(path, "disciplina.csv");
+
+		if (arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			String linha = buffer.readLine();
+			while (linha != null) {
+				String[] vetLinha = linha.split(";");
+				if (Integer.parseInt(vetLinha[0].trim()) == disciplina.getCodigoDisciplina()) {
+					disciplina.setNomeDisciplina(vetLinha[1].trim());
+					disciplina.setDiaDisciplina(vetLinha[2].trim());
+					disciplina.setDuracaoDisciplina(vetLinha[3].trim());
+					disciplina.setHoraDisciplina(vetLinha[4].trim());
+					break;
+				}
+				linha = buffer.readLine();
+			}
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
+		return disciplina;
+	}
+
 
 	@Override
 	public void Buscar() throws IOException {

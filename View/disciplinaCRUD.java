@@ -5,28 +5,33 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Controller.DisciplinaController;
+
 import javax.swing.JTabbedPane;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class disciplinaCRUD extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField tfCodigoDisciplina;
-	private JTextField tfNomeDisciplina;
-	private JTextField tfDiaDisciplina;
-	private JTextField tfHoraDisciplina;
-	private JTextField tfDuracaoDisciplina;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField tfCodigoDisciplinaCriar;
+	private JTextField tfNomeDisciplinaCriar;
+	private JTextField tfDiaDisciplinaCriar;
+	private JTextField tfDuracaoDisciplinaCriar;
+	private JTextField tfHoraDisciplinaCriar;
+	private JTextField tfCodigoDisciplinaAtualizar;
+	private JTextField tfNomeDisciplinaAtualizar;
+	private JTextField tfDiaDisciplinaAtualizar;
+	private JTextField tfDuracaoDisciplinaAtualizar;
+	private JTextField tfHoraDisciplinaAtualizar;
+	private JTextField tfCodigoDisciplinaDeletar;
 
 	/**
 	 * Launch the application.
@@ -70,55 +75,60 @@ public class disciplinaCRUD extends JFrame {
 		lblCodigodisciplina.setBounds(21, 11, 79, 19);
 		TabCriarDisciplina.add(lblCodigodisciplina);
 		
-		tfCodigoDisciplina = new JTextField();
-		tfCodigoDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfCodigoDisciplina.setBounds(90, 12, 197, 20);
-		TabCriarDisciplina.add(tfCodigoDisciplina);
-		tfCodigoDisciplina.setColumns(10);
+		tfCodigoDisciplinaCriar = new JTextField();
+		tfCodigoDisciplinaCriar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfCodigoDisciplinaCriar.setBounds(90, 12, 197, 20);
+		TabCriarDisciplina.add(tfCodigoDisciplinaCriar);
+		tfCodigoDisciplinaCriar.setColumns(10);
 		
 		JLabel lblNomeDisciplina = new JLabel("Nome");
 		lblNomeDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNomeDisciplina.setBounds(21, 41, 79, 19);
 		TabCriarDisciplina.add(lblNomeDisciplina);
 		
-		tfNomeDisciplina = new JTextField();
-		tfNomeDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfNomeDisciplina.setColumns(10);
-		tfNomeDisciplina.setBounds(90, 42, 197, 20);
-		TabCriarDisciplina.add(tfNomeDisciplina);
+		tfNomeDisciplinaCriar = new JTextField();
+		tfNomeDisciplinaCriar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfNomeDisciplinaCriar.setColumns(10);
+		tfNomeDisciplinaCriar.setBounds(90, 42, 197, 20);
+		TabCriarDisciplina.add(tfNomeDisciplinaCriar);
 		
 		JLabel lblDiaDisciplina = new JLabel("Dia");
 		lblDiaDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblDiaDisciplina.setBounds(21, 71, 79, 19);
 		TabCriarDisciplina.add(lblDiaDisciplina);
 		
-		tfDiaDisciplina = new JTextField();
-		tfDiaDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfDiaDisciplina.setColumns(10);
-		tfDiaDisciplina.setBounds(90, 72, 197, 20);
-		TabCriarDisciplina.add(tfDiaDisciplina);
+		tfDiaDisciplinaCriar = new JTextField();
+		tfDiaDisciplinaCriar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfDiaDisciplinaCriar.setColumns(10);
+		tfDiaDisciplinaCriar.setBounds(90, 72, 197, 20);
+		TabCriarDisciplina.add(tfDiaDisciplinaCriar);
+		
+		JLabel lblDuraçãoDisciplina = new JLabel("Duração");
+		lblDuraçãoDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDuraçãoDisciplina.setBounds(21, 101, 79, 19);
+		TabCriarDisciplina.add(lblDuraçãoDisciplina);
+		
+		tfDuracaoDisciplinaCriar = new JTextField();
+		tfDuracaoDisciplinaCriar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfDuracaoDisciplinaCriar.setColumns(10);
+		tfDuracaoDisciplinaCriar.setBounds(90, 101, 197, 20);
+		TabCriarDisciplina.add(tfDuracaoDisciplinaCriar);
 		
 		JLabel lblHoraDisciplina = new JLabel("Hora");
 		lblHoraDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblHoraDisciplina.setBounds(21, 101, 79, 19);
+		lblHoraDisciplina.setBounds(21, 131, 79, 19);
 		TabCriarDisciplina.add(lblHoraDisciplina);
 		
-		tfHoraDisciplina = new JTextField();
-		tfHoraDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfHoraDisciplina.setColumns(10);
-		tfHoraDisciplina.setBounds(90, 101, 197, 20);
-		TabCriarDisciplina.add(tfHoraDisciplina);
+		tfHoraDisciplinaCriar = new JTextField();
+		tfHoraDisciplinaCriar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tfHoraDisciplinaCriar.setColumns(10);
+		tfHoraDisciplinaCriar.setBounds(90, 131, 197, 20);
+		TabCriarDisciplina.add(tfHoraDisciplinaCriar);
 		
-		JLabel lblDuracaoDisciplina = new JLabel("Duração");
-		lblDuracaoDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDuracaoDisciplina.setBounds(21, 131, 79, 19);
-		TabCriarDisciplina.add(lblDuracaoDisciplina);
-		
-		tfDuracaoDisciplina = new JTextField();
-		tfDuracaoDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfDuracaoDisciplina.setColumns(10);
-		tfDuracaoDisciplina.setBounds(90, 131, 197, 20);
-		TabCriarDisciplina.add(tfDuracaoDisciplina);
+		JButton btnCriarDisciplina = new JButton("Criar");
+		btnCriarDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnCriarDisciplina.setBounds(300, 166, 89, 23);
+		TabCriarDisciplina.add(btnCriarDisciplina);
 		
 		JPanel TabAtualizarDisciplina = new JPanel();
 		tabbedPane.addTab("Atualizar", null, TabAtualizarDisciplina, "Atualizar Disciplina");
@@ -129,19 +139,19 @@ public class disciplinaCRUD extends JFrame {
 		lblcodigo.setBounds(21, 11, 79, 19);
 		TabAtualizarDisciplina.add(lblcodigo);
 		
-		textField = new JTextField();
-		textField.setBounds(90, 12, 197, 20);
-		TabAtualizarDisciplina.add(textField);
-		textField.setColumns(10);
+		tfCodigoDisciplinaAtualizar = new JTextField();
+		tfCodigoDisciplinaAtualizar.setBounds(90, 12, 197, 20);
+		TabAtualizarDisciplina.add(tfCodigoDisciplinaAtualizar);
+		tfCodigoDisciplinaAtualizar.setColumns(10);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnBuscar.setBounds(300, 11, 89, 23);
-		TabAtualizarDisciplina.add(btnBuscar);
+		JButton btnBuscarDisciplinaAtualizar = new JButton("Buscar_AT");
+		btnBuscarDisciplinaAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBuscarDisciplinaAtualizar.setBounds(300, 11, 89, 23);
+		TabAtualizarDisciplina.add(btnBuscarDisciplinaAtualizar);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(21, 39, 266, 34);
-		TabAtualizarDisciplina.add(textArea);
+		JTextArea taDisciplinaAtualizar = new JTextArea();
+		taDisciplinaAtualizar.setBounds(21, 39, 266, 34);
+		TabAtualizarDisciplina.add(taDisciplinaAtualizar);
 		
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -153,53 +163,53 @@ public class disciplinaCRUD extends JFrame {
 		lblDia.setBounds(21, 114, 79, 19);
 		TabAtualizarDisciplina.add(lblDia);
 		
-		JLabel lblcodigo_3 = new JLabel("Hora");
-		lblcodigo_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblcodigo_3.setBounds(21, 144, 79, 19);
-		TabAtualizarDisciplina.add(lblcodigo_3);
+		JLabel lblDuracao = new JLabel("Duração");
+		lblDuracao.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDuracao.setBounds(21, 144, 79, 19);
+		TabAtualizarDisciplina.add(lblDuracao);
 		
-		JLabel lblDuração = new JLabel("Duração");
-		lblDuração.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDuração.setBounds(21, 174, 79, 19);
-		TabAtualizarDisciplina.add(lblDuração);
+		JLabel lblHora = new JLabel("Hora");
+		lblHora.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblHora.setBounds(21, 174, 79, 19);
+		TabAtualizarDisciplina.add(lblHora);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(90, 85, 197, 20);
-		TabAtualizarDisciplina.add(textField_1);
+		tfNomeDisciplinaAtualizar = new JTextField();
+		tfNomeDisciplinaAtualizar.setColumns(10);
+		tfNomeDisciplinaAtualizar.setBounds(90, 85, 197, 20);
+		TabAtualizarDisciplina.add(tfNomeDisciplinaAtualizar);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(90, 115, 197, 20);
-		TabAtualizarDisciplina.add(textField_2);
+		tfDiaDisciplinaAtualizar = new JTextField();
+		tfDiaDisciplinaAtualizar.setColumns(10);
+		tfDiaDisciplinaAtualizar.setBounds(90, 115, 197, 20);
+		TabAtualizarDisciplina.add(tfDiaDisciplinaAtualizar);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(90, 145, 197, 20);
-		TabAtualizarDisciplina.add(textField_3);
+		tfDuracaoDisciplinaAtualizar = new JTextField();
+		tfDuracaoDisciplinaAtualizar.setColumns(10);
+		tfDuracaoDisciplinaAtualizar.setBounds(90, 145, 197, 20);
+		TabAtualizarDisciplina.add(tfDuracaoDisciplinaAtualizar);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(90, 175, 197, 20);
-		TabAtualizarDisciplina.add(textField_4);
+		tfHoraDisciplinaAtualizar = new JTextField();
+		tfHoraDisciplinaAtualizar.setColumns(10);
+		tfHoraDisciplinaAtualizar.setBounds(90, 175, 197, 20);
+		TabAtualizarDisciplina.add(tfHoraDisciplinaAtualizar);
 		
-		JButton btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnAtualizar.setBounds(300, 174, 89, 23);
-		TabAtualizarDisciplina.add(btnAtualizar);
+		JButton btnAtualizarDisciplina = new JButton("Atualizar");
+		btnAtualizarDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnAtualizarDisciplina.setBounds(300, 174, 89, 23);
+		TabAtualizarDisciplina.add(btnAtualizarDisciplina);
 		
 		JPanel TabLerDisciplina = new JPanel();
 		tabbedPane.addTab("Ler", null, TabLerDisciplina, "Ler Disciplina");
 		TabLerDisciplina.setLayout(null);
 		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(10, 12, 319, 191);
-		TabLerDisciplina.add(textArea_1);
+		JTextArea taDisciplinaLer = new JTextArea();
+		taDisciplinaLer.setBounds(10, 12, 319, 191);
+		TabLerDisciplina.add(taDisciplinaLer);
 		
-		JButton btnBuscarProfessor = new JButton("Ler");
-		btnBuscarProfessor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnBuscarProfessor.setBounds(338, 11, 73, 23);
-		TabLerDisciplina.add(btnBuscarProfessor);
+		JButton btnLerDisciplina = new JButton("Ler");
+		btnLerDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnLerDisciplina.setBounds(338, 11, 73, 23);
+		TabLerDisciplina.add(btnLerDisciplina);
 		
 		JPanel TabDeletarDisciplina = new JPanel();
 		tabbedPane.addTab("Deletar", null, TabDeletarDisciplina, "Deletar");
@@ -210,23 +220,41 @@ public class disciplinaCRUD extends JFrame {
 		lblCodigoDisciplina.setBounds(21, 11, 79, 19);
 		TabDeletarDisciplina.add(lblCodigoDisciplina);
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(90, 12, 197, 20);
-		TabDeletarDisciplina.add(textField_5);
-		textField_5.setColumns(10);
+		tfCodigoDisciplinaDeletar = new JTextField();
+		tfCodigoDisciplinaDeletar.setBounds(90, 12, 197, 20);
+		TabDeletarDisciplina.add(tfCodigoDisciplinaDeletar);
+		tfCodigoDisciplinaDeletar.setColumns(10);
 		
-		JButton btnBuscarDisciplina = new JButton("Buscar");
-		btnBuscarDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnBuscarDisciplina.setBounds(300, 11, 89, 23);
-		TabDeletarDisciplina.add(btnBuscarDisciplina);
+		JButton btnBuscarDisciplinaDeletar = new JButton("Buscar_DL");
+		btnBuscarDisciplinaDeletar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBuscarDisciplinaDeletar.setBounds(300, 11, 89, 23);
+		TabDeletarDisciplina.add(btnBuscarDisciplinaDeletar);
 		
-		JTextArea taProfessorLista = new JTextArea();
-		taProfessorLista.setBounds(21, 48, 368, 120);
-		TabDeletarDisciplina.add(taProfessorLista);
+		JTextArea taDisciplinaDeletar = new JTextArea();
+		taDisciplinaDeletar.setBounds(21, 48, 368, 120);
+		TabDeletarDisciplina.add(taDisciplinaDeletar);
 		
 		JButton btnDeletarDisciplina = new JButton("Deletar");
 		btnDeletarDisciplina.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnDeletarDisciplina.setBounds(161, 179, 89, 23);
 		TabDeletarDisciplina.add(btnDeletarDisciplina);
+		
+		DisciplinaController dCont = new DisciplinaController(tfCodigoDisciplinaCriar, tfNomeDisciplinaCriar, tfDuracaoDisciplinaCriar, tfHoraDisciplinaCriar, tfDiaDisciplinaCriar,
+				tfCodigoDisciplinaAtualizar, tfNomeDisciplinaAtualizar, tfDuracaoDisciplinaAtualizar, tfHoraDisciplinaAtualizar, tfDiaDisciplinaAtualizar,
+				taDisciplinaAtualizar, taDisciplinaLer,
+				tfCodigoDisciplinaDeletar, taDisciplinaDeletar
+			);
+			
+			btnCriarDisciplina.addActionListener(dCont);
+
+			btnBuscarDisciplinaAtualizar.addActionListener(dCont);
+			
+			btnAtualizarDisciplina.addActionListener(dCont);
+
+			btnLerDisciplina.addActionListener(dCont);
+
+			btnBuscarDisciplinaDeletar.addActionListener(dCont);
+			
+			btnDeletarDisciplina.addActionListener(dCont);
 	}
 }

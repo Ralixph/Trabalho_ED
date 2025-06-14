@@ -140,12 +140,12 @@ public class CursoCRUD extends JFrame {
 		tfNomeCursoAtualizar = new JTextField();
 		tfNomeCursoAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfNomeCursoAtualizar.setColumns(10);
-		tfNomeCursoAtualizar.setBounds(90, 182, 197, 20);
+		tfNomeCursoAtualizar.setBounds(90, 153, 197, 20);
 		tabAtualizarCurso.add(tfNomeCursoAtualizar);
 		
 		tfAreaCursoAtualizar = new JTextField();
 		tfAreaCursoAtualizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tfAreaCursoAtualizar.setBounds(90, 153, 197, 20);
+		tfAreaCursoAtualizar.setBounds(90, 182, 197, 20); 
 		tabAtualizarCurso.add(tfAreaCursoAtualizar);
 		tfAreaCursoAtualizar.setColumns(10);
 		
@@ -204,11 +204,11 @@ public class CursoCRUD extends JFrame {
 		tabbedPane.addTab("Deletar", null, tabDeletarCurso, "Deletar Curso");
 		tabDeletarCurso.setLayout(null);
 		
-		JTextField tfCodigoCursoBuscarDeletar = new JTextField();
+		/*JTextField tfCodigoCursoBuscarDeletar = new JTextField();
 		tfCodigoCursoBuscarDeletar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tfCodigoCursoBuscarDeletar.setBounds(90, 12, 197, 20);
 		tabDeletarCurso.add(tfCodigoCursoBuscarDeletar);
-		tfCodigoCursoBuscarDeletar.setColumns(10);
+		tfCodigoCursoBuscarDeletar.setColumns(10);*/
 		
 		
 		lblCodigoCurso = new JLabel("Código");
@@ -241,13 +241,18 @@ public class CursoCRUD extends JFrame {
 		taCursoListaDeletar.setBounds(21, 48, 368, 120);
 		tabDeletarCurso.add(taCursoListaDeletar);
 		
-		CursoController cc = new CursoController(tfAreaCursoAtualizar, tfAreaCursoCriar, tfAreaCursoDeletar, tfAreaCursoLer,
+		CursoController cc = new CursoController(tfAreaCursoAtualizar, tfAreaCursoCriar, 
+													tfAreaCursoDeletar, tfAreaCursoLer,
 				
-				tfCodigoCursoAtualizar, tfCodigoCursoCriar, tfCodigoCursoLer, tfCodigoCursoDeletar, tfCodigoCursoBuscarDeletar,
+				tfCodigoCursoAtualizar, tfCodigoCursoCriar, 
+				tfCodigoCursoLer, tfCodigoCursoDeletar,
+					/*tfCodigoCursoBuscarDeletar*/
 				
-				tfNomeCursoCriar, tfNomeCursoAtualizar, tfNomeCursoLer, tfNomeCursoDeletar,
+				tfNomeCursoCriar, tfNomeCursoAtualizar, 
+					tfNomeCursoLer, tfNomeCursoDeletar,
 				
-				taCursoListaDeletar, taCursoLista, taCursoListaLer);
+				taCursoListaDeletar, taCursoLista, 
+					taCursoListaLer);
 		
 		
 		btnCriarCurso.addActionListener(cc);

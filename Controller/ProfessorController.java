@@ -269,13 +269,17 @@ public class ProfessorController implements ActionListener, IProcura {
 
 				if (verifica == 0 && (Double.parseDouble(vetLinha[0]) == CPF)) {
 					verifica++;
+					professor.setCPFProfessor(Double.parseDouble(vetProfessor[0]));
+					professor.setNomeProfessor(vetProfessor[1]);
+					professor.setAreaProfessor(vetProfessor[2]);
+					professor.setPontosProfessor(Integer.parseInt(vetProfessor[3]));
 				} else {
 					professor.setCPFProfessor(Double.parseDouble(vetLinha[0]));
 					professor.setNomeProfessor(vetLinha[1]);
 					professor.setAreaProfessor(vetLinha[2]);
 					professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
-					lista.addLast(professor);
 				}
+				lista.addLast(professor);
 				linha = buffer.readLine();
 			}
 			fis.close();

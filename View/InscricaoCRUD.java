@@ -35,7 +35,7 @@ public class InscricaoCRUD extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ProfessorCRUD frame = new ProfessorCRUD();
+					InscricaoCRUD frame = new InscricaoCRUD();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,7 +65,7 @@ public class InscricaoCRUD extends JFrame {
 // Aba Criar
 		
 		JPanel tabCriarInscricao = new JPanel();
-		tabbedPane.addTab("Criar", null, tabCriarInscricao, "Criar Professor");
+		tabbedPane.addTab("Criar", null, tabCriarInscricao, "Criar Inscricao");
 		tabCriarInscricao.setLayout(null);
 		
 		JLabel lblCPFProfessor = new JLabel("CPF");
@@ -115,7 +115,7 @@ public class InscricaoCRUD extends JFrame {
 // Aba atualizar
 		
 		JPanel tabAtualizarInscricao = new JPanel();
-		tabbedPane.addTab("Atualizar", null, tabAtualizarInscricao, "Atualizar Professor");
+		tabbedPane.addTab("Atualizar", null, tabAtualizarInscricao, "Atualizar Inscricao");
 		tabAtualizarInscricao.setLayout(null);
 		
 		lblCodProcessoAtualizar = new JLabel("CodProcesso");
@@ -174,7 +174,7 @@ public class InscricaoCRUD extends JFrame {
 // Aba Ler
 		
 		JPanel tabLerInscricao = new JPanel();
-		tabbedPane.addTab("Ler", null, tabLerInscricao, "Ler Professor");
+		tabbedPane.addTab("Ler", null, tabLerInscricao, "Ler Inscricao");
 		tabLerInscricao.setLayout(null);
 		
 		JButton btnLerInscricao = new JButton("Ler");
@@ -189,7 +189,7 @@ public class InscricaoCRUD extends JFrame {
 // Aba Deletar
 		
 		JPanel tabDeletarInscricao = new JPanel();
-		tabbedPane.addTab("Deletar", null, tabDeletarInscricao, "Deletar Professor");
+		tabbedPane.addTab("Deletar", null, tabDeletarInscricao, "Deletar Inscricao");
 		tabDeletarInscricao.setLayout(null);
 		
 		lblCodProcessoDeletar = new JLabel("CodProcesso");

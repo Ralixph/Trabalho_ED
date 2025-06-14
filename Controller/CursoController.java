@@ -26,7 +26,7 @@ public class CursoController implements ActionListener, IProcura {
 	private JTextField tfNomeCursoCriar;
 	private JTextField tfAreaCursoCriar;
 	
-	private JTextField tfCodigoCursoBuscarAtualizar;
+	private JTextField tfCodigoCursoAtualizar;
 	private JTextField tfNomeCursoAtualizar;
 	private JTextField tfAreaCursoAtualizar;
 	private JTextField tfPontosProfessorAtualizar;
@@ -37,14 +37,14 @@ public class CursoController implements ActionListener, IProcura {
 	private JTextArea taCursoListaLer;
 	
 	private JTextArea taCursoListaDeletar;
-	private JTextField tfCodigoCursoBuscarDeletar;
+	private JTextField tfCodigoCursoDeletar;
 	
 	
 	private JTextField tfAreaCursoDeletar;
 	
-	private JTextField tfCodigoCursoDeletar;
+	//private JTextField tfCodigoCursoDeletar;
 	
-	private JTextField tfCodigoCursoAtualizar;
+	//private JTextField tfCodigoCursoAtualizar;
 	
 	private JTextArea taCursoLista;
 	
@@ -54,7 +54,7 @@ public class CursoController implements ActionListener, IProcura {
 			
 			JTextField tfCodigoCursoAtualizar,JTextField tfCodigoCursoCriar,
 			JTextField tfCodigoCursoLer,JTextField tfCodigoCursoDeletar, 
-			JTextField tfCodigoCursoBuscarDeletar,
+			/*JTextField tfCodigoCursoBuscarDeletar,*/
 			
 			JTextField tfNomeCursoCriar, JTextField tfNomeCursoAtualizar, 
 			JTextField tfNomeCursoLer, JTextField tfNomeCursoDeletar,
@@ -71,7 +71,7 @@ public class CursoController implements ActionListener, IProcura {
 		this.tfCodigoCursoCriar = tfCodigoCursoCriar;
 		this.tfCodigoCursoLer = tfCodigoCursoLer;
 		this.tfCodigoCursoDeletar = tfCodigoCursoDeletar;
-		this.tfCodigoCursoBuscarDeletar = tfCodigoCursoBuscarDeletar;
+		//this.tfCodigoCursoBuscarDeletar = tfCodigoCursoBuscarDeletar;
 		
 		
 		this.tfNomeCursoAtualizar = tfNomeCursoAtualizar;
@@ -242,10 +242,10 @@ public class CursoController implements ActionListener, IProcura {
 	
 	public void BuscarDeletar() throws IOException {
 		Curso curso = new Curso();
-		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoBuscarDeletar.getText()));
+		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoDeletar.getText()));
 
 		curso = buscaCurso(curso);
-		tfCodigoCursoBuscarDeletar.setText("");
+		tfCodigoCursoDeletar.setText("");
 		if (curso.getNomeCurso() != null) {
 			taCursoListaDeletar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
 					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
@@ -270,8 +270,8 @@ public class CursoController implements ActionListener, IProcura {
 		File arq = new File(path, "curso.csv");
 		ListaGenerica<Curso> lista = new ListaGenerica<>();
 
-		String[] vetCurso = curs.split(";");
-		int codigo = Integer.parseInt(vetCurso[0]);
+		String[] vetProfessor = curs.split(";");
+		int codigo = Integer.parseInt(vetProfessor[0]);
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
 			InputStreamReader isr = new InputStreamReader(fis);
@@ -287,16 +287,17 @@ public class CursoController implements ActionListener, IProcura {
 				Curso curso = new Curso();
 
 				if (verifica == 0 && (Integer.parseInt(vetLinha[0]) == codigo)) {
-					curso.setNomeCurso(vetCurso[1]);
-					curso.setAreaCurso(vetCurso[2]);
 					verifica++;
+					curso.setCodigoCurso(Integer.parseInt(vetProfessor[0]));
+					curso.setNomeCurso(vetProfessor[1]);
+					curso.setAreaCurso(vetProfessor[2]);
 				} else {
 					curso.setCodigoCurso(Integer.parseInt(vetLinha[0]));
 					curso.setNomeCurso(vetLinha[1]);
 					curso.setAreaCurso(vetLinha[2]);
-					lista.addLast(curso);
-					linha = buffer.readLine();
 				}
+				lista.addLast(curso);
+				linha = buffer.readLine();
 			}
 			fis.close();
 			isr.close();
@@ -308,27 +309,28 @@ public class CursoController implements ActionListener, IProcura {
 			pw.flush();
 			pw.close();
 			fw.close();
-			
+			FileWriter fw1 = new FileWriter(arq, existe);
+			PrintWriter pw1 = new PrintWriter(fw1);
 			int tamanhoLista = lista.size();
 
 			for (int i = 0; i < tamanhoLista; i++) {
+				
 				Curso curso = lista.get(i);
-				FileWriter fw1 = new FileWriter(arq, existe);
-				PrintWriter pw1 = new PrintWriter(fw1);
 				pw1.write(curso.toString() + "\r\n");
-				pw1.flush();
-				pw1.close();
-				fw1.close();
+				
 			}
+			pw1.flush();
+			pw1.close();
+			fw1.close();
 		}
 	}
 	
 	public void BuscarAtualizar() throws IOException {
 		Curso curso = new Curso();
-		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoBuscarAtualizar.getText()));
+		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoAtualizar.getText()));
 
 		curso = buscaCurso(curso);
-		tfCodigoCursoBuscarAtualizar.setText("");
+		tfCodigoCursoAtualizar.setText("");
 		if (curso.getNomeCurso() != null) {
 			taCursoListaAtualizar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
 					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");

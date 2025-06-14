@@ -11,7 +11,7 @@ public class Disciplina {
 	@Override
 	public String toString() {
 		return codigoDisciplina + "; " + nomeDisciplina +"; " + diaDisciplina + "; " 
-	+ horaDisciplina + ";" + horaDisciplina;
+	+ duracaoDisciplina + ";" + horaDisciplina;
 	}
 
 	public int getCodigoDisciplina() {
@@ -34,24 +34,24 @@ public class Disciplina {
 		return diaDisciplina;
 	}
 
-	public void setDiaDisciplina(String diaSemana) {
-		this.diaDisciplina = diaSemana;
+	public void setDiaDisciplina(String diaDisciplina) {
+	    this.diaDisciplina = diaDisciplina;
 	}
 
-	public String getDuracaoDisclina() {
+	public String getDuracaoDisciplina() {
 		return duracaoDisciplina;
 	}
 
-	public void setDuracaoDisciplina(String horasInicial) {
-		this.duracaoDisciplina = horasInicial;
+	public void setDuracaoDisciplina(String duracaoDisciplina) {
+	    this.duracaoDisciplina = duracaoDisciplina;
 	}
 
 	public String getHoraDisciplina() {
 		return horaDisciplina;
 	}
 
-	public void setHoraDisciplina(String horasTotal) {
-		this.horaDisciplina = horasTotal;
+	public void setHoraDisciplina(String horaDisciplina) {
+	    this.horaDisciplina = horaDisciplina;
 	}
 	
 	
