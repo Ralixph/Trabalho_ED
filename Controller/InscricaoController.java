@@ -18,6 +18,7 @@ import model.Inscricao;
 import model.Professor;
 import modeloLista.ListaGenerica;
 import model.Disciplina;
+import algorithms.sorting.QuickSortLista;
 
 public class InscricaoController implements ActionListener, IProcura {
 
@@ -131,7 +132,7 @@ public class InscricaoController implements ActionListener, IProcura {
 		if (!dir.exists()) {
 			dir.mkdir();
 		}
-		File arq = new File(path, "inscricao.csv");
+		File arq = new File(path, "inscricoes.csv");
 		boolean existe = false;
 		if (arq.exists()) {
 			existe = true;
@@ -167,9 +168,9 @@ public class InscricaoController implements ActionListener, IProcura {
 	}
 
 	private void DeletarInscricao(Double CodProcesso) throws Exception {
-		
+
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "inscricao.csv");
+		File arq = new File(path, "inscricoes.csv");
 		ListaGenerica<String> lista = new ListaGenerica<>();
 
 		if (arq.exists() && arq.isFile()) {
@@ -195,14 +196,14 @@ public class InscricaoController implements ActionListener, IProcura {
 			fis.close();
 			isr.close();
 			buffer.close();
-			
+
 			FileWriter fw = new FileWriter(arq);
 			PrintWriter pw = new PrintWriter(fw);
 			pw.write("");
 			pw.flush();
 			pw.close();
 			fw.close();
-			
+
 			int tamanhoLista = lista.size();
 
 			for (int i = 0; i < tamanhoLista; i++) {
@@ -251,12 +252,12 @@ public class InscricaoController implements ActionListener, IProcura {
 		AtualizarInscricao(buffer.toString());
 		tfCodDisciplinaInscricaoCriar.setText("");
 		tfCodProcessoInscricaoCriar.setText("");
-		
+
 	}
 
 	private void AtualizarInscricao(String novaInscricao) throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "inscricao.csv");
+		File arq = new File(path, "inscricoes.csv");
 		ListaGenerica<String> lista = new ListaGenerica<>();
 
 		String[] vetInscricao = novaInscricao.split(";");
@@ -291,7 +292,7 @@ public class InscricaoController implements ActionListener, IProcura {
 			pw.flush();
 			pw.close();
 			fw.close();
-			
+
 			int tamanhoLista = lista.size();
 
 			for (int i = 0; i < tamanhoLista; i++) {
@@ -308,13 +309,71 @@ public class InscricaoController implements ActionListener, IProcura {
 
 	@Override
 	public void Ler() throws IOException, Exception {
-		// TODO Auto-generated method stub
+		String pathProfessor = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+		File arqProfessor = new File(pathProfessor, "professor.csv");
 
+		ListaGenerica<Professor> listaAuxiliar = new ListaGenerica<>();
+		ListaGenerica<Professor> lista = new ListaGenerica<>();
+
+		if (arqProfessor.exists() && arqProfessor.isFile()) {
+			FileInputStream fis = new FileInputStream(arqProfessor);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			String linha = buffer.readLine();
+			while (linha != null) {
+				String[] vetLinha = linha.split(";");
+				Professor professor = new Professor();
+				professor.setCPFProfessor(Double.parseDouble(vetLinha[0]));
+				professor.setNomeProfessor(vetLinha[1]);
+				professor.setAreaProfessor(vetLinha[2]);
+				professor.setPontosProfessor(Integer.parseInt(vetLinha[3]));
+				listaAuxiliar.addLast(professor);
+				lista.addLast(professor);
+				linha = buffer.readLine();
+			}
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
+		int tamanhoLista = lista.size();
+
+		QuickSortLista quickSort = new QuickSortLista();
+		lista = quickSort.quickSort(lista, 0, tamanhoLista - 1);
+
+		String pathInscricoes = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+		File arqInscricoes = new File(pathInscricoes, "inscricoes.csv");
+		if (arqInscricoes.exists() && arqInscricoes.isFile()) {
+			
+			for (int i = 0; i < tamanhoLista; i++) {
+
+				Professor professor = new Professor();
+				professor = lista.get(i);
+
+				FileInputStream fis1 = new FileInputStream(arqInscricoes);
+				InputStreamReader isr1 = new InputStreamReader(fis1);
+				BufferedReader buffer1 = new BufferedReader(isr1);
+				String linha1 = buffer1.readLine();
+				while (linha1 != null) {
+					String[] vetLinha = linha1.split(";");
+					if (Double.parseDouble(vetLinha[0]) == professor.getCPFProfessor()) {
+						taInscricaoListaLer.setText("CPF: " + professor.getCPFProfessor() + " - Nome: "
+								+ professor.getNomeProfessor() + "  - Area: " + professor.getAreaProfessor()
+								+ " - Pontos: " + professor.getPontosProfessor() + " - Cod Disciplina: " + vetLinha[1]
+								+ "  - Cod Processo: " + vetLinha[2]);
+						break;
+					}
+					linha1 = buffer1.readLine();
+				}
+				buffer1.close();
+				isr1.close();
+				fis1.close();
+			}
+		}
 	}
 
 	private String buscaInscricao(Inscricao inscricao) throws IOException {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "inscricao.csv");
+		File arq = new File(path, "inscricoes.csv");
 
 		String linha = null;
 
