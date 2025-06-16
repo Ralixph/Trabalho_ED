@@ -13,13 +13,13 @@ import java.io.PrintWriter;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import Interface.IProcura;
+import Interface.ICRUD;
 import model.Professor;
 
 import modeloLista.ListaGenerica;
 import modelFila.Fila;
 
-public class ProfessorController implements ActionListener, IProcura {
+public class ProfessorController implements ActionListener, ICRUD {
 
 	private JTextField tfCPFProfessorCriar;
 	private JTextField tfNomeProfessorCriar;
@@ -320,6 +320,8 @@ public class ProfessorController implements ActionListener, IProcura {
 		File arq = new File(path, "professor.csv");
 		Fila<Professor> filaAuxiliar = new Fila<>();
 		Fila<Professor> fila = new Fila<>();
+		
+		taProfessorListaLer.setText("");
 
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);

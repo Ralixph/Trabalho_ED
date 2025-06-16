@@ -13,14 +13,14 @@ import java.io.PrintWriter;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import Interface.IProcura;
+import Interface.ICRUD;
 import model.Inscricao;
 import model.Professor;
 import modeloLista.ListaGenerica;
 import model.Disciplina;
 import algorithms.sorting.QuickSortLista;
 
-public class InscricaoController implements ActionListener, IProcura {
+public class InscricaoController implements ActionListener, ICRUD {
 
 	private JTextField tfCPFInscricaoCriar;
 	private JTextField tfCodDisciplinaInscricaoCriar;

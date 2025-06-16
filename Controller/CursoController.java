@@ -10,17 +10,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import Interface.IProcura;
+import Interface.ICRUD;
 import model.Curso;
-import model.Professor;
 import modelFila.Fila;
 import modeloLista.ListaGenerica;
 
-public class CursoController implements ActionListener, IProcura {
+public class CursoController implements ActionListener, ICRUD {
 
 	private JTextField tfCodigoCursoCriar;
 	private JTextField tfNomeCursoCriar;

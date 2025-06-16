@@ -13,13 +13,13 @@ import java.io.PrintWriter;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import Interface.IProcura;
+import Interface.ICRUD;
 import model.Disciplina;
 
 import modeloLista.ListaGenerica;
 import modelFila.Fila;
 
-public class DisciplinaController implements ActionListener, IProcura{
+public class DisciplinaController implements ActionListener, ICRUD{
 	
 	private JTextField tfCodigoDisciplinaCriar;
 	private JTextField tfNomeDisciplinaCriar;

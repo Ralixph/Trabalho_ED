@@ -13,13 +13,13 @@ import java.io.PrintWriter;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import Interface.IProcura;
+import Interface.ICRUD;
 import model.Disciplina;
 
 import modeloLista.ListaGenerica;
 import modelFila.Fila;
 
-public class DisciplinaController implements ActionListener, IProcura{
+public class DisciplinaController implements ActionListener, ICRUD{
 	
 	private JTextField tfCodigoDisciplinaCriar;
 	private JTextField tfNomeDisciplinaCriar;
@@ -155,7 +155,6 @@ public class DisciplinaController implements ActionListener, IProcura{
 	    disciplina.setCodigoDisciplina(Integer.parseInt(tfCodigoDisciplinaDeletar.getText()));
 
 	    disciplina = buscaDisciplina(disciplina);
-	    tfCodigoDisciplinaDeletar.setText("");
 
 	    if (disciplina.getNomeDisciplina() != null) {
 	        taDisciplinaDeletar.setText(
@@ -176,6 +175,8 @@ public class DisciplinaController implements ActionListener, IProcura{
 		int COD = Integer.parseInt(tfCodigoDisciplinaDeletar.getText());
 
 		DeletarDisciplina(COD);
+		tfCodigoDisciplinaCriar.setText("");
+		taDisciplinaAtualizar.setText("Disciplina deletada com Sucesso");
 	}
 
 	private void DeletarDisciplina(int cod) throws Exception {
@@ -242,12 +243,11 @@ public class DisciplinaController implements ActionListener, IProcura{
 		disciplina.setCodigoDisciplina(Integer.parseInt(tfCodigoDisciplinaAtualizar.getText()));
 
 		disciplina = buscaDisciplina(disciplina);
-		tfCodigoDisciplinaAtualizar.setText("");
 		if (disciplina.getNomeDisciplina() != null) {
 			taDisciplinaAtualizar.setText("Código: " + disciplina.getCodigoDisciplina() + " - Nome: " + disciplina.getNomeDisciplina()
 					+ "  - Dia: " + disciplina.getDiaDisciplina() + " - Hora: " + disciplina.getHoraDisciplina() + " - Duração: " + disciplina.getDuracaoDisciplina()) ;
 		} else {
-			taDisciplinaAtualizar.setText("Cliente nao encontrado");
+			taDisciplinaAtualizar.setText("Cliente não encontrado");
 		}
 	}
 	
@@ -261,11 +261,17 @@ public class DisciplinaController implements ActionListener, IProcura{
 		disciplina.setHoraDisciplina(tfHoraDisciplinaAtualizar.getText());
 
 		AtualizarDisciplina(disciplina.toString());
+		tfCodigoDisciplinaCriar.setText("");
+		tfNomeDisciplinaCriar.setText("");
+		tfDuracaoDisciplinaCriar.setText("");
+		tfHoraDisciplinaCriar.setText("");
+		tfDiaDisciplinaCriar.setText("");
+		taDisciplinaAtualizar.setText("Disciplina atualizada com Sucesso");
 	}
 	
 	public void AtualizarDisciplina(String disc) throws Exception {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "professor.csv");
+		File arq = new File(path, "disciplina.csv");
 		ListaGenerica<Disciplina> lista = new ListaGenerica<>();
 
 		String[] vetDisciplina = disc.split(";");
@@ -328,6 +334,8 @@ public class DisciplinaController implements ActionListener, IProcura{
 	    String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 	    File arq = new File(path, "disciplina.csv");
 
+	    taDisciplinaLer.setText("");
+	    
 	    Fila<Disciplina>[] tabela = new Fila[10];
 	    for (int i = 0; i < 10; i++) {
 	        tabela[i] = new Fila<>();

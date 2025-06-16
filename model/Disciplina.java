@@ -10,7 +10,7 @@ public class Disciplina {
 	
 	@Override
 	public String toString() {
-		return codigoDisciplina + "; " + nomeDisciplina +"; " + diaDisciplina + "; " 
+		return codigoDisciplina + ";" + nomeDisciplina +";" + diaDisciplina + ";" 
 	+ duracaoDisciplina + ";" + horaDisciplina;
 	}
 
