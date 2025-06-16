@@ -209,7 +209,7 @@ public class DisciplinaController implements ActionListener, IProcura{
 	            }
 	            linha = buffer.readLine();
 	        }
-
+	        InscricaoController.DeletarInscricoesPorDisciplina(cod);
 	        buffer.close();
 	        isr.close();
 	        fis.close();
@@ -232,6 +232,7 @@ public class DisciplinaController implements ActionListener, IProcura{
 	            pw1.close();
 	            fw1.close();
 	        }
+
 	    }
 	}
 
@@ -294,9 +295,9 @@ public class DisciplinaController implements ActionListener, IProcura{
 					disciplina.setDiaDisciplina(vetDisciplina[2]);
 					disciplina.setDuracaoDisciplina(vetDisciplina[3]);
 					disciplina.setHoraDisciplina(vetDisciplina[4]);
-					lista.addLast(disciplina);
-					linha = buffer.readLine();
 				}
+				lista.addLast(disciplina);
+				linha = buffer.readLine();
 			}
 			fis.close();
 			isr.close();
@@ -308,9 +309,8 @@ public class DisciplinaController implements ActionListener, IProcura{
 			pw.flush();
 			pw.close();
 			fw.close();
-			
-			int tamanhoLista = lista.size();
 
+			int tamanhoLista = lista.size();
 			for (int i = 0; i < tamanhoLista; i++) {
 				Disciplina disciplina = lista.get(i);
 				FileWriter fw1 = new FileWriter(arq, existe);
