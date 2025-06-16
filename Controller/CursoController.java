@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import Interface.ICRUD;
+import View.ErroTela;
 import model.Curso;
 import modelFila.Fila;
 import modeloLista.ListaGenerica;
@@ -75,46 +76,64 @@ public class CursoController implements ActionListener, ICRUD {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
+		ErroTela tela = new ErroTela();
+
 		if (cmd.equals("Criar")) {
 			try {
 				Criar();
+			} catch (NumberFormatException ex) {
+				tela.mostrarErros("Código inválido. Use apenas números inteiros.");
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				tela.mostrarErros("Erro ao criar o curso.");
 			}
 		}
 
 		if (cmd.equals("Deletar")) {
 			try {
 				Deletar();
+			} catch (NumberFormatException ex) {
+				tela.mostrarErros("Código inválido para deletar.");
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				tela.mostrarErros("Erro ao deletar o curso.");
 			}
 		}
+
 		if (cmd.equals("Buscar_AT")) {
 			try {
 				BuscarAtualizar();
+			} catch (NumberFormatException ex) {
+				tela.mostrarErros("Código inválido para buscar atualização.");
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				tela.mostrarErros("Erro ao buscar curso para atualizar.");
 			}
 		}
+
 		if (cmd.equals("Buscar_DL")) {
 			try {
 				BuscarDeletar();
+			} catch (NumberFormatException ex) {
+				tela.mostrarErros("Código inválido para buscar remoção.");
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				tela.mostrarErros("Erro ao buscar curso para deletar.");
 			}
 		}
+
 		if (cmd.equals("Atualizar")) {
 			try {
 				Atualizar();
+			} catch (NumberFormatException ex) {
+				tela.mostrarErros("Código inválido na atualização.");
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				tela.mostrarErros("Erro ao atualizar o curso.");
 			}
 		}
+
 		if (cmd.equals("Ler")) {
 			try {
 				Ler();
-			} catch (Exception e1) {e1.printStackTrace();}
+			} catch (Exception e1) {
+				tela.mostrarErros("Erro ao ler os cursos.");
+			}
 		}
 	}
 	

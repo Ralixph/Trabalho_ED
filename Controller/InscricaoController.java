@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import Interface.ICRUD;
+import View.ErroTela;
 import model.Inscricao;
 import model.Professor;
 import modeloLista.ListaGenerica;
@@ -56,52 +57,64 @@ public class InscricaoController implements ActionListener, ICRUD {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String cmd = e.getActionCommand();
-		if (cmd.equals("Criar")) {
-			try {
-				Criar();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
+	    String cmd = e.getActionCommand();
+	    ErroTela tela = new ErroTela();
 
-		if (cmd.equals("Deletar")) {
-			try {
-				Deletar();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
-		if (cmd.equals("Buscar_AT")) {
-			try {
-				BuscarAtualizar();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-		if (cmd.equals("Buscar_DL")) {
-			try {
-				BuscarDeletar();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-		if (cmd.equals("Atualizar")) {
-			try {
-				Atualizar();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
-		if (cmd.equals("Ler")) {
-			try {
-				Ler();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
+	    if (cmd.equals("Criar")) {
+	        try {
+	            Criar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro ao criar inscrição.");
+	        } catch (NumberFormatException e1) {
+	            tela.mostrarErros("Dados numéricos inválidos ao criar inscrição.");
+	        }
+	    }
+
+	    if (cmd.equals("Deletar")) {
+	        try {
+	            Deletar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro de leitura ao deletar inscrição.");
+	        } catch (Exception e1) {
+	            tela.mostrarErros("Erro ao deletar inscrição.");
+	        }
+	    }
+
+	    if (cmd.equals("Buscar_AT")) {
+	        try {
+	            BuscarAtualizar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro ao buscar inscrição para atualizar.");
+	        }
+	    }
+
+	    if (cmd.equals("Buscar_DL")) {
+	        try {
+	            BuscarDeletar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro ao buscar inscrição para deletar.");
+	        }
+	    }
+
+	    if (cmd.equals("Atualizar")) {
+	        try {
+	            Atualizar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro de leitura ao atualizar inscrição.");
+	        } catch (Exception e1) {
+	            tela.mostrarErros("Erro ao atualizar inscrição.");
+	        }
+	    }
+
+	    if (cmd.equals("Ler")) {
+	        try {
+	            Ler();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro de leitura ao carregar lista de inscrições.");
+	        } catch (Exception e1) {
+	            tela.mostrarErros("Erro ao carregar lista de inscrições.");
+	        }
+	    }
 	}
 
 	@Override
@@ -382,8 +395,7 @@ public class InscricaoController implements ActionListener, ICRUD {
 		}
 		int tamanhoLista = lista.size();
 
-		QuickSortLista quickSort = new QuickSortLista();
-		lista = quickSort.quickSort(lista, 0, tamanhoLista - 1);
+		lista = bubbleSort(lista);
 
 		String pathInscricoes = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arqInscricoes = new File(pathInscricoes, "inscricoes.csv");
@@ -414,6 +426,41 @@ public class InscricaoController implements ActionListener, ICRUD {
 			}
 		}
 	}
+	
+	public ListaGenerica<Professor> bubbleSort(ListaGenerica<Professor> lista) throws Exception {
+        int tamanho = lista.size();
+        boolean trocou;
+
+        for (int i = 0; i < tamanho - 1; i++) {
+            trocou = false;
+
+            for (int j = 0; j < tamanho - i - 1; j++) {
+                Professor atual = lista.get(j);
+                Professor proximo = lista.get(j + 1);
+
+                if (atual.getCPFProfessor() > proximo.getCPFProfessor()) {  
+                    swap(lista, j, j + 1);
+                    trocou = true;
+                }
+            }
+
+            if (!trocou) {
+                break;
+            }
+        }
+		return lista;
+    }
+	
+	private void swap(ListaGenerica<Professor> lista, int i, int j) throws Exception {
+		Professor elemI = lista.get(i);
+        Professor elemJ = lista.get(j);
+
+        lista.remove(j);
+        lista.remove(i);
+
+        lista.add(elemJ, i);
+        lista.add(elemI, j);
+    }
 
 	private String buscaInscricao(Inscricao inscricao) throws IOException {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";

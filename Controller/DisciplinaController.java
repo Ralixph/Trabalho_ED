@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import Interface.ICRUD;
+import View.ErroTela;
 import model.Disciplina;
 
 import modeloLista.ListaGenerica;
@@ -62,59 +63,67 @@ public class DisciplinaController implements ActionListener, ICRUD{
 		this.tfCodigoDisciplinaDeletar = tfCodigoDisciplinaDeletar;
 		this.taDisciplinaDeletar = taDisciplinaDeletar;
 	}
-		@Override
+	@Override
 	public void actionPerformed(ActionEvent e) {
-			String cmd = e.getActionCommand();
-			if (cmd.equals("Criar")) {
-				try {
-					Criar();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
+	    String cmd = e.getActionCommand();
+	    ErroTela tela = new ErroTela();
 
-			if (cmd.equals("Deletar")) {
-				try {
-					Deletar();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-			if (cmd.equals("Buscar_AT")) {
-				try {
-					BuscarAtualizar();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-			if (cmd.equals("Buscar_DL")) {
-				try {
-					BuscarDeletar();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-			if (cmd.equals("Atualizar")) {
-				try {
-					Atualizar();
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-			if (cmd.equals("Ler")) {
-				try {
-					Ler();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		}
+	    if (cmd.equals("Criar")) {
+	        try {
+	            Criar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro ao criar inscrição.");
+	        } catch (NumberFormatException e1) {
+	            tela.mostrarErros("Dados numéricos inválidos ao criar inscrição.");
+	        }
+	    }
+
+	    if (cmd.equals("Deletar")) {
+	        try {
+	            Deletar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro de leitura ao deletar inscrição.");
+	        } catch (Exception e1) {
+	            tela.mostrarErros("Erro ao deletar inscrição.");
+	        }
+	    }
+
+	    if (cmd.equals("Buscar_AT")) {
+	        try {
+	            BuscarAtualizar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro ao buscar inscrição para atualizar.");
+	        }
+	    }
+
+	    if (cmd.equals("Buscar_DL")) {
+	        try {
+	            BuscarDeletar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro ao buscar inscrição para deletar.");
+	        }
+	    }
+
+	    if (cmd.equals("Atualizar")) {
+	        try {
+	            Atualizar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro de leitura ao atualizar inscrição.");
+	        } catch (Exception e1) {
+	            tela.mostrarErros("Erro ao atualizar inscrição.");
+	        }
+	    }
+
+	    if (cmd.equals("Ler")) {
+	        try {
+	            Ler();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro de leitura ao carregar lista de inscrições.");
+	        } catch (Exception e1) {
+	            tela.mostrarErros("Erro ao carregar lista de inscrições.");
+	        }
+	    }
+	}
 		
 	public void Criar() throws IOException {
 		Disciplina disciplina = new Disciplina();

@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import Interface.ICRUD;
+import View.ErroTela;
 import model.Professor;
 
 import modeloLista.ListaGenerica;
@@ -59,52 +60,58 @@ public class ProfessorController implements ActionListener, ICRUD {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String cmd = e.getActionCommand();
-		if (cmd.equals("Criar")) {
-			try {
-				Criar();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
+	    String cmd = e.getActionCommand();
+	    ErroTela tela = new ErroTela();
 
-		if (cmd.equals("Deletar")) {
-			try {
-				Deletar();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
-		if (cmd.equals("Buscar_AT")) {
-			try {
-				BuscarAtualizar();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-		if (cmd.equals("Buscar_DL")) {
-			try {
-				BuscarDeletar();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-		if (cmd.equals("Atualizar")) {
-			try {
-				Atualizar();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
-		if (cmd.equals("Ler")) {
-			try {
-				Ler();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
+	    if (cmd.equals("Criar")) {
+	        try {
+	            Criar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro ao criar disciplina.");
+	        }
+	    }
+
+	    if (cmd.equals("Deletar")) {
+	        try {
+	            Deletar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro de leitura ao deletar disciplina.");
+	        } catch (Exception e1) {
+	            tela.mostrarErros("Erro ao deletar disciplina.");
+	        }
+	    }
+
+	    if (cmd.equals("Buscar_AT")) {
+	        try {
+	            BuscarAtualizar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro ao buscar disciplina para atualizar.");
+	        }
+	    }
+
+	    if (cmd.equals("Buscar_DL")) {
+	        try {
+	            BuscarDeletar();
+	        } catch (IOException e1) {
+	            tela.mostrarErros("Erro ao buscar disciplina para deletar.");
+	        }
+	    }
+
+	    if (cmd.equals("Atualizar")) {
+	        try {
+	            Atualizar();
+	        } catch (Exception e1) {
+	            tela.mostrarErros("Erro ao atualizar disciplina.");
+	        }
+	    }
+
+	    if (cmd.equals("Ler")) {
+	        try {
+	            Ler();
+	        } catch (Exception e1) {
+	            tela.mostrarErros("Erro ao ler lista de disciplinas.");
+	        }
+	    }
 	}
 
 	@Override
