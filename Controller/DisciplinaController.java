@@ -173,8 +173,8 @@ public class DisciplinaController implements ActionListener, ICRUD{
 		int COD = Integer.parseInt(tfCodigoDisciplinaDeletar.getText());
 
 		DeletarDisciplina(COD);
-		tfCodigoDisciplinaCriar.setText("");
-		taDisciplinaAtualizar.setText("Disciplina deletada com Sucesso");
+		tfCodigoDisciplinaDeletar.setText("");
+		taDisciplinaDeletar.setText("Disciplina deletada com Sucesso");
 	}
 	private void DeletarDisciplina(int cod) throws Exception {
 	    String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
@@ -257,11 +257,11 @@ public class DisciplinaController implements ActionListener, ICRUD{
 		disciplina.setHoraDisciplina(tfHoraDisciplinaAtualizar.getText());
 
 		AtualizarDisciplina(disciplina.toString());
-		tfCodigoDisciplinaCriar.setText("");
-		tfNomeDisciplinaCriar.setText("");
-		tfDuracaoDisciplinaCriar.setText("");
-		tfHoraDisciplinaCriar.setText("");
-		tfDiaDisciplinaCriar.setText("");
+		tfCodigoDisciplinaAtualizar.setText("");
+		tfNomeDisciplinaAtualizar.setText("");
+		tfDuracaoDisciplinaAtualizar.setText("");
+		tfHoraDisciplinaAtualizar.setText("");
+		tfDiaDisciplinaAtualizar.setText("");
 		taDisciplinaAtualizar.setText("Disciplina atualizada com Sucesso");
 	}
 	

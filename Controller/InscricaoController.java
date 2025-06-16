@@ -166,6 +166,7 @@ public class InscricaoController implements ActionListener, ICRUD {
 
 		DeletarInscricao(CodProcesso);
 		tfCodProcessoInscricaoBuscarDeletar.setText("");
+		taInscricaoListaAtualizar.setText("Incrição deletada com sucesso");
 		
 	}
 
@@ -269,9 +270,9 @@ public class InscricaoController implements ActionListener, ICRUD {
 			taInscricaoListaAtualizar.setText("CPF: " + inscricaoCompleta[0] + " - Cod Disciplina: "
 					+ inscricaoCompleta[1] + "  - Cod Processo: " + inscricaoCompleta[2]);
 		} else {
-			taInscricaoListaAtualizar.setText("Cliente nao encontrado");
+			taInscricaoListaAtualizar.setText("Inscrição não encontrada");
+			
 		}
-
 	}
 
 	@Override
@@ -290,8 +291,10 @@ public class InscricaoController implements ActionListener, ICRUD {
 		buffer.append(inscricao + ";");
 
 		AtualizarInscricao(buffer.toString());
-		tfCodDisciplinaInscricaoCriar.setText("");
-		tfCodProcessoInscricaoCriar.setText("");
+		
+		tfCPFInscricaoAtualizar.setText("");
+		tfCodDisciplinaInscricaoAtualizar.setText("");
+		taInscricaoListaAtualizar.setText("Inscrição atualizada com Sucesso");
 
 	}
 
@@ -351,6 +354,8 @@ public class InscricaoController implements ActionListener, ICRUD {
 	public void Ler() throws IOException, Exception {
 		String pathProfessor = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arqProfessor = new File(pathProfessor, "professor.csv");
+		
+		taInscricaoListaAtualizar.setText("");
 
 		ListaGenerica<Professor> listaAuxiliar = new ListaGenerica<>();
 		ListaGenerica<Professor> lista = new ListaGenerica<>();
