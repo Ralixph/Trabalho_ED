@@ -251,7 +251,7 @@ public class CursoController implements ActionListener, IProcura {
 		curso = buscaCurso(curso);
 		if (curso.getNomeCurso() != null) {
 			taCursoListaDeletar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
-					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
+					+ "  - Area: " + curso.getAreaCurso());
 		} else {
 			taCursoListaDeletar.setText("Curso não encontrado");
 		}
@@ -335,7 +335,7 @@ public class CursoController implements ActionListener, IProcura {
 		curso = buscaCurso(curso);
 		if (curso.getNomeCurso() != null) {
 			taCursoListaAtualizar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
-					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
+					+ "  - Area: " + curso.getAreaCurso());
 		} else {
 			taCursoListaAtualizar.setText("Curso não encontrado");
 		}
@@ -347,7 +347,9 @@ public class CursoController implements ActionListener, IProcura {
 		File arq = new File(path, "curso.csv");
 		Fila<Curso> filaAuxiliar = new Fila<>();
 		Fila<Curso> fila = new Fila<>();
-
+		
+		taCursoListaLer.setText("");
+		
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
 			InputStreamReader isr = new InputStreamReader(fis);
