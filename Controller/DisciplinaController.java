@@ -209,7 +209,7 @@ public class DisciplinaController implements ActionListener, IProcura{
 	            }
 	            linha = buffer.readLine();
 	        }
-
+	        InscricaoController.DeletarInscricoesPorDisciplina(cod);
 	        buffer.close();
 	        isr.close();
 	        fis.close();
@@ -232,6 +232,7 @@ public class DisciplinaController implements ActionListener, IProcura{
 	            pw1.close();
 	            fw1.close();
 	        }
+
 	    }
 	}
 
