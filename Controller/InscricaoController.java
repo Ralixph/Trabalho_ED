@@ -19,7 +19,6 @@ import model.Inscricao;
 import model.Professor;
 import modeloLista.ListaGenerica;
 import model.Disciplina;
-import algorithms.sorting.QuickSortLista;
 
 public class InscricaoController implements ActionListener, ICRUD {
 
