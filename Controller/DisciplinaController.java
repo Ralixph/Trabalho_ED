@@ -323,42 +323,57 @@ public class DisciplinaController implements ActionListener, IProcura{
 		}
 	}
 	@Override
+	@SuppressWarnings("unchecked")
 	public void Ler() throws Exception {
-		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
-		File arq = new File(path, "disciplina.csv");
-		Fila<Disciplina> filaAuxiliar = new Fila<>();
-		Fila<Disciplina> fila = new Fila<>();
+	    String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+	    File arq = new File(path, "disciplina.csv");
 
-		if (arq.exists() && arq.isFile()) {
-			FileInputStream fis = new FileInputStream(arq);
-			InputStreamReader isr = new InputStreamReader(fis);
-			BufferedReader buffer = new BufferedReader(isr);
-			String linha = buffer.readLine();
-			while (linha != null) {
-				String[] vetLinha = linha.split(";");
-				Disciplina disciplina = new Disciplina();
-				disciplina.setCodigoDisciplina(Integer.parseInt(vetLinha[0].trim()));
-				disciplina.setNomeDisciplina(vetLinha[1].trim());
-				disciplina.setDiaDisciplina(vetLinha[2].trim());
-				disciplina.setDuracaoDisciplina(vetLinha[3].trim());
-				disciplina.setHoraDisciplina(vetLinha[4].trim());
-				filaAuxiliar.insert(disciplina);
-				fila.insert(disciplina);
-				linha = buffer.readLine();
-			}
-			int tamanhoFila = filaAuxiliar.size();
+	    Fila<Disciplina>[] tabela = new Fila[10];
+	    for (int i = 0; i < 10; i++) {
+	        tabela[i] = new Fila<>();
+	    }
 
-			for (int i = 0; i < tamanhoFila; i++) {
-				Disciplina disciplina = new Disciplina();
-				disciplina = filaAuxiliar.remove();
-				taDisciplinaLer.append(disciplina.toString() + "\n");
-			}
+	    if (arq.exists() && arq.isFile()) {
+	        FileInputStream fis = new FileInputStream(arq);
+	        InputStreamReader isr = new InputStreamReader(fis);
+	        BufferedReader buffer = new BufferedReader(isr);
+	        String linha = buffer.readLine();
 
-			buffer.close();
-			isr.close();
-			fis.close();
-		}
+	        while (linha != null) {
+	            String[] vetLinha = linha.split(";");
+	            Disciplina disciplina = new Disciplina();
+	            disciplina.setCodigoDisciplina(Integer.parseInt(vetLinha[0].trim()));
+	            disciplina.setNomeDisciplina(vetLinha[1].trim());
+	            disciplina.setDiaDisciplina(vetLinha[2].trim());
+	            disciplina.setDuracaoDisciplina(vetLinha[3].trim());
+	            disciplina.setHoraDisciplina(vetLinha[4].trim());
+
+	            int codigo = disciplina.getCodigoDisciplina();
+	            int indice = hashMultiplicacao(codigo, 10);
+
+	            tabela[indice].insert(disciplina);
+
+	            linha = buffer.readLine();
+	        }
+
+	        for (int i = 0; i < tabela.length; i++) {
+	            if (!tabela[i].isEmpty()) {
+	                taDisciplinaLer.append("Divisão " + i + ":\n");
+	                int tamanho = tabela[i].size();
+	                for (int j = 0; j < tamanho; j++) {
+	                    Disciplina d = tabela[i].remove();
+	                    taDisciplinaLer.append("  " + d.toString() + "\n");
+	                    tabela[i].insert(d);
+	                }
+	            }
+	        }
+
+	        buffer.close();
+	        isr.close();
+	        fis.close();
+	    }
 	}
+	
 	private Disciplina buscaDisciplina(Disciplina disciplina) throws IOException {
 		String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 		File arq = new File(path, "disciplina.csv");
@@ -384,6 +399,13 @@ public class DisciplinaController implements ActionListener, IProcura{
 			fis.close();
 		}
 		return disciplina;
+	}
+
+	private int hashMultiplicacao(int chave, int m) {
+	    double A = 0.6180339887; // (√5 - 1) / 2
+	    double prod = chave * A;
+	    double frac = prod - Math.floor(prod);
+	    return (int) Math.floor(m * frac);
 	}
 
 
