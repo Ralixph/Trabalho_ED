@@ -30,7 +30,6 @@ public class CursoController implements ActionListener, IProcura {
 	private JTextField tfNomeCursoAtualizar;
 	private JTextField tfAreaCursoAtualizar;
 	private JTextField tfPontosProfessorAtualizar;
-	private JTextArea taCursoListaAtualizar;
 	
 	private JTextField tfAreaCursoLer;
 	private JTextField tfCodigoCursoLer;
@@ -48,6 +47,8 @@ public class CursoController implements ActionListener, IProcura {
 	
 	private JTextArea taCursoLista;
 	
+	private JTextArea taCursoListaAtualizar;
+	
 
 	public CursoController(JTextField tfAreaCursoAtualizar,JTextField tfAreaCursoCriar, 
 			JTextField tfAreaCursoDeletar, JTextField tfAreaCursoLer, 
@@ -59,7 +60,8 @@ public class CursoController implements ActionListener, IProcura {
 			JTextField tfNomeCursoCriar, JTextField tfNomeCursoAtualizar, 
 			JTextField tfNomeCursoLer, JTextField tfNomeCursoDeletar,
 			
-			JTextArea taCursoListaDeletar, JTextArea taCursoLista, JTextArea taCursoListaLer){
+			JTextArea taCursoListaDeletar,
+			JTextArea taCursoListaLer, JTextArea taCursoListaAtualizar){
 		super();
 		
 		this.tfAreaCursoAtualizar = tfAreaCursoAtualizar;
@@ -81,9 +83,11 @@ public class CursoController implements ActionListener, IProcura {
 		
 		this.tfCodigoCursoAtualizar = tfCodigoCursoAtualizar;
 		
-		this.taCursoLista = taCursoLista;
+		
 		
 		this.taCursoListaLer = taCursoListaLer;
+		
+		this.taCursoListaAtualizar = taCursoListaAtualizar;
 		
 		
 	}
@@ -245,7 +249,6 @@ public class CursoController implements ActionListener, IProcura {
 		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoDeletar.getText()));
 
 		curso = buscaCurso(curso);
-		tfCodigoCursoDeletar.setText("");
 		if (curso.getNomeCurso() != null) {
 			taCursoListaDeletar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
 					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
@@ -330,12 +333,11 @@ public class CursoController implements ActionListener, IProcura {
 		curso.setCodigoCurso(Integer.parseInt(tfCodigoCursoAtualizar.getText()));
 
 		curso = buscaCurso(curso);
-		tfCodigoCursoAtualizar.setText("");
 		if (curso.getNomeCurso() != null) {
 			taCursoListaAtualizar.setText("Codigo: " + curso.getCodigoCurso() + " - Nome: " + curso.getNomeCurso()
 					+ "  - Area: " + curso.getAreaCurso() + " - Pontos: ");
 		} else {
-			taCursoListaAtualizar.setText("Curso nao encontrado");
+			taCursoListaAtualizar.setText("Curso não encontrado");
 		}
 	}
 

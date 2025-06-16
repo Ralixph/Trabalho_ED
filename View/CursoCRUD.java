@@ -161,14 +161,16 @@ public class CursoCRUD extends JFrame {
 		lblCodigoCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCodigoCurso.setBounds(21, 11, 79, 19);
 		
-		JButton btnBuscarCurso = new JButton("Buscar");
-		btnBuscarCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnBuscarCurso.setBounds(300, 11, 89, 23);
-		tabAtualizarCurso.add(btnBuscarCurso);
+		JButton btnBuscarCursoAT = new JButton("Buscar_AT");
+		btnBuscarCursoAT.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBuscarCursoAT.setBounds(300, 11, 89, 23);
+		tabAtualizarCurso.add(btnBuscarCursoAT);
 		
-		JTextArea taCursoLista = new JTextArea();
-		taCursoLista.setBounds(21, 48, 267, 46);
-		tabAtualizarCurso.add(taCursoLista);
+		JTextArea taCursoListaAtualizar = new JTextArea();
+		taCursoListaAtualizar.setBounds(21, 48, 267, 46);
+		tabAtualizarCurso.add(taCursoListaAtualizar);
+		
+		//
 		
 		
 		JLabel lblNome = new JLabel("Nome");
@@ -188,7 +190,7 @@ public class CursoCRUD extends JFrame {
 		tabLerCurso.setLayout(null);
 		
 		
-		btnBuscarCurso = new JButton("Ler");
+		JButton btnBuscarCurso = new JButton("Ler");
 		btnBuscarCurso.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnBuscarCurso.setBounds(338, 11, 73, 23);
 		tabLerCurso.add(btnBuscarCurso);
@@ -233,9 +235,9 @@ public class CursoCRUD extends JFrame {
 		btnBuscarDLCurso.setBounds(300, 11, 89, 23);
 		tabDeletarCurso.add(btnBuscarDLCurso);
 		
-		taCursoLista = new JTextArea();
+		/*taCursoLista = new JTextArea();
 		taCursoLista.setBounds(21, 48, 368, 120);
-		tabDeletarCurso.add(taCursoLista);	
+		tabDeletarCurso.add(taCursoLista);	*/
 		
 		JTextArea taCursoListaDeletar = new JTextArea();
 		taCursoListaDeletar.setBounds(21, 48, 368, 120);
@@ -251,18 +253,22 @@ public class CursoCRUD extends JFrame {
 				tfNomeCursoCriar, tfNomeCursoAtualizar, 
 					tfNomeCursoLer, tfNomeCursoDeletar,
 				
-				taCursoListaDeletar, taCursoLista, 
-					taCursoListaLer);
+				taCursoListaDeletar, 
+				taCursoListaLer, taCursoListaAtualizar);
 		
 		
 		btnCriarCurso.addActionListener(cc);
 		
 		btnAtualizarCurso.addActionListener(cc);
 		
+		btnBuscarCursoAT.addActionListener(cc);
+		
 		btnBuscarCurso.addActionListener(cc);
 		
 		btnDeletarCurso.addActionListener(cc);
 		
 		btnBuscarDLCurso.addActionListener(cc);	
+		
+		//btnBuscarCurso
 	}
 }
