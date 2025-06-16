@@ -217,6 +217,44 @@ public class InscricaoController implements ActionListener, IProcura {
 			}
 		}
 	}
+	
+	public static void DeletarInscricoesPorDisciplina(int codigoDisciplina) throws Exception {
+	    String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
+	    File arq = new File(path, "inscricoes.csv");
+	    ListaGenerica<String> lista = new ListaGenerica<>();
+
+	    if (arq.exists() && arq.isFile()) {
+	        FileInputStream fis = new FileInputStream(arq);
+	        InputStreamReader isr = new InputStreamReader(fis);
+	        BufferedReader buffer = new BufferedReader(isr);
+	        String linha = buffer.readLine();
+
+	        while (linha != null) {
+	            String[] vetLinha = linha.split(";");
+
+	            if (Integer.parseInt(vetLinha[1]) != codigoDisciplina) {
+	                lista.addLast(linha);
+	            }
+
+	            linha = buffer.readLine();
+	        }
+
+	        buffer.close();
+	        isr.close();
+	        fis.close();
+
+	        FileWriter fw = new FileWriter(arq);
+	        PrintWriter pw = new PrintWriter(fw);
+
+	        for (int i = 0; i < lista.size(); i++) {
+	            pw.write(lista.get(i) + "\r\n");
+	        }
+
+	        pw.flush();
+	        pw.close();
+	        fw.close();
+	    }
+	}
 
 	private void BuscarAtualizar() throws IOException {
 		Inscricao inscricao = new Inscricao();

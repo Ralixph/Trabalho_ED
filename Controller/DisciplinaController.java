@@ -63,7 +63,7 @@ public class DisciplinaController implements ActionListener, IProcura{
 		this.taDisciplinaDeletar = taDisciplinaDeletar;
 	}
 		@Override
-		public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {
 			String cmd = e.getActionCommand();
 			if (cmd.equals("Criar")) {
 				try {
@@ -169,15 +169,12 @@ public class DisciplinaController implements ActionListener, IProcura{
 	        taDisciplinaDeletar.setText("Disciplina não encontrada");
 	    }
 	}
-
-
 	@Override
 	public void Deletar() throws Exception {
 		int COD = Integer.parseInt(tfCodigoDisciplinaDeletar.getText());
 
 		DeletarDisciplina(COD);
 	}
-
 	private void DeletarDisciplina(int cod) throws Exception {
 	    String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 	    File arq = new File(path, "disciplina.csv");
@@ -209,7 +206,7 @@ public class DisciplinaController implements ActionListener, IProcura{
 	            }
 	            linha = buffer.readLine();
 	        }
-
+	        InscricaoController.DeletarInscricoesPorDisciplina(cod);
 	        buffer.close();
 	        isr.close();
 	        fis.close();
@@ -234,7 +231,6 @@ public class DisciplinaController implements ActionListener, IProcura{
 	        }
 	    }
 	}
-
 
 	public void BuscarAtualizar() throws IOException {
 		Disciplina disciplina = new Disciplina();
