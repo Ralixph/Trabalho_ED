@@ -63,7 +63,7 @@ public class DisciplinaController implements ActionListener, ICRUD{
 		this.taDisciplinaDeletar = taDisciplinaDeletar;
 	}
 		@Override
-		public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {
 			String cmd = e.getActionCommand();
 			if (cmd.equals("Criar")) {
 				try {
@@ -168,8 +168,6 @@ public class DisciplinaController implements ActionListener, ICRUD{
 	        taDisciplinaDeletar.setText("Disciplina não encontrada");
 	    }
 	}
-
-
 	@Override
 	public void Deletar() throws Exception {
 		int COD = Integer.parseInt(tfCodigoDisciplinaDeletar.getText());
@@ -178,7 +176,6 @@ public class DisciplinaController implements ActionListener, ICRUD{
 		tfCodigoDisciplinaCriar.setText("");
 		taDisciplinaAtualizar.setText("Disciplina deletada com Sucesso");
 	}
-
 	private void DeletarDisciplina(int cod) throws Exception {
 	    String path = System.getProperty("user.home") + File.separator + "ContratacaoTemporaria";
 	    File arq = new File(path, "disciplina.csv");
@@ -236,7 +233,6 @@ public class DisciplinaController implements ActionListener, ICRUD{
 
 	    }
 	}
-
 
 	public void BuscarAtualizar() throws IOException {
 		Disciplina disciplina = new Disciplina();
