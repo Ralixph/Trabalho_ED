@@ -407,11 +407,4 @@ public class DisciplinaController implements ActionListener, IProcura{
 	    double frac = prod - Math.floor(prod);
 	    return (int) Math.floor(m * frac);
 	}
-
-
-	@Override
-	public void Buscar() throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
 }

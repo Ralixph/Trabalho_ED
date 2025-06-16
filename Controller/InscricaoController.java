@@ -396,11 +396,4 @@ public class InscricaoController implements ActionListener, IProcura {
 
 		return linha;
 	}
-
-	@Override
-	public void Buscar() throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
 }

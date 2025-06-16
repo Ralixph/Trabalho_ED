@@ -29,23 +29,11 @@ public class CursoController implements ActionListener, IProcura {
 	private JTextField tfCodigoCursoAtualizar;
 	private JTextField tfNomeCursoAtualizar;
 	private JTextField tfAreaCursoAtualizar;
-	private JTextField tfPontosProfessorAtualizar;
 	
-	private JTextField tfAreaCursoLer;
-	private JTextField tfCodigoCursoLer;
 	private JTextArea taCursoListaLer;
 	
 	private JTextArea taCursoListaDeletar;
 	private JTextField tfCodigoCursoDeletar;
-	
-	
-	private JTextField tfAreaCursoDeletar;
-	
-	//private JTextField tfCodigoCursoDeletar;
-	
-	//private JTextField tfCodigoCursoAtualizar;
-	
-	private JTextArea taCursoLista;
 	
 	private JTextArea taCursoListaAtualizar;
 	
@@ -55,7 +43,6 @@ public class CursoController implements ActionListener, IProcura {
 			
 			JTextField tfCodigoCursoAtualizar,JTextField tfCodigoCursoCriar,
 			JTextField tfCodigoCursoLer,JTextField tfCodigoCursoDeletar, 
-			/*JTextField tfCodigoCursoBuscarDeletar,*/
 			
 			JTextField tfNomeCursoCriar, JTextField tfNomeCursoAtualizar, 
 			JTextField tfNomeCursoLer, JTextField tfNomeCursoDeletar,
@@ -66,14 +53,10 @@ public class CursoController implements ActionListener, IProcura {
 		
 		this.tfAreaCursoAtualizar = tfAreaCursoAtualizar;
 		this.tfAreaCursoCriar = tfAreaCursoCriar;
-		this.tfAreaCursoLer = tfAreaCursoLer;
-		this.tfAreaCursoDeletar = tfAreaCursoDeletar;
 		
 		
 		this.tfCodigoCursoCriar = tfCodigoCursoCriar;
-		this.tfCodigoCursoLer = tfCodigoCursoLer;
 		this.tfCodigoCursoDeletar = tfCodigoCursoDeletar;
-		//this.tfCodigoCursoBuscarDeletar = tfCodigoCursoBuscarDeletar;
 		
 		
 		this.tfNomeCursoAtualizar = tfNomeCursoAtualizar;
@@ -82,7 +65,6 @@ public class CursoController implements ActionListener, IProcura {
 		this.taCursoListaDeletar = taCursoListaDeletar;
 		
 		this.tfCodigoCursoAtualizar = tfCodigoCursoAtualizar;
-		
 		
 		
 		this.taCursoListaLer = taCursoListaLer;
@@ -208,6 +190,8 @@ public class CursoController implements ActionListener, IProcura {
 		int Codigo = Integer.parseInt(tfCodigoCursoDeletar.getText());
 
 			DeletarCurso(Codigo);
+			tfCodigoCursoDeletar.setText("");
+			taCursoListaDeletar.setText("Curso deletado com Sucesso");
 		
 	}
 	
@@ -266,6 +250,11 @@ public class CursoController implements ActionListener, IProcura {
 		curso.setAreaCurso(tfAreaCursoAtualizar.getText());
 
 		AtualizarCurso(curso.toString());
+		tfNomeCursoAtualizar.setText("");
+		tfAreaCursoAtualizar.setText("");
+		tfCodigoCursoAtualizar.setText("");
+		taCursoListaAtualizar.setText("Atualização feita com Sucesso");
+		
 	}
 	
 	private void AtualizarCurso(String curs) throws Exception {
@@ -273,8 +262,8 @@ public class CursoController implements ActionListener, IProcura {
 		File arq = new File(path, "curso.csv");
 		ListaGenerica<Curso> lista = new ListaGenerica<>();
 
-		String[] vetProfessor = curs.split(";");
-		int codigo = Integer.parseInt(vetProfessor[0]);
+		String[] vetCurso = curs.split(";");
+		int codigo = Integer.parseInt(vetCurso[0]);
 		if (arq.exists() && arq.isFile()) {
 			FileInputStream fis = new FileInputStream(arq);
 			InputStreamReader isr = new InputStreamReader(fis);
@@ -291,9 +280,9 @@ public class CursoController implements ActionListener, IProcura {
 
 				if (verifica == 0 && (Integer.parseInt(vetLinha[0]) == codigo)) {
 					verifica++;
-					curso.setCodigoCurso(Integer.parseInt(vetProfessor[0]));
-					curso.setNomeCurso(vetProfessor[1]);
-					curso.setAreaCurso(vetProfessor[2]);
+					curso.setCodigoCurso(Integer.parseInt(vetCurso[0]));
+					curso.setNomeCurso(vetCurso[1]);
+					curso.setAreaCurso(vetCurso[2]);
 				} else {
 					curso.setCodigoCurso(Integer.parseInt(vetLinha[0]));
 					curso.setNomeCurso(vetLinha[1]);
@@ -377,12 +366,6 @@ public class CursoController implements ActionListener, IProcura {
 			isr.close();
 			fis.close();
 		}
-	}
-
-	@Override
-	public void Buscar() throws IOException {
-		// TODO Auto-generated method stub
-		
 	}
 }
 

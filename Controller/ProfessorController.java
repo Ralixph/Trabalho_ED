@@ -147,13 +147,12 @@ public class ProfessorController implements ActionListener, IProcura {
 		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorBuscarDeletar.getText()));
 
 		professor = buscaProfessor(professor);
-		tfCPFProfessorBuscarDeletar.setText("");
 		if (professor.getNomeProfessor() != null) {
 			taProfessorListaDeletar.setText(
 					"CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor() + "  - Area: "
 							+ professor.getAreaProfessor() + " - Pontos: " + professor.getPontosProfessor());
 		} else {
-			taProfessorListaDeletar.setText("Professor nao encontrado");
+			taProfessorListaDeletar.setText("Professor não encontrado");
 		}
 	}
 	
@@ -162,6 +161,9 @@ public class ProfessorController implements ActionListener, IProcura {
 		double CPF = Double.parseDouble(tfCPFProfessorBuscarDeletar.getText());
 
 		DeletarProfessor(CPF);
+		tfCPFProfessorCriar.setText("");
+		taProfessorListaDeletar.setText("Cadastro do professor deletado com Sucesso");
+		
 	}
 
 	private void DeletarProfessor(Double CPF) throws Exception {
@@ -226,7 +228,6 @@ public class ProfessorController implements ActionListener, IProcura {
 		professor.setCPFProfessor(Double.parseDouble(tfCPFProfessorBuscarAtualizar.getText()));
 
 		professor = buscaProfessor(professor);
-		tfCPFProfessorBuscarAtualizar.setText("");
 		if (professor.getNomeProfessor() != null) {
 			taProfessorListaAtualizar.setText(
 					"CPF: " + professor.getCPFProfessor() + " - Nome: " + professor.getNomeProfessor() + "  - Area: "
@@ -244,6 +245,12 @@ public class ProfessorController implements ActionListener, IProcura {
 		professor.setPontosProfessor(Integer.parseInt(tfPontosProfessorAtualizar.getText()));
 
 		AtualizarProfessor(professor.toString());
+		tfCPFProfessorBuscarAtualizar.setText("");
+		tfNomeProfessorAtualizar.setText("");
+		tfAreaProfessorAtualizar.setText("");
+		tfPontosProfessorAtualizar.setText("");
+		taProfessorListaAtualizar.setText("Cadastro atualizado com Sucesso");
+		
 	}
 	
 	private void AtualizarProfessor(String prof) throws Exception {
@@ -368,13 +375,5 @@ public class ProfessorController implements ActionListener, IProcura {
 			fis.close();
 		}
 		return professor;
-	}
-
-	
-
-	@Override
-	public void Buscar() throws IOException {
-		// TODO Auto-generated method stub
-
 	}
 }

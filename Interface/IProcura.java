@@ -10,6 +10,5 @@ public interface IProcura {
 	public void Deletar() throws IOException, Exception;
 	public void Atualizar() throws IOException, Exception;
 	public void Ler() throws IOException, Exception;
-	public void Buscar() throws IOException;
 	
 }
