@@ -401,11 +401,10 @@ public class InscricaoController implements ActionListener, ICRUD {
 				while (linha1 != null) {
 					String[] vetLinha = linha1.split(";");
 					if (Double.parseDouble(vetLinha[0]) == professor.getCPFProfessor()) {
-						taInscricaoListaLer.setText("CPF: " + professor.getCPFProfessor() + " - Nome: "
+						taInscricaoListaLer.append("CPF: " + professor.getCPFProfessor() + " - Nome: "
 								+ professor.getNomeProfessor() + "  - Area: " + professor.getAreaProfessor()
 								+ " - Pontos: " + professor.getPontosProfessor() + " - Cod Disciplina: " + vetLinha[1]
-								+ "  - Cod Processo: " + vetLinha[2]);
-						break;
+								+ "  - Cod Processo: " + vetLinha[2] +"\r\n");
 					}
 					linha1 = buffer1.readLine();
 				}
